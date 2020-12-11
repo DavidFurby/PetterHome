@@ -1,5 +1,7 @@
 <template>
   <nb-container>
+        <nb-header><nb-title>Account</nb-title></nb-header>
+
     <nb-content padder>
       <nb-text>{{ user.name }}</nb-text>
       <nb-text>Email: {{ user.email }}</nb-text>

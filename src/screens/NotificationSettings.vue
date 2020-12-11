@@ -1,7 +1,8 @@
 <template>
   <nb-container>
+        <nb-header><nb-title>Notification Settings</nb-title></nb-header>
+
     <nb-content padder>
-      <nb-text>Notification Settings</nb-text>
       <nb-form v-for="animal in animals" :key="animal.id">
         <nb-text>{{ animal.name }}</nb-text>
         <nb-picker

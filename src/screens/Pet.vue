@@ -1,5 +1,6 @@
 <template>
   <nb-container>
+        <nb-header><nb-title>Pet</nb-title></nb-header>
     <nb-content padder>
       <nb-text>{{ animal.name }}</nb-text>
       <nb-text>Animal: {{ animal.animal }}</nb-text>

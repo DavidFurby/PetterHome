@@ -1,6 +1,7 @@
 <template>
   <nb-container>
     <nb-content padder>
+          <nb-header><nb-title>Add Pet</nb-title></nb-header>
       <nb-form>
         <nb-picker
           note

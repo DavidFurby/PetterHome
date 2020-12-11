@@ -1,5 +1,7 @@
 <template>
   <nb-container>
+        <nb-header><nb-title>Notifications</nb-title></nb-header>
+
     <nb-content padder>
       <nb-card>
         <nb-card-item>

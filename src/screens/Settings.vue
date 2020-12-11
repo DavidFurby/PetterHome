@@ -1,6 +1,7 @@
 <template>
-  <nb-container
-    ><nb-content padder>
+  <nb-container>
+    <nb-header><nb-title>Settings</nb-title></nb-header>
+    <nb-content padder>
       <nb-button block light :on-press="goToAccount">
         <nb-text>Account Settings</nb-text>
       </nb-button>
@@ -23,15 +24,12 @@ export default {
   },
   methods: {
     goToAccount() {
-      alert("Account");
       this.navigation.navigate("Account");
     },
     goToNotificationSettings() {
-      alert("notifications");
       this.navigation.navigate("NotificationSettings");
     },
     goToSharePet() {
-      alert("share pet");
       this.navigation.navigate("SharePet");
     },
   },
