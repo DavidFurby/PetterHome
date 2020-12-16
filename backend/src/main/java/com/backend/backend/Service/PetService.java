@@ -2,7 +2,7 @@ package com.backend.backend.Service;
 
 import java.util.Collection;
 
-import com.backend.backend.DAO.PetDAO;
+import com.backend.backend.DAO.Pets.*;
 import com.backend.backend.Entity.Pet;
 
 import org.springframework.beans.factory.annotation.Autowired;

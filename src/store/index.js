@@ -7,7 +7,7 @@ Vue.use(Vuex);
 
 const BASE_URL =
   Platform.OS === "ios"
-    ? "http://localhost:3001/api/v1"
+    ? "http://localhost:8080"
     : "http://10.0.2.2:3001/api/v1";
 
 export default new Vuex.Store({
@@ -17,10 +17,9 @@ export default new Vuex.Store({
   getters: {},
   actions: {
     fetchPets({ commit, state }) {
-      return axios
-        .get("http://localhost:8080/pets")
+      axios
+        .get(`http://10.0.2.2:8080/pets`)
         .then((res) => {
-          console.log(res.data);
           const pets = res.data;
           commit("setPets", pets);
           return state.pets;

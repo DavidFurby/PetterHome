@@ -1,4 +1,4 @@
-package com.backend.backend.DAO;
+package com.backend.backend.DAO.Pets;
 
 import java.util.Collection;
 

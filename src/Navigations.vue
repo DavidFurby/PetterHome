@@ -24,7 +24,18 @@ import { Root } from "native-base";
 import ShareListScreen from "./screens/ShareList";
 import RecieveScreen from "./screens/Recieve";
 import SchemaScreen from "./screens/Schema";
+import LoginScreen from "./screens/Login";
+import RegistrationScreen from "./screens/Register";
+import RecoverPasswordScreen from "./screens/RecoverPassword";
 
+const LoginNavigator = createBottomTabNavigator(
+  {
+    Registration: RegistrationScreen,
+    Login: LoginScreen,
+    RecoverPassword: RecoverPasswordScreen,
+  },
+  { initialRouteName: "Login", headerMode: "none" }
+);
 const MainNavigator = createStackNavigator(
   {
     Main: MainScreen,

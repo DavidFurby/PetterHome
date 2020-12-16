@@ -1,4 +1,4 @@
-package com.backend.backend.DAO;
+package com.backend.backend.DAO.Pets;
 
 import com.backend.backend.Entity.Pet;
 

@@ -2,8 +2,13 @@
   <nb-container>
     <nb-header><nb-title>Home</nb-title></nb-header>
     <nb-content>
-      <nb-card v-for="pet in pets" :key="pet.id">
-        <nb-card-item button :on-press="goToPetScreen">
+      <nb-card>
+        <nb-card-item
+          button
+          v-for="pet in pets"
+          v-bind:key="pet._id"
+          :on-press="goToPetScreen"
+        >
           <nb-body full info>
             <nb-text>{{ pet.petName }} </nb-text>
             <nb-text>{{ pet.animal }} </nb-text>
@@ -30,11 +35,13 @@ export default {
     },
   },
   computed: {
-    pets() {
-      return this.$store.state.pets;
+     pets() {
+      let petData = this.$store.state.pets;
+     console.log(petData);
+     return petData;
     },
   },
-  created() {
+   created() {
     this.$store.dispatch("fetchPets");
   },
   methods: {
