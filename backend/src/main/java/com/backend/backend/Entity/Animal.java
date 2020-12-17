@@ -9,16 +9,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Animal {
     
     @Id
-    private BigInteger _id;
+    private String id;
     private String animalName;
     private String breed;
 
-    public BigInteger getId() {
-        return _id;
+    public String getId() {
+        return id;
     }
 
-    public void setId(BigInteger _id) {
-        this._id = _id;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getAnimalName() {

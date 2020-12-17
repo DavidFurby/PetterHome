@@ -22,7 +22,7 @@ import PetScreen from "./screens/Pet";
 import AddPetScreen from "./screens/AddPet";
 import { Root } from "native-base";
 import ShareListScreen from "./screens/ShareList";
-import RecieveScreen from "./screens/Recieve";
+import RequestScreen from "./screens/Request";
 import SchemaScreen from "./screens/Schema";
 import LoginScreen from "./screens/Login";
 import RegistrationScreen from "./screens/Register";
@@ -49,7 +49,7 @@ const MainNavigator = createStackNavigator(
 const ShareNavigation = createStackNavigator(
   {
     ShareList: ShareListScreen,
-    Recieve: RecieveScreen,
+    Request: RequestScreen,
     SharePet: SharePetScreen,
   },
   {

@@ -18,9 +18,10 @@ export default new Vuex.Store({
   actions: {
     fetchPets({ commit, state }) {
       axios
-        .get(`http://10.0.2.2:8080/pets`)
+        .get(`http://localhost:8080/pets`)
         .then((res) => {
           const pets = res.data;
+          console.log(pets)
           commit("setPets", pets);
           return state.pets;
         })

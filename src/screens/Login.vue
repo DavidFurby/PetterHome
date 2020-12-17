@@ -9,8 +9,26 @@
         <nb-item last>
           <nb-input placeholder="Password" />
         </nb-item>
-        <nb-button><nb-text>Login</nb-text></nb-button>
+        <nb-button @click="Login(userName, password)"
+          ><nb-text>Login</nb-text></nb-button
+        >
       </nb-form>
     </nb-content>
   </nb-container>
-</template>
+</template> 
+
+<script>
+import users from "../data/userMock.json";
+export default {
+  methods: {
+    Login(userName, password) {
+      if (users.includes(userName) && users.includes(password)) {
+        alert("success");
+      }
+    },
+  },
+};
+</script>
+
+<style>
+</style>

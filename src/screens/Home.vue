@@ -2,57 +2,68 @@
   <nb-container>
     <nb-header><nb-title>Home</nb-title></nb-header>
     <nb-content>
-      <nb-card>
-        <nb-card-item
-          button
-          v-for="pet in pets"
-          v-bind:key="pet._id"
-          :on-press="goToPetScreen"
-        >
-          <nb-body full info>
-            <nb-text>{{ pet.petName }} </nb-text>
-            <nb-text>{{ pet.animal }} </nb-text>
-            <nb-text>{{ pet.age }} </nb-text>
-            <nb-text>{{ pet.gender }} </nb-text>
-            <nb-text>{{ pet.breed }} </nb-text>
-          </nb-body>
-          <nb-button :on-press="goToPetSchema"
-            ><nb-text>Calender</nb-text></nb-button
-          >
-        </nb-card-item>
-      </nb-card>
-      <nb-button block :on-press="goToAddPetScreen">
+      <PetCard
+        v-for="pet in petData"
+        :key="pet.id"
+        :pet="pet"
+        :navigateToPet="goToPetScreen"
+        :navigateToPetSchema="goToPetSchema"
+      />
+      <nb-button block :on-press="goToAddPetScreen" :pets="petData">
         <nb-text>Add Animal</nb-text>
       </nb-button>
     </nb-content>
   </nb-container>
 </template>
 <script>
+import mock from "../data/petMock.json";
+import PetCard from "../components/PetCard";
+
+const apiURL = "http://83.226.207.208:8080/pets";
 export default {
+  components: {
+    PetCard,
+  },
   props: {
     navigation: {
       type: Object,
     },
   },
+  data() {
+    return {
+      petData: mock,
+    };
+  },
   computed: {
-     pets() {
+    pets() {
       let petData = this.$store.state.pets;
-     console.log(petData);
-     return petData;
+      return petData;
     },
   },
-   created() {
+  created() {
+    fetch(apiURL)
+      .then((response) => {
+        console.log(response.json());
+        return response.json();
+      })
+      .then((pets) => {
+        console.log(pets);
+        this.petData = pets;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     this.$store.dispatch("fetchPets");
   },
   methods: {
-    goToPetScreen() {
-      this.navigation.navigate("Pet");
+    goToPetScreen(petId) {
+      this.navigation.navigate("Pet", {petId: {petId}});
     },
     goToAddPetScreen() {
       this.navigation.navigate("AddPet");
     },
-    goToPetSchema() {
-      this.navigation.navigate("Schema");
+    goToPetSchema(petId) {
+      this.navigation.navigate("Schema", {petId: {petId}});
     },
   },
 };

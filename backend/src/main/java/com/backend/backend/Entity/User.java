@@ -8,16 +8,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "Users")
 public class User {
     @Id
-    private BigInteger _id;
+    private String id;
     private String userName;
     private String password;
 
-    public BigInteger getId() {
-        return _id;
+    public String getId() {
+        return id;
     }
 
-    public void setId(BigInteger _id) {
-        this._id = _id;
+    public void setId(String id) {
+        this.id = id;
     }
     public String getUserName() {
         return userName;
