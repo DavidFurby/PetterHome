@@ -1,36 +1,25 @@
 <template>
   <nb-container>
-        <nb-header><nb-title>Notifications</nb-title></nb-header>
-
-    <nb-content padder>
-      <nb-card>
-        <nb-card-item>
-          <nb-body>
-            <nb-text
-              >{{ hour }}:{{ min }} {{ animals.name }} needs to be
-              walked</nb-text
-            >
-          </nb-body>
-        </nb-card-item>
-      </nb-card>
-      <nb-button full info>
-        <nb-text>View More </nb-text>
-      </nb-button>
-    </nb-content>
+    <nb-header><nb-title>Notifications</nb-title></nb-header>
+    <NotificationCard v-for="pet in pets" v-bind:key="pet.id" :time="time" />
   </nb-container>
 </template>
 <script>
+import NotificationCard from "../components/NotificationCard";
+import petData from "../data/petMock.json";
+const hour = new Date().getHours();
+const min = new Date().getMinutes();
+
 export default {
-  props: {
-    animals: {
-      type: Array,
-      default: () => [],
-    },
+  components: {
+    NotificationCard,
+  },
+  data: {
+    pets: petData,
   },
   data() {
     return {
-      hour: new Date().getHours(),
-      min: new Date().getMinutes(),
+      time: hour + "" + min,
     };
   },
 };

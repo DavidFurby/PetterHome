@@ -1,41 +1,40 @@
 <template>
   <nb-container>
-        <nb-header><nb-title>Notification Settings</nb-title></nb-header>
-
-    <nb-content padder>
-      <nb-form v-for="animal in animals" :key="animal.id">
-        <nb-text>{{ animal.name }}</nb-text>
-        <nb-picker
-          note
-          mode="dropdown"
-          :style="{ width: 120 }"
-          :selectedValue="selected"
-          :onValueChange="onValueChange"
-        >
-          <item label="Food" value="key0" />
-          <item label="Walks" value="key1" />
-          <item label="Medicine" value="key2" />
-        </nb-picker>
-      </nb-form>
-    </nb-content>
+    <nb-header><nb-title>Notification Settings</nb-title></nb-header>
+    <NotifcationSettingsForm
+      v-for="pet in petData"
+      :key="pet.id"
+      :pet="pet"
+      :selected="selected"
+    />
   </nb-container>
 </template>
 <script>
-import { Picker } from "native-base";
-
+import petMock from "../data/petMock.json";
+import NotificationSettingsForm from "../components/NotificationSettingsForm";
 export default {
+  components: {
+    NotificationSettingsForm,
+  },
   props: {
-    animals: {
-      type: Array,
-      default: () => [],
+    navigation: {
+      type: Object,
     },
   },
-  components: { Item: Picker.Item },
-  data: function () {
+  data() {
     return {
+      petData: petMock,
       selected: "key1",
     };
   },
+
+  computed: {
+    pets() {
+      let petData = this.$store.state.pets;
+      return petData;
+    },
+  },
+
   methods: {
     onValueChange: function (value) {
       this.selected = value;

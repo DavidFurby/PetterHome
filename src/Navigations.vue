@@ -10,6 +10,7 @@ import {
   createBottomTabNavigator,
   createStackNavigator,
   createDrawerNavigator,
+  createMaterialTopTabNavigator,
 } from "vue-native-router";
 
 import MainScreen from "./screens/Home";
@@ -46,15 +47,17 @@ const MainNavigator = createStackNavigator(
   { initialRouteName: "Main", headerMode: "none" }
 );
 
+const RequestNavigation = createMaterialTopTabNavigator({
+  Request: RequestScreen,
+  SharePet: SharePetScreen,
+});
 const ShareNavigation = createStackNavigator(
   {
     ShareList: ShareListScreen,
-    Request: RequestScreen,
-    SharePet: SharePetScreen,
+    ShareMenu: RequestNavigation,
   },
   {
-    initialRouteName: "SharePet",
-    headerMode: "none",
+    initialRouteName: "ShareMenu",
   }
 );
 const SettingsNavigator = createStackNavigator(

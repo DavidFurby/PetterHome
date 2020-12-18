@@ -1,7 +1,7 @@
 <template>
   <nb-container>
     <nb-header><nb-title>Invites</nb-title></nb-header>
-    <nb-text>Recieve Page</nb-text>
+    <nb-text>Request Page</nb-text>
     <nb-card-item v-for="request in requests" :key="request.id">
       <nb-body full info>
         <nb-text

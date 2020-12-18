@@ -24,15 +24,16 @@ export default {
   components: {
     PetCard,
   },
-  props: {
-    navigation: {
-      type: Object,
-    },
-  },
+
   data() {
     return {
       petData: mock,
     };
+  },
+  props: {
+    navigation: {
+      type: Object,
+    },
   },
   computed: {
     pets() {
@@ -40,30 +41,15 @@ export default {
       return petData;
     },
   },
-  created() {
-    fetch(apiURL)
-      .then((response) => {
-        console.log(response.json());
-        return response.json();
-      })
-      .then((pets) => {
-        console.log(pets);
-        this.petData = pets;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    this.$store.dispatch("fetchPets");
-  },
   methods: {
     goToPetScreen(petId) {
-      this.navigation.navigate("Pet", {petId: {petId}});
+      this.navigation.navigate("Pet", { petId: { petId } });
     },
     goToAddPetScreen() {
       this.navigation.navigate("AddPet");
     },
     goToPetSchema(petId) {
-      this.navigation.navigate("Schema", {petId: {petId}});
+      this.navigation.navigate("Schema", { petId: { petId } });
     },
   },
 };

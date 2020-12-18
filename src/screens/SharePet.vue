@@ -1,36 +1,29 @@
 <template>
   <nb-container>
     <nb-header><nb-title>Share Pet</nb-title></nb-header>
-
-    <nb-button :on-press="goToRecieve"><nb-text>Recieve</nb-text> </nb-button>
-    <nb-card v-for="animal in animals" :key="animal.id">
-      <nb-card-item button :on-press="goToShareList">
-        <nb-body full info>
-          <nb-text>{{ animal.name }} </nb-text>
-          <nb-text> {{ animal.age }} år </nb-text>
-          <nb-text>{{ animal.breed }} </nb-text>
-        </nb-body>
-      </nb-card-item>
-    </nb-card>
+    <SharePetCard v-for="pet in petStore" :key="pet.id" :pet="pet" :navigateToShareList="goToShareList"/>
   </nb-container>
 </template>
 <script>
+import SharePetCard from "../components/SharePetCard";
 export default {
+  components: {
+    SharePetCard,
+  },
   props: {
-    animals: {
-      type: Array,
-      default: () => [],
-    },
     navigation: {
       type: Object,
     },
   },
-  methods: {
-    goToShareList() {
-      this.navigation.navigate("ShareList");
+  computed: {
+    petStore() {
+      let petTemp = this.$store.state.pets;
+      return petTemp;
     },
-    goToRecieve() {
-      this.navigation.navigate("Recieve");
+  },
+  methods: {
+    goToShareList(petId) {
+      this.navigation.navigate("ShareList", { petId: { petId } });
     },
   },
 };
