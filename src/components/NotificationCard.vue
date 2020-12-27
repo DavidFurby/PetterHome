@@ -15,7 +15,7 @@
 <script>
 export default {
   props: {
-    pet: Object,
+    pet: Array,
     default: () => [],
     time: Object,
     default: () => [],

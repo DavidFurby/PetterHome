@@ -1,7 +1,5 @@
 package com.backend.backend.Entity;
 
-import java.math.BigInteger;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,7 +11,7 @@ public class Pet {
     private String petName;
     private String animal;
     private Integer age;
-    private String gender;
+    private Gender gender;
 
     public String getId() {
         return id;
@@ -47,11 +45,12 @@ public class Pet {
         this.age = age;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    enum Gender {
+        Male, Female;
     }
+
 }

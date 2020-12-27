@@ -3,14 +3,32 @@
     <nb-header><nb-title>Login</nb-title></nb-header>
     <nb-content>
       <nb-form>
-        <nb-item>
-          <nb-input placeholder="Username" />
-        </nb-item>
-        <nb-item last>
-          <nb-input placeholder="Password" />
-        </nb-item>
-        <nb-button @click="Login(userName, password)"
-          ><nb-text>Login</nb-text></nb-button
+        <InputWithError
+          :error="$v.form.email.$dirty && !$v.form.email.required"
+          msg="Email is required!"
+        >
+          <nb-input
+            v-model="form.email"
+            placeholder="Email"
+            auto-capitalize="none"
+            :on-blur="() => $v.form.email.$touch()"
+          />
+        </InputWithError>
+        <InputWithError
+          :error="$v.form.password.$dirty && !$v.form.password.required"
+          msg="Password is required!"
+        >
+          <nb-input
+            v-model="form.password"
+            placeholder="Password"
+            auto-capitalize="none"
+            :on-blur="() => $v.form.password.$touch()"
+            secure-text-entry
+          />
+        </InputWithError>
+        <nb-button :on-press="login" block><nb-text>Login</nb-text></nb-button>
+        <nb-button transparent :on-press="goToRegister"
+          ><nb-text>Register new account</nb-text></nb-button
         >
       </nb-form>
     </nb-content>
@@ -18,13 +36,55 @@
 </template> 
 
 <script>
+import { required } from "vuelidate/lib/validators";
 import users from "../data/userMock.json";
+import InputWithError from "../components/InputWithError";
 export default {
+  components: {
+    InputWithError,
+  },
+  props: { navigation: { type: Object } },
+
+  data() {
+    return {
+      form: {
+        email: "",
+        password: "",
+      },
+    };
+  },
+  validations: {
+    form: {
+      email: {
+        required,
+      },
+      password: {
+        required,
+      },
+    },
+  },
   methods: {
-    Login(userName, password) {
-      if (users.includes(userName) && users.includes(password)) {
-        alert("success");
+    login() {
+      this.$v.form.$touch();
+      if (!this.$v.form.$invalid) {
+        this.$store
+          .dispatch("auth/login", this.form)
+          .then(() => {
+            alert(JSON.stringify(user));
+            this.navigation.navigate("Main");
+          })
+          .catch((err) => {
+            Toast.show({
+              text: "Wrong password!",
+              buttonText: "Okay",
+              type: "danger",
+              duration: 3000,
+            });
+          });
       }
+    },
+    goToRegister() {
+      this.navigation.navigate("Register");
     },
   },
 };

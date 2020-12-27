@@ -11,6 +11,7 @@
       />
       <nb-button block :on-press="goToAddPetScreen" :pets="petData">
         <nb-text>Add Animal</nb-text>
+        <nb-text>Welcome {{user.username}}</nb-text>
       </nb-button>
     </nb-content>
   </nb-container>
@@ -19,7 +20,6 @@
 import mock from "../data/petMock.json";
 import PetCard from "../components/PetCard";
 
-const apiURL = "http://83.226.207.208:8080/pets";
 export default {
   components: {
     PetCard,
@@ -27,7 +27,7 @@ export default {
 
   data() {
     return {
-      petData: mock,
+      petData: null
     };
   },
   props: {
@@ -37,9 +37,12 @@ export default {
   },
   computed: {
     pets() {
-      let petData = this.$store.state.pets;
+       petData = this.$store.state.pets;
       return petData;
     },
+    user(){
+      return this.$store.state.auth.user
+    }
   },
   methods: {
     goToPetScreen(petId) {

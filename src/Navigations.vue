@@ -11,6 +11,7 @@ import {
   createStackNavigator,
   createDrawerNavigator,
   createMaterialTopTabNavigator,
+  createSwitchNavigator,
 } from "vue-native-router";
 
 import MainScreen from "./screens/Home";
@@ -29,9 +30,9 @@ import LoginScreen from "./screens/Login";
 import RegistrationScreen from "./screens/Register";
 import RecoverPasswordScreen from "./screens/RecoverPassword";
 
-const LoginNavigator = createBottomTabNavigator(
+const LoginNavigator = createStackNavigator(
   {
-    Registration: RegistrationScreen,
+    Register: RegistrationScreen,
     Login: LoginScreen,
     RecoverPassword: RecoverPasswordScreen,
   },
@@ -83,7 +84,13 @@ const TabNavigation = createBottomTabNavigator(
   }
 );
 
-const AppNavigaton = createAppContainer(TabNavigation);
+const AppNavigaton = createAppContainer(
+  createSwitchNavigator({
+    login: LoginNavigator,
+
+    tabs: TabNavigation,
+  })
+);
 
 export default {
   components: {
