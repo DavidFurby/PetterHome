@@ -1,5 +1,6 @@
 <template>
   <nb-container>
+    <AppNavigationEvents :onDidFocus="checkForMessage" />
     <nb-header><nb-title>Login</nb-title></nb-header>
     <nb-content>
       <nb-form>
@@ -39,14 +40,20 @@
 import { required } from "vuelidate/lib/validators";
 import users from "../data/userMock.json";
 import InputWithError from "../components/InputWithError";
+import { Toast } from "native-base";
+import AppNavigaton from "../react-components/AppNavigationEvents";
+//import { AsyncStorage } from "@react-native-community/async-storage";
+
 export default {
   components: {
     InputWithError,
+    AppNavigaton,
   },
   props: { navigation: { type: Object } },
 
   data() {
     return {
+      isCheckingUser: false,
       form: {
         email: "",
         password: "",
@@ -62,6 +69,20 @@ export default {
         required,
       },
     },
+  },
+  async created() {
+    const isAuth = this.$store.getters["auth/isAuth"];
+    if (isAuth) {
+      this.navigation.navigate("Main");
+    }
+    //await AsyncStorage.removeItem('petterhome-jwt')
+    /*this.isCheckingUser = true;
+    this.$store
+      .dispatch("auth/verifyUser")
+      .then(() => this.navigation.navigate("Main"))
+      .catch(() => {
+        (this.isCheckingUser = false), this.checkForMessage();
+      });*/
   },
   methods: {
     login() {
@@ -83,12 +104,20 @@ export default {
           });
       }
     },
+    checkForMessage() {
+      const message = this.navigation.getParam("message");
+      if (message) {
+        Toast.show({
+          text: message,
+          buttonText: "Okay",
+          type: "Success",
+          duration: 3000,
+        });
+      }
+    },
     goToRegister() {
       this.navigation.navigate("Register");
     },
   },
 };
 </script>
-
-<style>
-</style>

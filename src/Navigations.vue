@@ -85,11 +85,7 @@ const TabNavigation = createBottomTabNavigator(
 );
 
 const AppNavigaton = createAppContainer(
-  createSwitchNavigator({
-    login: LoginNavigator,
-
-    tabs: TabNavigation,
-  })
+TabNavigation
 );
 
 export default {

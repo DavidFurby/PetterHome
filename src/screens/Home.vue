@@ -11,7 +11,7 @@
       />
       <nb-button block :on-press="goToAddPetScreen" :pets="petData">
         <nb-text>Add Animal</nb-text>
-        <nb-text>Welcome {{user.username}}</nb-text>
+        <nb-text v-if="user">Welcome {{user.username}}</nb-text>
       </nb-button>
     </nb-content>
   </nb-container>

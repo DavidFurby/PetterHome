@@ -11,13 +11,14 @@
       <nb-button :on-press="changePassword"
         ><nb-text>Change password</nb-text></nb-button
       >
-      <nb-button :on-press="logout"><nb-text>Log out</nb-text></nb-button>
+      <nb-button :on-press="logout"><nb-text>Logout</nb-text></nb-button>
     </nb-content>
   </nb-container>
 </template>
 
 <script>
 import userData from "../data/userMock.json";
+import { AsyncStorage } from "@react-native-community/async-storage";
 export default {
   props: {
     navigation: {
@@ -34,10 +35,10 @@ export default {
       alert("change passowrd");
       this.navigation.navigate("ChangePassword");
     },
-    
+
     logout() {
       alert("logout");
-      this.navigation.navigate("Pet");
+      AsyncStorage.removeItem("petterhome-jwt");
     },
   },
 };

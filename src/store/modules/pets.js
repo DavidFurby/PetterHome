@@ -1,7 +1,8 @@
 import Vue from "vue-native-core";
 import axios from "axios";
 import { Platform } from "react-native";
-
+import { AsyncStorage } from "@react-native-community/async-storage";
+import axiosInstance from "../../services/axios";
 const BASE_URL =
   Platform.OS === "ios" ? "http://localhost:8080" : "http://10.0.2.2:8080";
 
@@ -13,17 +14,22 @@ export default {
   },
   getters: {},
   actions: {
+    async fetchSecret() {
+      return axiosInstance
+        .get(`${BASE_URL}/users/pets`)
+        .then((res) => {
+          const data = res.data;
+          alert(JSON.stringify(data));
+        })
+        .catch(() => alert("Not Authorized"));
+    },
     fetchPets({ commit, state }) {
       commit("setPet", {});
       return axios
         .get(`${BASE_URL}/pets`)
         .then(async (res) => {
           const pets = await res.data;
-          commit(
-            "setItems",
-            { items: pets, resource: "pets" },
-            { root: true }
-          );
+          commit("setItems", { items: pets, resource: "pets" }, { root: true });
           return state.items;
         })
         .catch((error) => {

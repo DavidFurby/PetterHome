@@ -6,7 +6,7 @@
   <nb-form>
         <InputWithError
           :error="$v.form.username.$dirty && !$v.form.username.minLength"
-          msg="Minimum length is 8 characters!"
+          msg="Minimum length of 6 characters!"
          >          
         <nb-input v-model="form.username" placeholder="Username" auto-captialize="none" :on-blur="() => $v.form.username.$touch()"
 />
@@ -43,6 +43,8 @@
 <script>
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 import InputWithError from "../components/InputWithError";
+import { Toast } from "native-base";
+
 export default {
   components: {
     InputWithError,
@@ -62,9 +64,10 @@ export default {
       },
     };
   },
+
   validations: {
     form: {
-      username: { minLength: minLength(12) },
+      username: { minLength: minLength(6) },
       email: { validEmail: email },
       password: { required },
       passwordConfirmation: { sameAsPassword: sameAs("password") },
@@ -73,11 +76,27 @@ export default {
   methods: {
     register() {
       this.$v.form.$touch();
+      if (this.$v.form.$invalid) {
+        this.$store
+          .dispatch("auth/register")
+          .then(() => this.navigateToLogin())
+          .catch(() => {
+            Toast.show({
+              text: "something went wrong",
+              buttonText: "okay",
+              type: "danger",
+              duration: 3000,
+            });
+          });
+      }
       alert(JSON.stringify(this.form));
     },
     goToLogin() {
       this.navigation.navigate("Login");
     },
+    navigateToLogin() {
+      this.navigation.navigate('Login', {message: 'Succesfull registration'})
+    }
   },
 };
 </script>
