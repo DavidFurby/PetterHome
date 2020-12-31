@@ -4,6 +4,8 @@
     <NotificationCard v-for="pet in pets" v-bind:key="pet.id" :time="time" />
   </nb-container>
 </template>
+
+
 <script>
 import NotificationCard from "../components/NotificationCard";
 import petData from "../data/petMock.json";

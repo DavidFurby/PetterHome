@@ -1,12 +1,15 @@
 <template>
   <nb-container>
     <nb-header><nb-title>Notification Settings</nb-title></nb-header>
-    <NotifcationSettingsForm
-      v-for="pet in petData"
-      :key="pet.id"
-      :pet="pet"
-      :selected="selected"
-    />
+    <scroll-view>
+      <NotificationSettingsForm
+        v-for="pet in petData"
+        :key="pet.id"
+        :pet="pet"
+        :notificationOn="notificationOn"
+        :setCheck="setCheck"
+      />
+    </scroll-view>
   </nb-container>
 </template>
 <script>
@@ -24,20 +27,18 @@ export default {
   data() {
     return {
       petData: petMock,
-      selected: "key1",
+      setCheck: false,
     };
   },
-
+  methods: {
+    notificationOn() {
+      this.setCheck = !this.setCheck;
+    },
+  },
   computed: {
     pets() {
       let petData = this.$store.state.pets;
       return petData;
-    },
-  },
-
-  methods: {
-    onValueChange: function (value) {
-      this.selected = value;
     },
   },
 };

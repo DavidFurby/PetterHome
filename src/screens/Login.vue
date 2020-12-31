@@ -1,7 +1,7 @@
 <template>
   <nb-container>
     <AppNavigationEvents :onDidFocus="checkForMessage" />
-    <nb-header><nb-title>Login</nb-title></nb-header>
+    <AppHeader screen="Login"/>
     <nb-content>
       <nb-form>
         <InputWithError
@@ -42,12 +42,16 @@ import users from "../data/userMock.json";
 import InputWithError from "../components/InputWithError";
 import { Toast } from "native-base";
 import AppNavigaton from "../react-components/AppNavigationEvents";
+import AppHeader from "../components/AppHeader";
+
 //import { AsyncStorage } from "@react-native-community/async-storage";
 
 export default {
   components: {
     InputWithError,
     AppNavigaton,
+    AppHeader,
+    AppHeader
   },
   props: { navigation: { type: Object } },
 

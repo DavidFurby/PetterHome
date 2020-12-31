@@ -1,7 +1,7 @@
 <template>
   <nb-container>
-    <nb-header><nb-title>Home</nb-title></nb-header>
-    <nb-content>
+    <AppHeader screen="Home" />
+    <scroll-view>
       <PetCard
         v-for="pet in petData"
         :key="pet.id"
@@ -9,25 +9,27 @@
         :navigateToPet="goToPetScreen"
         :navigateToPetSchema="goToPetSchema"
       />
-      <nb-button block :on-press="goToAddPetScreen" :pets="petData">
-        <nb-text>Add Animal</nb-text>
-        <nb-text v-if="user">Welcome {{user.username}}</nb-text>
-      </nb-button>
-    </nb-content>
+    </scroll-view>
+    <nb-button block :on-press="goToAddPetScreen" :pets="petData">
+      <nb-text>Add Animal</nb-text>
+      <nb-text v-if="user">Welcome {{ user.username }}</nb-text>
+    </nb-button>
   </nb-container>
 </template>
 <script>
 import mock from "../data/petMock.json";
 import PetCard from "../components/PetCard";
+import AppHeader from "../components/AppHeader";
 
 export default {
   components: {
     PetCard,
+    AppHeader,
   },
 
   data() {
     return {
-      petData: null
+      petData: mock,
     };
   },
   props: {
@@ -37,12 +39,12 @@ export default {
   },
   computed: {
     pets() {
-       petData = this.$store.state.pets;
+      petData = this.$store.state.pets;
       return petData;
     },
-    user(){
-      return this.$store.state.auth.user
-    }
+    user() {
+      return this.$store.state.auth.user;
+    },
   },
   methods: {
     goToPetScreen(petId) {

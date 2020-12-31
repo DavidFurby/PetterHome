@@ -2,16 +2,15 @@
   <nb-container>
     <nb-content padder>
           <nb-header><nb-title>Add Pet</nb-title></nb-header>
- 
     </nb-content>
   </nb-container>
 </template>
 <script>
 import { Picker } from "native-base";
-
+import animalMock from "../data/animalMock.json"
 export default {
   props: {
-    animalsAvailable : {
+    animals : {
       type: Array,
       default: () => [],
     },

@@ -1,7 +1,6 @@
 <template>
   <nb-container>
-    <nb-header><nb-title>Account</nb-title></nb-header>
-
+    <AppHeader leftButton="return" :leftButtonFunction="goBack" />
     <nb-content padder>
       <nb-text>{{ user[0].userName }}</nb-text>
       <nb-text>Email: {{ user[0].email }}</nb-text>
@@ -19,7 +18,11 @@
 <script>
 import userData from "../data/userMock.json";
 import { AsyncStorage } from "@react-native-community/async-storage";
+import AppHeader from "../components/AppHeader";
 export default {
+  components: {
+    AppHeader,
+  },
   props: {
     navigation: {
       type: Object,
@@ -39,6 +42,9 @@ export default {
     logout() {
       alert("logout");
       AsyncStorage.removeItem("petterhome-jwt");
+    },
+    goBack() {
+      this.navigation.goBack();
     },
   },
 };

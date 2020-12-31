@@ -1,6 +1,12 @@
 <template>
   <nb-container>
-    <nb-header><nb-title>Pet</nb-title></nb-header>
+    <AppHeader
+      screen="Pet"
+      leftButton="return"
+      rightButton="delete"
+      :rightButtonFunction="deleteFromApp"
+      :leftButtonFunction="goBack"
+    />
     <nb-content padder>
       <nb-text>{{ pet.petName }}</nb-text>
       <nb-text>Animal: {{ pet.animal }}</nb-text>
@@ -11,21 +17,28 @@
       <nb-text>Walks:{{ pet.walks }}</nb-text>
       <nb-text>Medication:{{ pet.medication }}</nb-text>
       <nb-text>Allergies:{{ pet.allergies }}</nb-text>
-      <nb-button :on-press="deleteFromApp">
-        <nb-text>Delete {{ pet.name }} from the app</nb-text></nb-button
-      >
     </nb-content>
   </nb-container>
 </template>
 <script>
+import AppHeader from "../components/AppHeader";
+import { ActionSheet } from "native-base";
+
 export default {
+  components: {
+    AppHeader,
+  },
   props: {
     navigation: {
       type: Object,
     },
   },
   data() {
-    petId: undefined;
+    return {
+      btnOptions: ["Delete", "Cancel"],
+      optionCancelIndex: 1,
+      optionDestructiveIndex: 0,
+    };
   },
   computed: {
     pet() {
@@ -40,8 +53,24 @@ export default {
   },
   methods: {
     deleteFromApp() {
-      alert("deleted");
+      this.displayActionsheet();
       //this.$store.dispatch('pets/deletePetsById', this.petId)
+    },
+    displayActionsheet() {
+      ActionSheet.show(
+        {
+          options: this.btnOptions,
+          cancelButtonIndex: this.optionCancelIndex,
+          destructiveButtonIndex: this.optionDestructiveIndex,
+          title: "Are you sure you want to delete?",
+        },
+        (buttonIndex) => {
+          this.clicked = this.btnOptions[buttonIndex];
+        }
+      );
+    },
+    goBack() {
+      this.navigation.goBack();
     },
   },
 };

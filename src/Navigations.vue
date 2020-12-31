@@ -45,7 +45,9 @@ const MainNavigator = createStackNavigator(
     AddPet: AddPetScreen,
     Schema: SchemaScreen,
   },
-  { initialRouteName: "Main", headerMode: "none" }
+  { initialRouteName: "Main", headerMode: "none", navigationOptions: {
+    headerVisible: false
+  } }
 );
 
 const RequestNavigation = createMaterialTopTabNavigator({
