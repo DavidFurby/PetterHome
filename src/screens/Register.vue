@@ -95,8 +95,8 @@ export default {
       this.navigation.navigate("Login");
     },
     navigateToLogin() {
-      this.navigation.navigate('Login', {message: 'Succesfull registration'})
-    }
+      this.navigation.navigate("Login", { message: "Succesfull registration" });
+    },
   },
 };
 </script>

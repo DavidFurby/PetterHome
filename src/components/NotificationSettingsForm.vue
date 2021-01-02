@@ -1,10 +1,11 @@
 <template>
   <nb-content padder>
-    <nb-card>
+    <nb-card v-for="pet in pets" v-bind:key="pet.id">
       <nb-text>{{ pet.petName }}</nb-text>
-      <nb-list-item v-for="need in pet" v-bind:key="need.id">
-        <nb-checkbox :checked="setCheck" :on-press="notificationOn" />
-        <nb-body><nb-text>Walks</nb-text></nb-body>
+      <nb-text>{{ pet.animal }}</nb-text>
+      <nb-list-item v-for="needs in pet" v-bind:key="needs.id">
+        <nb-checkbox :checked="false" :on-press="notificationOn" />
+        <nb-text>{{needs.type}}</nb-text>
       </nb-list-item>
     </nb-card>
   </nb-content>
@@ -15,13 +16,13 @@ import { Picker } from "native-base";
 export default {
   components: { Item: Picker.Item },
   props: {
-    pet: { type: Object, required: !true },
+    pets: { type: Array, required: !true },
     selected: { type: String },
     notificationOn: {
       type: Function,
       default: () => {},
     },
-    setCheck: {type: Boolean, default: false}
+    setCheck: { type: Boolean, default: false },
   },
 };
 </script>

@@ -21,7 +21,7 @@
     "native-base": "^2.13.14",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.4.tar.gz",
+    "react-native": "0.63.4",
     "react-native-async-storage": "0.0.1",
     "react-native-gesture-handler": "~1.7.0",
     "react-native-paper": "^4.4.1",

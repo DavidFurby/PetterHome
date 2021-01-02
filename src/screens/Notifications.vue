@@ -1,7 +1,13 @@
 <template>
   <nb-container>
-    <nb-header><nb-title>Notifications</nb-title></nb-header>
-    <NotificationCard v-for="pet in pets" v-bind:key="pet.id" :time="time" />
+    <AppHeader screen="Notifications" />
+
+    <scroll-view>
+      <NotificationCard :time="time" :pets="pets" />
+    </scroll-view>
+    <nb-button block>
+      <nb-text>View More</nb-text>
+    </nb-button>
   </nb-container>
 </template>
 
@@ -9,19 +15,20 @@
 <script>
 import NotificationCard from "../components/NotificationCard";
 import petData from "../data/petMock.json";
+import AppHeader from "../components/AppHeader";
 const hour = new Date().getHours();
 const min = new Date().getMinutes();
 
 export default {
   components: {
     NotificationCard,
-  },
-  data: {
-    pets: petData,
+    AppHeader,
   },
   data() {
     return {
-      time: hour + "" + min,
+      pets: petData,
+
+      time: hour + ":" + min,
     };
   },
 };

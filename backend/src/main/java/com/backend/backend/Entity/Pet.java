@@ -1,5 +1,7 @@
 package com.backend.backend.Entity;
 
+import java.lang.reflect.Array;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,6 +14,7 @@ public class Pet {
     private String animal;
     private Integer age;
     private Gender gender;
+    private Array needs;
 
     public String getId() {
         return id;
@@ -53,4 +56,11 @@ public class Pet {
         Male, Female;
     }
 
+    public Array getNeeds() {
+        return needs;
+    }
+
+    public void setNeeds(Array needs) {
+        this.needs = needs;
+    }
 }

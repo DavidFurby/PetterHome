@@ -1,10 +1,38 @@
 [{
   "id": 1,
   "petName": "Plover, three-banded",
-  "animal": "Charadrius tricollaris",
+  "animal": "Dog",
   "age": "3437",
   "gender": "Female",
-  "breed": "jcb"
+  "breed": "jcb",
+  "needs": [{
+    "id": "1",
+    "type": "walks",
+    "time": [{
+      "clock": "09:00",
+      "assigned": "dbaldung0"
+    }, {
+      "clock": "12:00",
+      "assigned": "dbaldung0"
+    }, {
+      "clock": "16:00",
+      "assigned": "dbaldung0"
+    }, {
+      "clock": "20:00",
+      "assigned": "dbaldung0"
+    }]
+  }, {
+    "id": "2",
+    "type": "medicine",
+    "time": [{
+      "clock": "09:00",
+      "assigned": "dbaldung0"
+    }, {
+      "clock": "20:00",
+      "assigned": "dbaldung0"
+    }]
+
+  }]
 }, {
   "id": 2,
   "petName": "Polecat, african",

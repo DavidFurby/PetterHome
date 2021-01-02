@@ -1,51 +1,51 @@
 [{
     "id": 1,
-    "animal": "Heron, giant",
-    "breed": "Ardea golieth",
+    "animal": "Dog",
+    "breeds": "Ardea golieth",
     "gender": "Female"
   }, {
     "id": 2,
     "animal": "Eurasian red squirrel",
-    "breed": "Sciurus vulgaris",
+    "breeds": "Sciurus vulgaris",
     "gender": "Male"
   }, {
     "id": 3,
     "animal": "Hawk, galapagos",
-    "breed": "Buteo galapagoensis",
+    "breeds": "Buteo galapagoensis",
     "gender": "Female"
   }, {
     "id": 4,
     "animal": "Jabiru stork",
-    "breed": "Ephippiorhynchus mycteria",
+    "breeds": "Ephippiorhynchus mycteria",
     "gender": "Female"
   }, {
     "id": 5,
     "animal": "Barasingha deer",
-    "breed": "Cervus duvauceli",
+    "breeds": "Cervus duvauceli",
     "gender": "Male"
   }, {
     "id": 6,
     "animal": "Lilac-breasted roller",
-    "breed": "Coracias caudata",
+    "breeds": "Coracias caudata",
     "gender": "Male"
   }, {
     "id": 7,
     "animal": "Trumpeter, dark-winged",
-    "breed": "Psophia viridis",
+    "breeds": "Psophia viridis",
     "gender": "Female"
   }, {
     "id": 8,
     "animal": "Galapagos mockingbird",
-    "breed": "Nesomimus trifasciatus",
+    "breeds": "Nesomimus trifasciatus",
     "gender": "Male"
   }, {
     "id": 9,
     "animal": "Heron, boat-billed",
-    "breed": "Cochlearius cochlearius",
+    "breeds": "Cochlearius cochlearius",
     "gender": "Male"
   }, {
     "id": 10,
     "animal": "Gecko, barking",
-    "breed": "Phylurus milli",
+    "breeds": "Phylurus milli",
     "gender": "Female"
   }]

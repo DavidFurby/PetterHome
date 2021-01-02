@@ -3,9 +3,7 @@
     <nb-header><nb-title>Notification Settings</nb-title></nb-header>
     <scroll-view>
       <NotificationSettingsForm
-        v-for="pet in petData"
-        :key="pet.id"
-        :pet="pet"
+        :pets="petData"
         :notificationOn="notificationOn"
         :setCheck="setCheck"
       />
