@@ -1,23 +1,30 @@
 <template>
   <nb-container>
-    <nb-header><nb-title>Invites</nb-title></nb-header>
-    <nb-text>Request Page</nb-text>
-    <nb-card-item v-for="request in requests" :key="request.id">
-      <nb-body full info>
-        <nb-text
-          >{{ request.user }} want to share their {{ request.pet }}
-        </nb-text>
-        <nb-button><nb-text>Accept</nb-text></nb-button>
-      </nb-body>
-    </nb-card-item>
+    <scroll-view>
+      <AppHeader screen="Request Page" />
+      <RequestCard :requests="requests" :acceptRequest="acceptRequest"/>
+    </scroll-view>
   </nb-container>
 </template>
 <script>
+import requestMock from "../data/requestMock.json";
+import RequestCard from "../components/RequestCard";
 export default {
+  components: {
+    RequestCard,
+  },
+  data: {
+    requests: requestMock,
+  },
   props: {
-    requests: {
+    requestData: {
       type: Array,
       default: () => [],
+    },
+  },
+  methods: {
+    acceptRequest() {
+      alert("accepted");
     },
   },
 };

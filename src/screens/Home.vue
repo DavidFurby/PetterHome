@@ -19,12 +19,10 @@
 <script>
 import mock from "../data/petMock.json";
 import PetCard from "../components/PetCard";
-import AppHeader from "../components/AppHeader";
 
 export default {
   components: {
     PetCard,
-    AppHeader,
   },
 
   data() {

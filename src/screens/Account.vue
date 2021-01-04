@@ -1,12 +1,12 @@
 <template>
   <nb-container>
-    <AppHeader leftButton="return" :leftButtonFunction="goBack" />
+    <AppHeader
+      screen="Account"
+      leftButton="return"
+      :leftButtonFunction="goBack"
+    />
     <nb-content padder>
-      <nb-text>{{ user[0].userName }}</nb-text>
-      <nb-text>Email: {{ user[0].email }}</nb-text>
-      <nb-text>Account ID: {{ user[0].id }}</nb-text>
-      <nb-text>Phone Number: {{ user[0].phoneNumber }}</nb-text>
-      <nb-text>Region: {{ user[0].region }}</nb-text>
+      <account-information :user="user" />
       <nb-button :on-press="changePassword"
         ><nb-text>Change password</nb-text></nb-button
       >
@@ -18,11 +18,9 @@
 <script>
 import userData from "../data/userMock.json";
 import { AsyncStorage } from "@react-native-community/async-storage";
-import AppHeader from "../components/AppHeader";
+import AccountInformation from "../components/AccountInformation.vue";
 export default {
-  components: {
-    AppHeader,
-  },
+  components: { AccountInformation },
   props: {
     navigation: {
       type: Object,
@@ -41,7 +39,9 @@ export default {
 
     logout() {
       alert("logout");
-      AsyncStorage.removeItem("petterhome-jwt");
+      this.navigation.navigate("Login");
+
+      this.$store.dispatch("auth/logout").then(() => {});
     },
     goBack() {
       this.navigation.goBack();

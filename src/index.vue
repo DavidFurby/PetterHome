@@ -10,9 +10,14 @@ import Vue from "vue-native-core";
 import { VueNativeBase } from "native-base";
 import store from "./store";
 import axios from "axios";
+import AppHeader from "./components/AppHeader"
+import InputWithError from "./components/InputWithError"
 // registering all native-base components to the global scope of the Vue
 Vue.use(VueNativeBase, axios);
 Vue.prototype.$store = store;
+Vue.component('AppHeader', AppHeader)
+Vue.component('InputWithError', InputWithError)
+
 export default {
   components: {
     Navigation,

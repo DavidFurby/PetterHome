@@ -1,7 +1,7 @@
 <template>
   <nb-container>
     <AppNavigationEvents :onDidFocus="checkForMessage" />
-    <AppHeader screen="Login"/>
+    <AppHeader screen="Login" />
     <nb-content>
       <nb-form>
         <InputWithError
@@ -31,27 +31,25 @@
         <nb-button transparent :on-press="goToRegister"
           ><nb-text>Register new account</nb-text></nb-button
         >
+        <nb-button transparent :on-press="goToRecoverPassword"
+          ><nb-text>Forgot Password?</nb-text></nb-button
+        >
       </nb-form>
     </nb-content>
   </nb-container>
-</template> 
+</template>
 
 <script>
 import { required } from "vuelidate/lib/validators";
 import users from "../data/userMock.json";
-import InputWithError from "../components/InputWithError";
 import { Toast } from "native-base";
 import AppNavigaton from "../react-components/AppNavigationEvents";
-import AppHeader from "../components/AppHeader";
 
 //import { AsyncStorage } from "@react-native-community/async-storage";
 
 export default {
   components: {
-    InputWithError,
     AppNavigaton,
-    AppHeader,
-    AppHeader
   },
   props: { navigation: { type: Object } },
 
@@ -121,6 +119,9 @@ export default {
     },
     goToRegister() {
       this.navigation.navigate("Register");
+    },
+    goToRecoverPassword() {
+      this.navigation.navigate("RecoverPassword");
     },
   },
 };

@@ -14,10 +14,9 @@
 <script>
 import { Picker } from "native-base";
 import animalMock from "../data/animalMock.json";
-import AppHeader from "../components/AppHeader";
 import AddPetForm from "../components/AddPetForm";
 export default {
-  components: { Item: Picker.Item, AppHeader, AddPetForm },
+  components: { Item: Picker.Item, AddPetForm },
 
   props: {
     animals: {

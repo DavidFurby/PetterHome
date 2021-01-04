@@ -1,6 +1,6 @@
 <template>
   <nb-container>
-    <nb-header><nb-title>Settings</nb-title></nb-header>
+    <AppHeader screen="Settings"/>
     <nb-content padder>
       <nb-button block light :on-press="goToAccount">
         <nb-text>Account Settings</nb-text>
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+
 export default {
   props: {
     navigation: {

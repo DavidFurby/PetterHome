@@ -18,6 +18,7 @@ import MainScreen from "./screens/Home";
 import NotificationScreen from "./screens/Notifications";
 import SettingsScreen from "./screens/Settings";
 import AccountScreen from "./screens/Account";
+import ChangePasswordScreen from "./screens/ChangePassword";
 import NotificationSettingsScreen from "./screens/NotificationSettings";
 import SharePetScreen from "./screens/SharePet";
 import PetScreen from "./screens/Pet";
@@ -30,6 +31,64 @@ import LoginScreen from "./screens/Login";
 import RegistrationScreen from "./screens/Register";
 import RecoverPasswordScreen from "./screens/RecoverPassword";
 
+const MainNavigator = createStackNavigator(
+  {
+    Main: MainScreen,
+    Pet: PetScreen,
+    AddPet: AddPetScreen,
+    Schema: SchemaScreen,
+  },
+  {
+    initialRouteName: "Main",
+    headerMode: "none",
+    navigationOptions: {
+      headerVisible: false,
+    },
+  }
+);
+
+const RequestNavigation = createBottomTabNavigator(
+  {
+    Request: RequestScreen,
+    SharePet: SharePetScreen,
+  },
+  {
+    initialRouteName: "Request",
+    headerMode: "none",
+    navigationOptions: {
+      headerVisible: false,
+    },
+  }
+);
+const ShareNavigation = createStackNavigator(
+  {
+    ShareList: ShareListScreen,
+    ShareMenu: RequestNavigation,
+  },
+  {
+    initialRouteName: "ShareMenu",
+    headerMode: "none",
+    navigationOptions: {
+      headerVisible: false,
+    },
+  }
+);
+const SettingsNavigator = createStackNavigator(
+  {
+    Settings: SettingsScreen,
+    ChangePassword: ChangePasswordScreen,
+    Account: AccountScreen,
+    NotificationSettings: NotificationSettingsScreen,
+    SharePet: ShareNavigation,
+  },
+  {
+    initialRouteName: "Settings",
+    headerMode: "none",
+    navigationOptions: {
+      headerVisible: false,
+    },
+  }
+);
 const LoginNavigator = createStackNavigator(
   {
     Register: RegistrationScreen,
@@ -38,43 +97,6 @@ const LoginNavigator = createStackNavigator(
   },
   { initialRouteName: "Login", headerMode: "none" }
 );
-const MainNavigator = createStackNavigator(
-  {
-    Main: MainScreen,
-    Pet: PetScreen,
-    AddPet: AddPetScreen,
-    Schema: SchemaScreen,
-  },
-  { initialRouteName: "Main", headerMode: "none", navigationOptions: {
-    headerVisible: false
-  } }
-);
-
-const RequestNavigation = createMaterialTopTabNavigator({
-  Request: RequestScreen,
-  SharePet: SharePetScreen,
-});
-const ShareNavigation = createStackNavigator(
-  {
-    ShareList: ShareListScreen,
-    ShareMenu: RequestNavigation,
-  },
-  {
-    initialRouteName: "ShareMenu",
-  }
-);
-const SettingsNavigator = createStackNavigator(
-  {
-    Settings: SettingsScreen,
-    Account: AccountScreen,
-    NotificationSettings: NotificationSettingsScreen,
-    SharePet: ShareNavigation,
-  },
-  {
-    headerMode: "none",
-  }
-);
-
 const TabNavigation = createBottomTabNavigator(
   {
     Notification: NotificationScreen,
@@ -87,7 +109,10 @@ const TabNavigation = createBottomTabNavigator(
 );
 
 const AppNavigaton = createAppContainer(
-TabNavigation
+  createSwitchNavigator({
+    tabs: TabNavigation,
+    auth: LoginNavigator,
+  })
 );
 
 export default {
@@ -97,5 +122,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-</style>
+<style scoped></style>

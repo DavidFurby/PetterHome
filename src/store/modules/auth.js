@@ -36,6 +36,16 @@ export default {
     register(context, userData) {
       return Axios.post(`${BASE_URL}/user/register`, userData);
     },
+    updatePassword(context, userData) {
+      return Axios.post(`${BASE_URL}/user/updatePassword`, userData);
+    },
+    logout({ commit }) {
+      return new Promise((resolve) => {
+        AsyncStorage.removeItem("petterhome-jwt");
+        commit("setAuthUser", null);
+        resolve(true);
+      });
+    },
     fetchCurrentUser({ commit, state }) {
       return axiosInstance
         .get(`${BASE_URL}/users/current`)
@@ -45,7 +55,7 @@ export default {
           commit("setAuthUser", user);
           return state.user;
         })
-        .catch(() => undefined );
+        .catch(() => undefined);
     },
     async verifyUser({ dispatch, commit }) {
       const token = await AsyncStorage.getItem("petterhome-jwt");

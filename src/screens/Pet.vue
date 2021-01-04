@@ -14,20 +14,18 @@
       <nb-text>Weight: {{ pet.weight }}</nb-text>
       <nb-text>Height:{{ pet.height }}</nb-text>
       <nb-text>Birthday:{{ pet.birth }}</nb-text>
-      <nb-text>Walks:{{ pet.walks }}</nb-text>
-      <nb-text>Medication:{{ pet.medication }}</nb-text>
-      <nb-text>Allergies:{{ pet.allergies }}</nb-text>
+      <nb-text v-for="needs in pet" v-bind:key="needs.id"
+        >{{ needs.type }}
+        <nb-text v-for="time in needs" :key="time.id"
+          >{{ time.clock }} assigned To {{ time.assigned }}</nb-text
+        >
+      </nb-text>
     </nb-content>
   </nb-container>
 </template>
 <script>
-import AppHeader from "../components/AppHeader";
 import { ActionSheet } from "native-base";
-
 export default {
-  components: {
-    AppHeader,
-  },
   props: {
     navigation: {
       type: Object,

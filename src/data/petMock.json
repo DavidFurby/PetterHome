@@ -8,92 +8,42 @@
   "needs": [{
     "id": "1",
     "type": "walks",
+    "notified": true,
     "time": [{
+      "id": "1",
       "clock": "09:00",
       "assigned": "dbaldung0"
     }, {
+      "id": "1",
+
       "clock": "12:00",
       "assigned": "dbaldung0"
     }, {
+      "id": "2",
+
       "clock": "16:00",
       "assigned": "dbaldung0"
     }, {
+      "id": "3",
+
       "clock": "20:00",
       "assigned": "dbaldung0"
     }]
   }, {
     "id": "2",
     "type": "medicine",
+    "notified": false,
     "time": [{
+      "id": "4",
+
       "clock": "09:00",
       "assigned": "dbaldung0"
     }, {
+      "id": "5",
+
       "clock": "20:00",
       "assigned": "dbaldung0"
     }]
 
   }]
-}, {
-  "id": 2,
-  "petName": "Polecat, african",
-  "animal": "Ictonyx striatus",
-  "age": "4",
-  "gender": "Female",
-  "breed": "jcb"
-}, {
-  "id": 3,
-  "petName": "Buttermilk snake",
-  "animal": "Coluber constrictor",
-  "age": "02",
-  "gender": "Male",
-  "breed": "visa-electron"
-}, {
-  "id": 4,
-  "petName": "Pelican, great white",
-  "animal": "Pelecans onocratalus",
-  "age": "82668",
-  "gender": "Male",
-  "breed": "jcb"
-}, {
-  "id": 5,
-  "petName": "Crested bunting",
-  "animal": "Melophus lathami",
-  "age": "1",
-  "gender": "Female",
-  "breed": "jcb"
-}, {
-  "id": 6,
-  "petName": "Oryx, fringe-eared",
-  "animal": "Oryx gazella callotis",
-  "age": "13857",
-  "gender": "Female",
-  "breed": "jcb"
-}, {
-  "id": 7,
-  "petName": "North American river otter",
-  "animal": "Lutra canadensis",
-  "age": "0",
-  "gender": "Male",
-  "breed": "switch"
-}, {
-  "id": 8,
-  "petName": "Gerenuk",
-  "animal": "Litrocranius walleri",
-  "age": "28",
-  "gender": "Male",
-  "breed": "switch"
-}, {
-  "id": 9,
-  "petName": "Sandhill crane",
-  "animal": "Grus canadensis",
-  "age": "498",
-  "gender": "Female",
-  "breed": "mastercard"
-}, {
-  "id": 10,
-  "petName": "Stork, jabiru",
-  "animal": "Ephippiorhynchus mycteria",
-  "age": "93177",
-  "gender": "Female",
-  "breed": "mastercard"
 }]

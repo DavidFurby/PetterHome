@@ -3,9 +3,12 @@
     <nb-card v-for="pet in pets" v-bind:key="pet.id">
       <nb-text>{{ pet.petName }}</nb-text>
       <nb-text>{{ pet.animal }}</nb-text>
-      <nb-list-item v-for="needs in pet" v-bind:key="needs.id">
-        <nb-checkbox :checked="false" :on-press="notificationOn" />
-        <nb-text>{{needs.type}}</nb-text>
+      <nb-list-item v-for="needs in pet.needs" v-bind:key="needs.id">
+        <nb-checkbox
+          :checked="needs.notified"
+          :on-press="() => needs.notified === !needs.notified"
+        />
+        <nb-text>{{ needs.type }}</nb-text>
       </nb-list-item>
     </nb-card>
   </nb-content>
@@ -18,11 +21,6 @@ export default {
   props: {
     pets: { type: Array, required: !true },
     selected: { type: String },
-    notificationOn: {
-      type: Function,
-      default: () => {},
-    },
-    setCheck: { type: Boolean, default: false },
   },
 };
 </script>

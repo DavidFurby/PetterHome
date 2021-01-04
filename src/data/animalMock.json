@@ -3,49 +3,4 @@
     "animal": "Dog",
     "breeds": "Ardea golieth",
     "gender": "Female"
-  }, {
-    "id": 2,
-    "animal": "Eurasian red squirrel",
-    "breeds": "Sciurus vulgaris",
-    "gender": "Male"
-  }, {
-    "id": 3,
-    "animal": "Hawk, galapagos",
-    "breeds": "Buteo galapagoensis",
-    "gender": "Female"
-  }, {
-    "id": 4,
-    "animal": "Jabiru stork",
-    "breeds": "Ephippiorhynchus mycteria",
-    "gender": "Female"
-  }, {
-    "id": 5,
-    "animal": "Barasingha deer",
-    "breeds": "Cervus duvauceli",
-    "gender": "Male"
-  }, {
-    "id": 6,
-    "animal": "Lilac-breasted roller",
-    "breeds": "Coracias caudata",
-    "gender": "Male"
-  }, {
-    "id": 7,
-    "animal": "Trumpeter, dark-winged",
-    "breeds": "Psophia viridis",
-    "gender": "Female"
-  }, {
-    "id": 8,
-    "animal": "Galapagos mockingbird",
-    "breeds": "Nesomimus trifasciatus",
-    "gender": "Male"
-  }, {
-    "id": 9,
-    "animal": "Heron, boat-billed",
-    "breeds": "Cochlearius cochlearius",
-    "gender": "Male"
-  }, {
-    "id": 10,
-    "animal": "Gecko, barking",
-    "breeds": "Phylurus milli",
-    "gender": "Female"
   }]

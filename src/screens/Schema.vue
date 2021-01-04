@@ -1,17 +1,18 @@
 <template>
   <nb-container>
-    <nb-header
-      ><nb-title>{{ pet.name }} Schema</nb-title></nb-header
-    >
-
-    <nb-content>
-      <nb-text>Calender</nb-text>
-    </nb-content>
+    <AppHeader screen="Schema" />
+    <nb-content></nb-content>
   </nb-container>
 </template>
 
 <script>
+import userMock from "../data/userMock.json"
 export default {
+  data() {
+    return{
+      petTemp:userMock
+    }
+  },
   props: {
     pet: {
       type: Array,

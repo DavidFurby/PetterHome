@@ -17,13 +17,8 @@
 </template>
 <script>
 export default {
-  data () {
-    return {
-
-    };
-  },
-  methods: {
- 
+  data() {
+    return {};
   },
   props: {
     screen: {

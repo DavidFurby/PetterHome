@@ -15,14 +15,12 @@
 <script>
 import NotificationCard from "../components/NotificationCard";
 import petData from "../data/petMock.json";
-import AppHeader from "../components/AppHeader";
 const hour = new Date().getHours();
 const min = new Date().getMinutes();
 
 export default {
   components: {
     NotificationCard,
-    AppHeader,
   },
   data() {
     return {

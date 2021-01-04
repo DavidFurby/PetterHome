@@ -1,11 +1,9 @@
 <template>
   <nb-container>
-    <nb-header><nb-title>Notification Settings</nb-title></nb-header>
+    <AppHeader screen="Notifications" />
     <scroll-view>
       <NotificationSettingsForm
         :pets="petData"
-        :notificationOn="notificationOn"
-        :setCheck="setCheck"
       />
     </scroll-view>
   </nb-container>
@@ -25,13 +23,8 @@ export default {
   data() {
     return {
       petData: petMock,
-      setCheck: false,
+
     };
-  },
-  methods: {
-    notificationOn() {
-      this.setCheck = !this.setCheck;
-    },
   },
   computed: {
     pets() {
