@@ -1,6 +1,6 @@
 <template>
   <view>
-    <nb-text>{{ user[0].userName }}</nb-text>
+    <nb-text>{{ user[0].username }}</nb-text>
     <nb-text>Email: {{ user[0].email }}</nb-text>
     <nb-text>Account ID: {{ user[0].id }}</nb-text>
     <nb-text>Phone Number: {{ user[0].phoneNumber }}</nb-text>

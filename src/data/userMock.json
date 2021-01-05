@@ -1,11 +1,7 @@
 [{
   "id": 1,
-  "userName": "dbaldung0",
+  "username": "dbaldung0",
   "password": "abc1234",
-  "ID": "119.139.65.219/24",
-  "phoneNumber": "479-117-2284",
-  "email": "djosiah0@cbslocal.com",
-  "region": "Mīrpur Sakro",
   "pets": [{
     "id": 1,
     "petName": "Plover, three-banded",

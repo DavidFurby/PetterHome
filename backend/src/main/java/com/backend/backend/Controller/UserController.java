@@ -1,7 +1,9 @@
 package com.backend.backend.Controller;
 
+import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.backend.backend.Entity.User.*;
 import com.backend.backend.Service.UserService;
@@ -24,27 +26,33 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public Collection<User> getUser() {
+    public Collection<User> getUsers() {
         return userService.getUsers();
     }
 
-    @PostMapping
+    @PostMapping(value = "/createAccount")
     public User postUser(@RequestBody User user) {
         return userService.createUser(user);
     }
 
-    @GetMapping(value = "/{id}")
-    public Optional<User> getUserById(@PathVariable("id") int id) {
+    @GetMapping(value = "/login/{id}")
+    public Optional<User> getUserById(@PathVariable("id") BigInteger id) {
         return userService.getUserById(id);
     }
 
-    @DeleteMapping(value = "/{id}")
-    public Optional<User> deleteUserById(@PathVariable("id") int id) {
+    @DeleteMapping(value = "/deleteAccount/{id}")
+    public Optional<User> deleteUserById(@PathVariable("id") BigInteger id) {
         return userService.deleteUserById(id);
     }
 
-    @PutMapping(value = "/{id}")
-    public Optional<User> deleteUserById(@PathVariable("id") int id, @RequestBody UserUpdatePayload userUpdatePayload) {
+    @PutMapping(value = "/updatePassword/{id}")
+    public Optional<User> updatePasswordById(@PathVariable("id") BigInteger id,
+            @RequestBody UserUpdatePayload userUpdatePayload) {
         return userService.updatePasswordById(id, userUpdatePayload);
+    }
+
+    @PutMapping(value = "/addPet/{id}")
+    public Optional<User> addPetToUser(@PathVariable("id") BigInteger id, @RequestBody UserUpdatePayload userUpdatePayload) {
+        return userService.addPetToUser(id, userUpdatePayload); 
     }
 }
