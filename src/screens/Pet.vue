@@ -1,25 +1,61 @@
 <template>
   <nb-container>
     <AppHeader
-      screen="Pet"
+      :screen="pet.petName"
       leftButton="return"
       rightButton="delete"
       :rightButtonFunction="deleteFromApp"
       :leftButtonFunction="goBack"
     />
     <nb-content padder>
-      <nb-text>{{ pet.petName }}</nb-text>
-      <nb-text>Animal: {{ pet.animal }}</nb-text>
-      <nb-text>Breed: {{ pet.breed }}</nb-text>
-      <nb-text>Weight: {{ pet.weight }}</nb-text>
-      <nb-text>Height:{{ pet.height }}</nb-text>
-      <nb-text>Birthday:{{ pet.birth }}</nb-text>
-      <nb-text v-for="needs in pet" v-bind:key="needs.id"
-        >{{ needs.type }}
-        <nb-text v-for="time in needs" :key="time.id"
-          >{{ time.clock }} assigned To {{ time.assigned }}</nb-text
+      <nb-card>
+        <nb-card-item>
+          <nb-body>
+            <nb-text>Name: {{ pet.petName }}</nb-text></nb-body
+          ></nb-card-item
         >
-      </nb-text>
+        <nb-card-item>
+          <nb-body>
+            <nb-text>Animal: {{ pet.animal }}</nb-text></nb-body
+          ></nb-card-item
+        >
+        <nb-card-item>
+          <nb-body>
+            <nb-text>Breed: {{ pet.breed }}</nb-text></nb-body
+          ></nb-card-item
+        >
+        <nb-card-item>
+          <nb-body>
+            <nb-text>Age: {{ pet.age }}</nb-text></nb-body
+          ></nb-card-item
+        >
+        <nb-card-item>
+          <nb-body>
+            <nb-text>Weight: {{ pet.weight }}</nb-text></nb-body
+          ></nb-card-item
+        >
+        <nb-card-item>
+          <nb-body>
+            <nb-text>Height: {{ pet.height }}</nb-text></nb-body
+          ></nb-card-item
+        >
+        <nb-card-item>
+          <nb-body>
+            <nb-text>Birthday: {{ pet.birthday }}</nb-text></nb-body
+          ></nb-card-item
+        >
+        <nb-card-item
+          ><nb-body
+            ><nb-text>Needs</nb-text>
+            <nb-text v-for="needs in pet" v-bind:key="needs.id"
+              >{{ needs.type }}
+              <nb-text v-for="time in needs" :key="time.id"
+                >{{ time.clock }} assigned To {{ time.assigned }}</nb-text
+              >
+            </nb-text></nb-body
+          ></nb-card-item
+        >
+      </nb-card>
     </nb-content>
   </nb-container>
 </template>
@@ -45,8 +81,6 @@ export default {
   },
   created() {
     const petIdTemp = this.navigation.getParam("petId", "undefined");
-    this.petId = petIdTemp;
-    alert(this.petId);
     //this.$store.dispatch('pets/fetchPetsById', this.petId)
   },
   methods: {

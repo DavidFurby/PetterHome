@@ -33,12 +33,10 @@ export default {
   },
   methods: {
     changePassword() {
-      alert("change passowrd");
       this.navigation.navigate("ChangePassword");
     },
 
     logout() {
-      alert("logout");
       this.navigation.navigate("Login");
 
       this.$store.dispatch("auth/logout").then(() => {});

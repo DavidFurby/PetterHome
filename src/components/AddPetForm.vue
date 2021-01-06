@@ -32,17 +32,17 @@
           :label="animal.breeds"
           :value="animal.id"
         /> </nb-picker
-      ><nb-item><nb-input placeholder="Name"/></nb-item>
+      ><nb-item stackedLabel><nb-input placeholder="Name"/></nb-item>
 
-      <nb-item><nb-input placeholder="Height"/></nb-item>
-      <nb-item>
+      <nb-item stackedLabel><nb-input placeholder="Height"/></nb-item>
+      <nb-item stackedLabel>
         <nb-input placeholder="Weight"/>
-      </nb-item>
-      <nb-list-item :onPress="setMedication">
-        <nb-body>
+      </nb-item >
+      <nb-list-item >
           <nb-text>Medication ?</nb-text>
+        <nb-body>
         </nb-body>
-        <nb-checkbox :checked="medication" />
+        <nb-checkbox :onPress="setMedication" :checked="medication" />
       </nb-list-item>
       <nb-item v-if="medication"
         ><nb-input placeholder="Medication"></nb-item>
@@ -50,6 +50,9 @@
         ><nb-input placeholder="Dosage amount"
       /></nb-item>
       <DogForm v-if="ifDog"/>
+          <nb-button block :on-press="addPet">
+      <nb-text>Add Pet</nb-text>
+    </nb-button>
     </nb-form>
   </nb-container>
 </template>
@@ -66,21 +69,43 @@ export default {
       breedSelection: null,
       animals: animalMock,
       medication: false,
- 
     };
   },
+
   methods: {
-    onAnimalChange(value) {
-      this.animalSelection = value;
+    onAnimalChange(animalValue) {
+      this.animalSelection = animalValue;
     },
-    onBreedChange(value) {
-      this.breedSelection = value;
+    onBreedChange(breedValue) {
+      this.breedSelection = breedValue;
     },
     getIosIcon() {
       return <Icon name="ios-arrow-down-outline" />;
     },
     setMedication() {
       return (this.medication = !this.medication);
+    },
+    addPet() {
+      this.$v.form.$touch();
+      if (this.$v.form.$invalid) {
+        this.$store
+          .dispatch("auth/newPet")
+          .then(() => this.navigateToMain())
+          .catch(() => {
+            Toast.show({
+              text: "Something went wrong",
+              buttonText: "okay",
+              type: "danger",
+              duration: 3000,
+            });
+          });
+      }
+      alert(JSON.stringify(this.form));
+    },
+    navigateToMain() {
+      this.navigation.navigate("Main", {
+        message: "Succesfully added new pet!",
+      });
     },
   },
   computed: {
@@ -89,7 +114,6 @@ export default {
         return true;
       }
     },
- 
   },
 };
 </script>
