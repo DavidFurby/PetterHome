@@ -19,12 +19,12 @@ public class UserService {
 		return userDAO.getUsers();
 	}
 
-	public User createUser(User user) {
-		return userDAO.createUser(user);
+	public User register(User user) {
+		return userDAO.register(user);
 	}
 
-	public Optional<User> getUserById(BigInteger id) {
-		return userDAO.getUserById(id);
+	public User login(User user) {
+		return userDAO.login(user);
 	}
 
 	public Optional<User> deleteUserById(BigInteger id) {
@@ -36,5 +36,9 @@ public class UserService {
 	}
 	public Optional<User> addPetToUser(BigInteger id, UserUpdatePayload userUpdatePayload) {
 		return userDAO.addPetToUser(id, userUpdatePayload);
+	}
+
+	public Optional<User> getCurrentUser() {
+		return userDAO.getCurrentUser();
 	}
 }

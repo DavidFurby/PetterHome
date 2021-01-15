@@ -1,7 +1,6 @@
 package com.backend.backend.Entity.User;
 
 import java.lang.reflect.Array;
-import java.math.BigInteger;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,14 +8,20 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "Users")
 
 public class User {
+    
     @Id
-    private BigInteger id;
+    private String id;
     private String username;
+    private String email;
     private String password;
     private Array pet;
 
-    public BigInteger getId() {
+    public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -25,6 +30,14 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

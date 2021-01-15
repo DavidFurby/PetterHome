@@ -1,6 +1,8 @@
 package com.backend.backend.Service;
 
+import java.math.BigInteger;
 import java.util.Collection;
+import java.util.Optional;
 
 import com.backend.backend.DAO.Pets.*;
 import com.backend.backend.Entity.Pet;
@@ -18,5 +20,8 @@ public class PetService {
 
 	public Pet createPet(Pet pet) {
 		return petDAO.createPet(pet);
+    }
+    public Optional<Pet> getPetById(BigInteger id) {
+		return petDAO.getPetById(id);
 	}
 }

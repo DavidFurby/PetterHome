@@ -12,6 +12,7 @@ public class Pet {
     private String id;
     private String petName;
     private String animal;
+    private String breed; 
     private Integer age;
     private Gender gender;
     private Array needs;
@@ -38,6 +39,13 @@ public class Pet {
 
     public void setAnimal(String animal) {
         this.animal = animal;
+    }
+
+    public String getBreed() {
+        return breed;
+    }
+    public void setBreed(String breed) {
+        this.breed = breed; 
     }
 
     public Integer getAge() {

@@ -3,12 +3,12 @@ package com.backend.backend.Controller;
 import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Optional;
-import java.util.UUID;
 
 import com.backend.backend.Entity.User.*;
 import com.backend.backend.Service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -30,16 +31,20 @@ public class UserController {
         return userService.getUsers();
     }
 
-    @PostMapping(value = "/createAccount")
-    public User postUser(@RequestBody User user) {
-        return userService.createUser(user);
+    @PostMapping(value = "/register")
+    public User register(@RequestBody User user) {
+        return userService.register(user);
     }
+    
 
-    @GetMapping(value = "/login/{id}")
-    public Optional<User> getUserById(@PathVariable("id") BigInteger id) {
-        return userService.getUserById(id);
+    @PostMapping(value = "/login")
+    public User login(@RequestBody User user) {
+        return userService.login(user);
     }
-
+    @GetMapping(value = "/current")
+    public Optional<User> getCurrentUser() {
+        return userService.getCurrentUser(); 
+    }
     @DeleteMapping(value = "/deleteAccount/{id}")
     public Optional<User> deleteUserById(@PathVariable("id") BigInteger id) {
         return userService.deleteUserById(id);
@@ -51,8 +56,9 @@ public class UserController {
         return userService.updatePasswordById(id, userUpdatePayload);
     }
 
-    @PutMapping(value = "/addPet/{id}")
-    public Optional<User> addPetToUser(@PathVariable("id") BigInteger id, @RequestBody UserUpdatePayload userUpdatePayload) {
-        return userService.addPetToUser(id, userUpdatePayload); 
+    @PostMapping(value = "/addPet/{id}")
+    public Optional<User> addPetToUser(@PathVariable("id") BigInteger id,
+            @RequestBody UserUpdatePayload userUpdatePayload) {
+        return userService.addPetToUser(id, userUpdatePayload);
     }
 }

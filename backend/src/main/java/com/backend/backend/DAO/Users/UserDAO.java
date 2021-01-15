@@ -19,12 +19,12 @@ public class UserDAO {
         return repository.findAll();
     }
 
-    public User createUser(User user) {
+    public User register(User user) {
         return repository.insert(user);
     }
 
-    public Optional<User> getUserById(BigInteger id) {
-        return repository.findById(id);
+    public User login(User user) {
+        return repository.insert(user);
     }
 
     public Optional<User> deleteUserById(BigInteger id) {
@@ -37,12 +37,17 @@ public class UserDAO {
         Optional<User> user = repository.findById(id);
         user.ifPresent(b -> b.setPassword(userUpdatePayload.getPassword()));
         user.ifPresent(b -> repository.save(b));
-        return user; 
+        return user;
     }
+
     public Optional<User> addPetToUser(BigInteger id, UserUpdatePayload userUpdatePayload) {
         Optional<User> user = repository.findById(id);
         user.ifPresent(b -> b.setPet(userUpdatePayload.getPets()));
         user.ifPresent(b -> repository.save(b));
-        return user; 
+        return user;
     }
+
+	public Optional<User> getCurrentUser() {
+		return null;
+	}
 }

@@ -7,6 +7,4 @@ import java.math.BigInteger;
 import com.backend.backend.Entity.User.*;
 @Repository
 public interface UserRepository extends MongoRepository<User, BigInteger> {
-
-    
 }
