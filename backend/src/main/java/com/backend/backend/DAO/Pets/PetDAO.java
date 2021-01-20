@@ -4,7 +4,7 @@ import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Optional;
 
-import com.backend.backend.Entity.Pet;
+import com.backend.backend.Model.Pet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

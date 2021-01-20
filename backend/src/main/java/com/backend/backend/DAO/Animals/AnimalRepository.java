@@ -1,6 +1,6 @@
 package com.backend.backend.DAO.Animals;
 
-import com.backend.backend.Entity.Animal;
+import com.backend.backend.Model.Animal;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;

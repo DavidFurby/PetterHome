@@ -1,4 +1,4 @@
-package com.backend.backend.Entity.User;
+package com.backend.backend.Model.User;
 
 import java.lang.reflect.Array;
 

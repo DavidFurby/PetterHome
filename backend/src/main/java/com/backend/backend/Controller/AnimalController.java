@@ -2,7 +2,7 @@ package com.backend.backend.Controller;
 
 import java.util.Collection;
 
-import com.backend.backend.Entity.Animal;
+import com.backend.backend.Model.Animal;
 import com.backend.backend.Service.AnimalService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/animals")
+@RequestMapping("api/v1/animals")
 public class AnimalController {
 
     @Autowired

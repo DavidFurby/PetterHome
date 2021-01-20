@@ -4,7 +4,7 @@ import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Optional;
 
-import com.backend.backend.Entity.User.*;
+import com.backend.backend.Model.User.*;
 import com.backend.backend.Service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/users")
+@RequestMapping("api/v1/users")
 public class UserController {
 
     @Autowired
@@ -36,11 +36,6 @@ public class UserController {
         return userService.register(user);
     }
     
-
-    @PostMapping(value = "/login")
-    public User login(@RequestBody User user) {
-        return userService.login(user);
-    }
     @GetMapping(value = "/current")
     public Optional<User> getCurrentUser() {
         return userService.getCurrentUser(); 
