@@ -27,16 +27,6 @@ public class UserService {
 		return userDAO.login(user);
 	}
 
-	public Optional<User> deleteUserById(BigInteger id) {
-		return userDAO.deleteUserById(id);
-	}
-
-	public Optional<User> updatePasswordById(BigInteger id, UserUpdatePayload userUpdatePayload) {
-		return userDAO.updatePasswordById(id, userUpdatePayload);
-	}
-	public Optional<User> addPetToUser(BigInteger id, UserUpdatePayload userUpdatePayload) {
-		return userDAO.addPetToUser(id, userUpdatePayload);
-	}
 
 	public Optional<User> getCurrentUser() {
 		return userDAO.getCurrentUser();

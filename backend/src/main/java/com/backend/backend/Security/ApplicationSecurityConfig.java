@@ -1,6 +1,12 @@
 package com.backend.backend.Security;
 
-import java.util.Collection;
+import static com.backend.backend.Security.ApplicationUserPermission.USER_PET;
+import static com.backend.backend.Security.ApplicationUserRole.ADMIN;
+import static com.backend.backend.Security.ApplicationUserRole.ADMINTRAINEE;
+import static com.backend.backend.Security.ApplicationUserRole.USER;
+import static org.springframework.http.HttpMethod.DELETE;
+import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.PUT;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,19 +28,30 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public ApplicationSecurityConfig(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder; 
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/", "index", "css/*", "js/*").permitAll().anyRequest().authenticated()
-                .and().httpBasic();
+        http.csrf().disable().authorizeRequests().antMatchers("/", "index", "/css/*", "/js/*").permitAll()
+                .antMatchers("/api/**").hasRole(USER.name()).antMatchers(DELETE, "/management/api/**")
+                .hasAuthority(USER_PET.getPermission()).antMatchers(POST, "/management/api/**").hasAuthority(USER_PET.getPermission())
+                .antMatchers(PUT, "/management/api/**").hasAuthority(USER_PET.getPermission()).antMatchers("/management/api/**")
+                .hasAnyRole(ADMIN.name(), ADMINTRAINEE.name()).anyRequest().authenticated().and().httpBasic();
     }
 
     @Override
     @Bean
     protected UserDetailsService userDetailsService() {
-        UserDetails annaSmithUser = User.builder().username("annaSmith").password(passwordEncoder.encode("password")).roles("USER").build(); 
-        return new InMemoryUserDetailsManager(annaSmithUser);
+        UserDetails annaSmithUser = User.builder().username("anna").password(passwordEncoder.encode("password")).authorities(USER.getGrantedAuthority()).build();
+                //.roles(USER.name()).build();
+
+        UserDetails lindaUser = User.builder().username("linda").password(passwordEncoder.encode("password123")).authorities(ADMIN.getGrantedAuthority()).build();
+                //.roles(ADMIN.name()).build();
+
+        UserDetails tomUser = User.builder().username("tom").password(passwordEncoder.encode("password123")).authorities(ADMINTRAINEE.getGrantedAuthority()).build();  
+                //.roles(ADMINTRAINEE.name()).build();
+
+        return new InMemoryUserDetailsManager(annaSmithUser, lindaUser, tomUser);
     }
 }
