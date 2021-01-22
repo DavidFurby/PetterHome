@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.Sets;
 
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 public enum ApplicationUserRole {

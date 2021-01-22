@@ -1,7 +1,7 @@
 package com.backend.backend.Security;
 
 public enum ApplicationUserPermission {
-    USER_PET("user:pet"), USER_INFO("user:info");
+    USER_PET("user:pet");
 
     private final String permission;
 
