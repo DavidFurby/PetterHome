@@ -1,20 +1,34 @@
-package com.backend.backend.Model.User;
-
-import java.lang.reflect.Array;
+package com.backend.backend.Model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.HashSet;
+import java.util.Set;
 
 @Document(collection = "Users")
-
-public class User {
-    
+public class AppUser {
     @Id
     private String id;
+
     private String username;
+
+
     private String email;
+
     private String password;
-    private Array pet;
+
+    @DBRef
+    private Set<Role> roles = new HashSet<>();
+
+    public AppUser() {
+    }
+
+    public AppUser(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
 
     public String getId() {
         return id;
@@ -48,11 +62,11 @@ public class User {
         this.password = password;
     }
 
-    public Array getPet() {
-        return pet;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setPet(Array pet) {
-        this.pet = pet;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }
