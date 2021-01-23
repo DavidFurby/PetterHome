@@ -3,9 +3,11 @@ package com.backend.backend.Auth;
 import java.util.Collection;
 import java.util.Set;
 
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+@Document(collection = "ApplicationUsers")
 public class ApplicationUser implements UserDetails {
 
     private final Set<? extends GrantedAuthority> grantedAuthorities;

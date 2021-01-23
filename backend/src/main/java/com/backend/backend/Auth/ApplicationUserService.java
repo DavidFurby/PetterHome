@@ -1,5 +1,8 @@
 package com.backend.backend.Auth;
 
+import java.util.Collection;
+import java.util.Optional;
+
 import com.backend.backend.DAO.Users.ApplicationUserDao;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +18,27 @@ public class ApplicationUserService implements UserDetailsService {
 	private final ApplicationUserDao applicationUserDao;
 
 	@Autowired
-	public ApplicationUserService(@Qualifier("fake") ApplicationUserDao applicationUserDao) {
+	public ApplicationUserService( ApplicationUserDao applicationUserDao) {
 		this.applicationUserDao = applicationUserDao;
+	}
+
+
+	public Collection<ApplicationUser> getUsers() {
+		return applicationUserDao.getUsers();
+	}
+
+	public ApplicationUser register(ApplicationUser applicationUser) {
+		return applicationUserDao.register(applicationUser);
+	}
+
+	public Optional<ApplicationUser> getCurrentUser() {
+		return applicationUserDao.getCurrentUser();
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
-		return applicationUserDao.selectApplicationUserByUsername(username)
-				.orElseThrow(() -> new UsernameNotFoundException(String.format("Username %s not found", username)));
+		return null;
 	}
 
 }
