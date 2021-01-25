@@ -1,5 +1,8 @@
 package com.backend.backend.Payload.response;
 
+import com.backend.backend.Model.Pet;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -10,13 +13,15 @@ public class JwtResponse {
     private String username;
     private String email;
     private final List<String> roles;
+    private final ArrayList<Pet> pets;
 
-    public JwtResponse(String accessToken, String id, String username, String email, List<String> roles) {
+    public JwtResponse(String accessToken, String id, String username, String email, List<String> roles, ArrayList<Pet> pets) {
         this.token = accessToken;
         this.id = id;
         this.username = username;
         this.email = email;
         this.roles = roles;
+        this.pets = pets;
     }
 
     public String getAccessToken() {
@@ -61,5 +66,8 @@ public class JwtResponse {
 
     public List<String> getRoles() {
         return roles;
+    }
+    public ArrayList<Pet> getPets() {
+        return pets;
     }
 }

@@ -1,5 +1,8 @@
 package com.backend.backend.Payload.request;
 
+import com.backend.backend.Model.Pet;
+
+import java.util.ArrayList;
 import java.util.Set;
 
 public class SignupRequest {
@@ -10,6 +13,8 @@ public class SignupRequest {
     private String email;
 
     private Set<String> roles;
+    private ArrayList<Pet> pets;
+
 
     private String password;
 
@@ -43,5 +48,13 @@ public class SignupRequest {
 
     public void setRole(Set<String> roles) {
         this.roles = roles;
+    }
+
+    public ArrayList<Pet> getPets() {
+        return this.pets;
+    }
+
+    public void setPets(ArrayList<Pet> pets) {
+        this.pets = pets;
     }
 }

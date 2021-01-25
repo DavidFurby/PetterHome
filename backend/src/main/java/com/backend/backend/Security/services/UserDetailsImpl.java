@@ -1,50 +1,56 @@
 package com.backend.backend.Security.services;
 
-import com.backend.backend.Model.AppUser;
+import com.backend.backend.Model.Pet;
+import com.backend.backend.Model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
 
-    private String id;
+    private final String id;
 
-    private String username;
+    private final String username;
 
-    private String email;
+    private final String email;
 
     @JsonIgnore
     private String password;
 
-    private Collection<? extends GrantedAuthority> authorities;
+    private final Collection<? extends GrantedAuthority> authorities;
+
+    private final ArrayList<Pet> pets;
+
 
     public UserDetailsImpl(String id, String username, String email, String password,
-                           Collection<? extends GrantedAuthority> authorities) {
+                           Collection<? extends GrantedAuthority> authorities, ArrayList<Pet> pets) {
         this.id = id;
         this.username = username;
+        this.password = password;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
+        this.pets = pets;
     }
 
-    public static UserDetailsImpl build(AppUser user) {
+    public static UserDetailsImpl build(User user) {
         List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .collect(Collectors.toList());
-
+        ArrayList<Pet> pets = user.getPets();
         return new UserDetailsImpl(
                 user.getId(),
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
-                authorities);
+                authorities,
+                pets
+        );
     }
 
     @Override
@@ -98,5 +104,13 @@ public class UserDetailsImpl implements UserDetails {
             return false;
         UserDetailsImpl user = (UserDetailsImpl) o;
         return Objects.equals(id, user.id);
+    }
+
+    public ArrayList<Pet> getPets() {
+        return pets;
+    }
+
+    public String setPassword(String password) {
+        return this.password = password;
     }
 }

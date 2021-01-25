@@ -3,40 +3,48 @@ package com.backend.backend.Model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 @Document(collection = "Users")
-public class AppUser {
+public class User {
     @Id
     private String id;
 
+    @NotBlank
+    @Size(max = 20)
     private String username;
 
-
-    private String email;
-
+    @NotBlank
+    @Size(max = 50)
+    @Email
+    private final String email;
+    @NotBlank
+    @Size(max = 120)
     private String password;
 
     @DBRef
     private Set<Role> roles = new HashSet<>();
 
-    public AppUser() {
-    }
+    private ArrayList<Pet> pets;
 
-    public AppUser(String username, String email, String password) {
+    public User(String username, String email, String password, ArrayList<Pet> pets) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.pets = pets;
     }
+
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return username;
@@ -50,9 +58,6 @@ public class AppUser {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getPassword() {
         return password;
@@ -69,4 +74,12 @@ public class AppUser {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public ArrayList<Pet> getPets() {
+        return pets;
+    }
+    public void setPets(ArrayList<Pet> pets) {
+        this.pets = pets;
+    }
+
 }

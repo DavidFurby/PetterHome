@@ -1,14 +1,15 @@
 package com.backend.backend.Controller;
 
-import com.backend.backend.Model.AppUser;
+import com.backend.backend.Model.User;
 import javax.validation.Valid;
 import com.backend.backend.Model.ERole;
 import com.backend.backend.Model.Role;
 import com.backend.backend.Payload.request.LoginRequest;
 import com.backend.backend.Payload.request.SignupRequest;
+import com.backend.backend.Payload.request.ChangePasswordRequest;
 import com.backend.backend.Payload.response.JwtResponse;
 import com.backend.backend.Payload.response.MessageResponse;
-import com.backend.backend.Repository.AppUserRepository;
+import com.backend.backend.Repository.UserRepository;
 import com.backend.backend.Repository.RoleRepository;
 import com.backend.backend.Security.jwt.JwtUtils;
 import com.backend.backend.Security.services.UserDetailsImpl;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -36,7 +38,7 @@ public class AuthController {
     AuthenticationManager authenticationManager;
 
     @Autowired
-    AppUserRepository appUserRepository;
+    UserRepository userRepository;
 
     @Autowired
     RoleRepository roleRepository;
@@ -47,7 +49,7 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
-    @PostMapping("/signin")
+    @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
@@ -61,23 +63,22 @@ public class AuthController {
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(
-                new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
+                new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles, userDetails.getPets()));
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-        if (appUserRepository.existsByUsername(signUpRequest.getUsername())) {
+        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
         }
 
-        if (appUserRepository.existsByEmail(signUpRequest.getEmail())) {
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
         }
 
         // Create new user's account
-        AppUser user = new AppUser(signUpRequest.getUsername(), signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword()));
-
+        User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
+                encoder.encode(signUpRequest.getPassword()), signUpRequest.getPets());
         Set<String> strRoles = signUpRequest.getRoles();
         Set<Role> roles = new HashSet<>();
 
@@ -109,7 +110,7 @@ public class AuthController {
         }
 
         user.setRoles(roles);
-        appUserRepository.save(user);
+        userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }

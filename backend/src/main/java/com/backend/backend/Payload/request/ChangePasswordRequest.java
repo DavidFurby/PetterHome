@@ -1,11 +1,18 @@
 package com.backend.backend.Payload.request;
 
-public class LoginRequest {
+public class ChangePasswordRequest {
+
     private String username;
-
     private String password;
+    private String newPassword;
 
-    private String email;
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
 
     public String getUsername() {
         return username;
@@ -23,10 +30,4 @@ public class LoginRequest {
         this.password = password;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    public String getEmail() {
-        return email;
-    }
 }
