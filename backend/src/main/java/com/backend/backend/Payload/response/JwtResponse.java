@@ -13,9 +13,9 @@ public class JwtResponse {
     private String username;
     private String email;
     private final List<String> roles;
-    private final ArrayList<Pet> pets;
+    private final List<Pet> pets;
 
-    public JwtResponse(String accessToken, String id, String username, String email, List<String> roles, ArrayList<Pet> pets) {
+    public JwtResponse(String accessToken, String id, String username, String email, List<String> roles, List<Pet> pets) {
         this.token = accessToken;
         this.id = id;
         this.username = username;
@@ -67,7 +67,7 @@ public class JwtResponse {
     public List<String> getRoles() {
         return roles;
     }
-    public ArrayList<Pet> getPets() {
+    public List<Pet> getPets() {
         return pets;
     }
 }

@@ -1,16 +1,15 @@
 package com.backend.backend.Payload.request;
 
 import com.backend.backend.Model.Animal;
+import com.backend.backend.Model.Gender;
 import org.checkerframework.checker.units.qual.A;
 
-public class AddPetRequest {
+public class PetRequest {
 
-    private String username;
-    private String password;
     private String petName;
-
     private Integer petAge;
     private Animal animal;
+    private Gender gender;
 
     public String getPetName() {
         return petName;
@@ -34,5 +33,12 @@ public class AddPetRequest {
 
     public void setAnimal(Animal animal) {
         this.animal = animal;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 }

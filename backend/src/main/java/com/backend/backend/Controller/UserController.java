@@ -1,14 +1,19 @@
 package com.backend.backend.Controller;
 
 
+import com.backend.backend.Model.Pet;
 import com.backend.backend.Model.User;
-import com.backend.backend.Payload.request.UpdateUserRequest;
+import com.backend.backend.Payload.request.PetRequest;
+import com.backend.backend.Payload.response.MessageResponse;
+import com.backend.backend.Repository.PetRepository;
 import com.backend.backend.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import javax.validation.Valid;
+import java.util.*;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -16,43 +21,45 @@ import java.util.Optional;
 public class UserController {
 
     @Autowired
-    private UserRepository repository;
+    private UserRepository userRepository;
 
-    @GetMapping("/all")
-    public String allAccess() {
-        return "Public Content.";
-    }
-
-    @GetMapping("/user")
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    public String userAccess() {
-        return "User Content.";
-    }
+    @Autowired
+    private PetRepository petRepository;
 
     @GetMapping("/getCurrentUser")
     @PreAuthorize("hasRole('USER')")
     public Optional<User> getCurrentUser(@RequestParam String id) {
-        return repository.findById(id);
+        return userRepository.findById(id);
     }
-    @PutMapping("/addPetToUser")
+
+    @PostMapping("/addPetToUser")
     @PreAuthorize("hasRole('USER')")
-    public Optional<User> addPetToUser(@RequestBody UpdateUserRequest updateUserRequest, @RequestParam String id) {
-        Optional<User> user = repository.findById(id);
-        user.ifPresent(b -> b.setPets(updateUserRequest.getPets()));
-        user.ifPresent(b -> repository.save(b));
-        return user;
+    public ResponseEntity<MessageResponse> addPetToUser(@Valid @RequestBody PetRequest petRequest, @RequestParam String userId) {
+
+        Optional<User> user = userRepository.findById(userId);
+        Pet pet = new Pet(petRequest.getPetName(), petRequest.getPetAge(),
+                petRequest.getGender(),
+                petRequest.getAnimal());
+        petRepository.save(pet);
+        user.ifPresent(u -> u.addPet(pet));
+        user.ifPresent(u -> userRepository.save(u));
+        return ResponseEntity.ok(new MessageResponse("Pet added successfully!"));
+    }
+    @PutMapping("/updateUserPet")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<MessageResponse> updateUserPet(@Valid @RequestBody PetRequest petRequest, @RequestParam Map<String, String> id) {
+        String userId = id.get("userId");
+        String petId = id.get("petId");
+        Optional<Pet> pet = petRepository.findById(petId);
+        Optional<User> user = userRepository.findById(userId);
+
+        pet.ifPresent(p -> p.setPetName(petRequest.getPetName()));
+        pet.ifPresent(p -> p.setPetAge(petRequest.getPetAge()));
+        pet.ifPresent(p -> p.setGender(petRequest.getGender()));
+        pet.ifPresent(p -> p.setGender(petRequest.getGender()));
+        pet.ifPresent(p -> petRepository.save(p));
+
+        return ResponseEntity.ok(new MessageResponse("The pets information has been updated successfully!"));
     }
 
-
-    @GetMapping("/mod")
-    @PreAuthorize("hasRole('MODERATOR')")
-    public String moderatorAccess() {
-        return "Moderator Board.";
-    }
-
-    @GetMapping("/admin")
-    @PreAuthorize("hasRole('ADMIN')")
-    public String adminAccess() {
-        return "Admin Board.";
-    }
 }

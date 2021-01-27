@@ -12,16 +12,32 @@ public class Pet {
     @Id
     private String id;
 
-    @NotBlank
-    @Size(max = 20)
-    private final String petName;
+    public void setPetName(String petName) {
+        this.petName = petName;
+    }
+
+    public void setPetAge(Integer petAge) {
+        this.petAge = petAge;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public void setAnimal(Animal animal) {
+        this.animal = animal;
+    }
 
     @NotBlank
-    private final Integer petAge;
+    @Size(max = 20)
+    private  String petName;
+
     @NotBlank
-    private final Gender gender;
+    private  Integer petAge;
     @NotBlank
-    private final Animal animal;
+    private  Gender gender;
+    @NotBlank
+    private  Animal animal;
 
     public Pet(String petName, Integer petAge, Gender gender, Animal animal) {
         this.petName = petName;
@@ -43,5 +59,8 @@ public class Pet {
     }
     public Gender getGender() {
         return gender;
+    }
+
+    public void setPetName() {
     }
 }

@@ -9,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Document(collection = "Users")
@@ -80,6 +81,10 @@ public class User {
     }
     public void setPets(ArrayList<Pet> pets) {
         this.pets = pets;
+    }
+
+    public void addPet(Pet newPet) {
+        pets.add(newPet);
     }
 
 }

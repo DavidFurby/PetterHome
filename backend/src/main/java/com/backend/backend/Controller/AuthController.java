@@ -1,5 +1,6 @@
 package com.backend.backend.Controller;
 
+import com.backend.backend.Model.Pet;
 import com.backend.backend.Model.User;
 import javax.validation.Valid;
 import com.backend.backend.Model.ERole;
@@ -113,5 +114,22 @@ public class AuthController {
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    }
+    @PutMapping("/changePassword")
+    public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(changePasswordRequest.getUsername(), changePasswordRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
+
+        String newPassword = changePasswordRequest.getNewPassword();
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
+        Optional<User> user = userRepository.findByUsername(changePasswordRequest.getUsername());
+        user.ifPresent(b -> b.setPassword(encoder.encode(newPassword)));
+        user.ifPresent(b -> userRepository.save(b));
+        return ResponseEntity.ok(new MessageResponse("password changed successfully!"));
     }
 }
