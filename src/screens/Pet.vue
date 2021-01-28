@@ -73,7 +73,8 @@ export default {
     },
   },
   created() {
-    const petId = this.navigation.getParam("petId", "undefined");
+    const params = this.navigation.getParam("params", "undefined");
+    console.log(params); 
     this.$store.dispatch("pets/fetchPetById", petId);
   },
   methods: {

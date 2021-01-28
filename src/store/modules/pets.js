@@ -26,7 +26,6 @@ export default {
         .catch(() => alert("Not Authorized"));
     },
     fetchPets({ commit, state }) {
-      console.log("test")
       return axiosInstance
         .get(`/user/getAllPets`)
         .then((res) => {
@@ -39,20 +38,15 @@ export default {
         });
     },
     addPetToUser(context, params) {
-      console.log(params)
       let petData = params.petForm; 
-      console.log(petData)
-      let userId = params.userId;
-      console.log(userId)
-      return axiosInstance.post(`/user/addPetToUser?userId=6012a98cf830886ff88cdd2c`, petData).then((res) => {
-        console.log(res)
+      let userId = params.userId.user;
+      return axiosInstance.post(`/user/addPetToUser?userId=${userId}`, petData).then((res) => {
       }).catch((err) => {
-        console.log(err)
       });
     },
     fetchPetById({ commit, state }, petId) {
       commit("setPet", {});
-      return axiosInstance.get(`$/user/getPetById/${petId}`).then((res) => {
+      return axiosInstance.get(`/user/getPetById/${petId}`).then((res) => {
         const pet = res.data;
         commit("setPet", pet);
         return state.item;

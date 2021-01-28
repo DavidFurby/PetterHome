@@ -34,7 +34,6 @@ export default {
       return axiosInstance.post(`/auth/login`, userData)
         .then(async (res) => {
           const user = res.data;
-          console.log(user); 
           await AsyncStorage.setItem("petterhome-jwt", user.accessToken);
           commit("setAuthUser", user);
           return state.user;
