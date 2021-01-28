@@ -1,0 +1,59 @@
+[{
+  "id": 1,
+  "username": "dbaldung0",
+  "password": "abc1234",
+  "pets": [{
+    "id": 1,
+    "petName": "Plover",
+    "animal": "Dog",
+    "age": "3437",
+    "gender": "Female",
+    "breed": "jcb",
+    "weight": "14",
+    "height": "2",
+    "birthday":"20-13-2014",  
+    "shared": true,
+    "needs": [{
+      "id": "1",
+      "type": "walks",
+      "notified": true,
+      "time": [{
+        "id": "1",
+        "clock": "09:00",
+        "assigned": "dbaldung0"
+      }, {
+        "id": "1",
+
+        "clock": "12:00",
+        "assigned": "dbaldung0"
+      }, {
+        "id": "2",
+
+        "clock": "16:00",
+        "assigned": "dbaldung0"
+      }, {
+        "id": "3",
+
+        "clock": "20:00",
+        "assigned": "dbaldung0"
+      }]
+    }, {
+      "id": "2",
+      "type": "medicine",
+      "notified": false,
+      "time": [{
+        "id": "4",
+
+        "clock": "09:00",
+        "assigned": "dbaldung0"
+      }, {
+        "id": "5",
+
+        "clock": "20:00",
+        "assigned": "dbaldung0"
+      }]
+
+    }]
+
+  }]
+}]

@@ -1,0 +1,28 @@
+import axios from "axios";
+import { AsyncStorage } from "react-native";
+
+
+const BASE_URL = __DEV__ ? (Platform.OS === 'ios' ? 'http://192.168.10.206:8080/api'
+                                                  : 'http://10.0.2.2:8080/api')
+                         : 'https://vue-meetuper-server.herokuapp.com/api'
+
+
+const axiosInstance = axios.create({
+  timeout: 3000,
+  baseURL: BASE_URL
+});
+
+axiosInstance.interceptors.request.use(
+  async (config) => {
+    const token = await AsyncStorage.getItem("petterhome-jwt");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (err) => {
+    return Promise.reject(err);
+  }
+);
+
+export default axiosInstance;
