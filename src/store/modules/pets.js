@@ -1,11 +1,6 @@
 import Vue from "vue-native-core";
-import axios from "axios";
 import { Platform } from "react-native";
 import axiosInstance from "../../services/axios";
-const BASE_URL =
-  Platform.OS === "ios"
-    ? "http://192.168.10.206:8080"
-    : "http://192.168.10.206:8080";
 
 export default {
   namespaced: true,
@@ -40,6 +35,7 @@ export default {
     addPetToUser(context, params) {
       let petData = params.petForm; 
       let userId = params.userId.user;
+      console.log(petData);
       return axiosInstance.post(`/user/addPetToUser?userId=${userId}`, petData).then((res) => {
       }).catch((err) => {
       });

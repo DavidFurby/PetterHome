@@ -13,18 +13,12 @@
               :on-blur="() => $v.animalForm.animal.$touch()"
           /></nb-item>
         </InputWithError>
-        <InputWithError
-          :error="$v.animalForm.breed.$dirty && !$v.animalForm.breed.required"
-          msg="Select breed"
-        >
-          <nb-item stackedLabel
-            ><nb-input
-              placeholder="Breed"
-              v-model="animalForm.breed"
-              :on-blur="() => $v.animalForm.breed.$touch()"
-          /></nb-item>
-        </InputWithError>
+
+        <nb-item stackedLabel
+          ><nb-input placeholder="Breed" v-model="animalForm.breed"
+        /></nb-item>
       </nb-form>
+
       <nb-form>
         <InputWithError
           :error="$v.petForm.petName.$dirty && !$v.petForm.petName.required"
@@ -37,20 +31,28 @@
               :on-blur="() => $v.petForm.petName.$touch()"
           /></nb-item>
         </InputWithError>
-        <!-- <nb-item stackedLabel
-          ><nb-input
-            v-model="petForm.height"
-            placeholder="Height"
-            :on-blur="() => $v.petForm.height.$touch()"
+
+        <nb-item stackedLabel
+          ><nb-input placeholder="Age" v-model="petForm.petAge"
         /></nb-item>
+
+        <InputWithError
+          :error="$v.petForm.gender.$dirty && !$v.petForm.gender.required"
+          msg="A gender must be given for the pet"
+        >
+          <nb-item stackedLabel
+            ><nb-input placeholder="Gender" v-model="petForm.gender"
+          /></nb-item>
+        </InputWithError>
+
+        <nb-item stackedLabel
+          ><nb-input v-model="petForm.height" placeholder="Height"
+        /></nb-item>
+
         <nb-item stackedLabel>
-          <nb-input
-            v-model="petForm.weight"
-            placeholder="Weight"
-            :on-blur="() => $v.petForm.weight.$touch()"
-          />
+          <nb-input v-model="petForm.weight" placeholder="Weight" />
         </nb-item>
-        <nb-list-item>
+        <!-- <nb-list-item>
           <nb-text>Medication ?</nb-text>
           <nb-body> </nb-body>
           <nb-checkbox
@@ -63,11 +65,30 @@
           :medicationName="$v.petForm.medicationName"
           :dosage="$v.petForm.dosage"
         />
-        <DogForm v-if="ifDog" /> -->
+        <DogForm v-if="ifDog" />
         <nb-button block :on-press="addPet">
-          <nb-text>Add Pet</nb-text>
-        </nb-button>
+          <nb-text>Add Pet</nb-text> 
+        </nb-button>-->
       </nb-form>
+      <nb-form>
+        <nb-item stackedLabel
+          ><nb-input placeholder="Need" v-model="needForm.type"
+        /></nb-item>
+
+        <nb-item stackedLabel
+          ><nb-input placeholder="Notified" v-model="needForm.notified"
+        /></nb-item>
+      </nb-form>
+      <nb-form>
+        <nb-item stackedLabel
+          ><nb-input
+            placeholder="Set Scheduled time for need"
+            v-model="scheduleForm.time"
+        /></nb-item>
+      </nb-form>
+      <nb-button block :on-press="addPet">
+        <nb-text>Add Pet</nb-text>
+      </nb-button>
     </scroll-view>
   </nb-container>
 </template>
@@ -86,10 +107,22 @@ export default {
       breedSelection: "",
       petForm: {
         petName: "",
+        petAge: "",
+        gender: "",
+        weight: "",
+        height: "",
       },
       animalForm: {
         animal: "",
         breed: "",
+      },
+      needForm: {
+        type: "",
+        notified: "",
+      },
+      scheduleForm: {
+        time: "",
+        assignedTo: "user",
       },
     };
   },
@@ -103,11 +136,11 @@ export default {
       petName: {
         required,
       },
-    },
-    animalForm: {
-      breed: {
+      gender: {
         required,
       },
+    },
+    animalForm: {
       animal: {
         required,
       },
@@ -131,10 +164,21 @@ export default {
       this.$v.animalForm.$touch();
       let petForm = this.petForm;
       let animalForm = this.animalForm;
-      let animal = {}
+      let needForm = this.needForm;
+      let scheduleForm = this.scheduleForm;
+      let animal = {};
+      let need = {};
+      let schedule = {};
       animal.animal = animalForm.animal;
-      animal.breed = animalForm.breed; 
+      animal.breed = animalForm.breed;
+      need.type = needForm.type;
+      need.notified = needForm.notified;
+      schedule.time = scheduleForm.time;
+      schedule.assignedTo = scheduleForm.assignedTo;
+      need.schedule = schedule;
+
       petForm.animal = animal;
+      petForm.need = need;
       let userId = this.user;
       let params = { petForm, userId };
       if (!this.$v.petForm.$invalid) {
