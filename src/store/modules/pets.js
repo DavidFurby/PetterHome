@@ -31,7 +31,7 @@ export default {
         .then((res) => {
           const pets = res.data;
           commit("setPets", pets);
-          return state.items;
+          return state.pets;
         })
         .catch((error) => {
           console.log(error);
@@ -44,12 +44,14 @@ export default {
       }).catch((err) => {
       });
     },
-    fetchPetById({ commit, state }, petId) {
+    fetchPetById({ commit, state }, params) {
+      const petId = params.petId;
+      const userId = params.userId; 
       commit("setPet", {});
-      return axiosInstance.get(`/user/getPetById/${petId}`).then((res) => {
+      return axiosInstance.get(`/user/getPetById?userId=${userId}&petId=${petId}`).then((res) => {
         const pet = res.data;
         commit("setPet", pet);
-        return state.item;
+        return state.pet;
       }).catch((error) => {
 console.log(error)
       })

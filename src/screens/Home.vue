@@ -44,12 +44,11 @@ export default {
   },
   methods: {
     goToPetScreen(petId) {
-      let params = {petId, user}
-      this.navigation.navigate("Pet", { params: { params } });
+      let userId = this.user.id;
+      this.navigation.navigate("Pet", { userId: userId, petId: petId });
     },
     goToAddPetScreen() {
       let user = this.user.id;
-      console.log(user)
       this.navigation.navigate("AddPet", { user: { user } });
     },
     goToPetSchema(petId) {

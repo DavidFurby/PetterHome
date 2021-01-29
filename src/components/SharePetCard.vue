@@ -1,4 +1,5 @@
 <template>
+
   <nb-card>
     <nb-card-item button :on-press="() => navigateToShareList(pet.id)">
       <nb-body full info>

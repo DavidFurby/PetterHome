@@ -31,7 +31,7 @@ export default {
   },
   computed: {
     animal() {
-      return this.pet.animal; 
+      return this.pet.animal
     }
      }
 };

@@ -1,5 +1,5 @@
 <template>
-  <nb-container>
+  <nb-container v-if="isPetPageLoaded">
     <AppHeader
       :screen="pet.petName"
       leftButton="return"
@@ -7,53 +7,21 @@
       :rightButtonFunction="deleteFromApp"
       :leftButtonFunction="goBack"
     />
-    <nb-content padder>
-      <nb-card>
-        <nb-card-item>
-          <nb-body>
-            <nb-text>Name: {{ pet.petName }}</nb-text></nb-body
-          ></nb-card-item
-        >
-        <nb-card-item>
-          <nb-body>
-            <nb-text>Animal: {{ pet.animal }}</nb-text></nb-body
-          ></nb-card-item
-        >
-        <nb-card-item>
-          <nb-body>
-            <nb-text>Breed: {{ pet.breed }}</nb-text></nb-body
-          ></nb-card-item
-        >
-        <nb-card-item>
-          <nb-body>
-            <nb-text>Age: {{ pet.age }}</nb-text></nb-body
-          ></nb-card-item
-        >
-        <nb-card-item>
-          <nb-body>
-            <nb-text>Weight: {{ pet.weight }}</nb-text></nb-body
-          ></nb-card-item
-        >
-        <nb-card-item>
-          <nb-body>
-            <nb-text>Height: {{ pet.height }}</nb-text></nb-body
-          ></nb-card-item
-        >
-        <nb-card-item>
-          <nb-body>
-            <nb-text>Birthday: {{ pet.birthday }}</nb-text></nb-body
-          ></nb-card-item
-        >
-        <nb-card-item
-          ><nb-body><nb-text>Needs</nb-text> </nb-body></nb-card-item
-        >
-      </nb-card>
-    </nb-content>
+    <PetPage
+      :animal="animal"
+      :pet="pet"
+      :deleteFromApp="deleteFromApp"
+      :goBack="goBack"
+    />
   </nb-container>
 </template>
 <script>
 import { ActionSheet } from "native-base";
+import PetPage from ".././components/PetPage";
 export default {
+  components: {
+    PetPage,
+  },
   props: {
     navigation: {
       type: Object,
@@ -68,14 +36,24 @@ export default {
   },
   computed: {
     pet() {
-      let pet = this.$store.state.pet;
+      let pet = this.$store.state.pets.pet;
       return pet;
+    },
+    animal() {
+      return this.pet.animal || {};
+    },
+    isPetPageLoaded() {
+      return Object.keys(this.pet).length > 0
     },
   },
   created() {
-    const params = this.navigation.getParam("params", "undefined");
-    console.log(params); 
-    this.$store.dispatch("pets/fetchPetById", petId);
+    const userId = this.navigation.getParam("userId", "undefined");
+    const petId = this.navigation.getParam("petId", "undefined");
+
+    let params = {};
+    params.userId = userId;
+    params.petId = petId;
+    this.$store.dispatch("pets/fetchPetById", params);
   },
   methods: {
     deleteFromApp() {
