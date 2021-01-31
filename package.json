@@ -9,9 +9,11 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^10.2.1",
+    "axios": "^0.21.1",
     "expo": "^39.0.5",
     "expo-font": "~8.3.0",
     "expo-status-bar": "~1.0.2",
+    "jwt-decode": "^3.1.2",
     "native-base": "^2.13.14",
     "react": "16.13.1",
     "react-dom": "16.13.1",
@@ -23,7 +25,9 @@
     "react-native-web": "~0.13.12",
     "vue-native-core": "^0.1.4",
     "vue-native-helper": "0.1.4",
-    "vue-native-router": "^0.2.0"
+    "vue-native-router": "^0.2.0",
+    "vuelidate": "^0.7.6",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@babel/core": "7.0.0",
