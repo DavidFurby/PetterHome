@@ -30,6 +30,7 @@ import SchemaScreen from "./screens/Schema";
 import LoginScreen from "./screens/Login";
 import RegistrationScreen from "./screens/Register";
 import RecoverPasswordScreen from "./screens/RecoverPassword";
+import AddSchedule from "./screens/AddSchema"
 
 const MainNavigator = createStackNavigator(
   {
@@ -37,6 +38,7 @@ const MainNavigator = createStackNavigator(
     Pet: PetScreen,
     AddPet: AddPetScreen,
     Schema: SchemaScreen,
+    AddSchema: AddSchedule,
   },
   {
     initialRouteName: "Main",

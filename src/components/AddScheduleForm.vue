@@ -3,75 +3,59 @@
     <scroll-view>
       <nb-form>
         <InputWithError
-          :error="$v.animalForm.animal.$dirty && !$v.animalForm.animal.required"
-          msg="Must select an animal"
+          :error="$v.needForm.type.$dirty && !$v.needForm.type.required"
+          msg="Must select an type"
         >
           <nb-item stackedLabel
             ><nb-input
-              placeholder="Animal"
-              v-model="animalForm.animal"
-              :on-blur="() => $v.animalForm.animal.$touch()"
+              placeholder="type"
+              v-model="needForm.type"
+              :on-blur="() => $v.needForm.type.$touch()"
           /></nb-item>
         </InputWithError>
 
         <nb-item stackedLabel
-          ><nb-input placeholder="Breed" v-model="animalForm.breed"
+          ><nb-input placeholder="Notified" v-model="needForm.notified"
         /></nb-item>
       </nb-form>
 
       <nb-form>
         <InputWithError
-          :error="$v.petForm.petName.$dirty && !$v.petForm.petName.required"
-          msg="A name must be given for the pet"
+          :error="$v.scheduleForm.time.$dirty && !$v.scheduleForm.time.required"
+          msg="A time must be given for the schedule"
         >
           <nb-item stackedLabel
             ><nb-input
-              placeholder="Name"
-              v-model="petForm.petName"
-              :on-blur="() => $v.petForm.petName.$touch()"
+              placeholder="Time"
+              v-model="scheduleForm.time"
+              :on-blur="() => $v.scheduleForm.time.$touch()"
           /></nb-item>
         </InputWithError>
 
         <nb-item stackedLabel
-          ><nb-input placeholder="Age" v-model="petForm.petAge"
+          ><nb-input placeholder="Assigned to" v-model="scheduleForm.assignedTo"
         /></nb-item>
 
-        <InputWithError
-          :error="$v.petForm.gender.$dirty && !$v.petForm.gender.required"
-          msg="A gender must be given for the pet"
-        >
-          <nb-item stackedLabel
-            ><nb-input placeholder="Gender" v-model="petForm.gender"
-          /></nb-item>
-        </InputWithError>
-
-        <nb-item stackedLabel
-          ><nb-input v-model="petForm.height" placeholder="Height"
-        /></nb-item>
-
-        <nb-item stackedLabel>
-          <nb-input v-model="petForm.weight" placeholder="Weight" />
-        </nb-item>
         <!-- <nb-list-item>
           <nb-text>Medication ?</nb-text>
           <nb-body> </nb-body>
           <nb-checkbox
             :on-press="setMedication"
-            :checked="petForm.medication"
+            :checked="needForm.medication"
           />
         </nb-list-item>
         <Medication
           v-if="ifMedication"
-          :medicationName="$v.petForm.medicationName"
-          :dosage="$v.petForm.dosage"
+          :medicationName="$v.needForm.medicationName"
+          :dosage="$v.needForm.dosage"
         />
         <DogForm v-if="ifDog" />
         <nb-button block :on-press="addPet">
           <nb-text>Add Pet</nb-text> 
         </nb-button>-->
       </nb-form>
-      <nb-button block :on-press="addPet">
-        <nb-text>Add Pet</nb-text>
+      <nb-button block :on-press="addPetNeed">
+        <nb-text>Add PetNeed</nb-text>
       </nb-button>
     </scroll-view>
   </nb-container>
@@ -90,15 +74,12 @@ export default {
     return {
       breedSelection: "",
       needForm: {
-        petName: "",
-        petAge: "",
-        gender: "",
-        weight: "",
-        height: "",
+        type: "",
+        notified: "false",
       },
       scheduleForm: {
-        animal: "",
-        breed: "",
+        time: "",
+        assignedTo: "",
       },
     };
   },
@@ -106,25 +87,25 @@ export default {
     user: {
       type: Object,
     },
+    pet: {
+      type: Object,
+    },
   },
   validations: {
-    petForm: {
-      petName: {
-        required,
-      },
-      gender: {
+    needForm: {
+      type: {
         required,
       },
     },
-    animalForm: {
-      animal: {
+    scheduleForm: {
+      time: {
         required,
       },
     },
   },
   methods: {
-    onAnimalChange(animalValue) {
-      this.animalForm.animal = animalValue;
+    ontypeChange(typeValue) {
+      this.needForm.type = typeValue;
     },
     onBreedChange(breedValue) {
       this.breedSelection = breedValue;
@@ -133,20 +114,21 @@ export default {
       return <Icon name="ios-arrow-down-outline" />;
     },
     setMedication() {
-      this.petForm.medication = !this.petForm.medication;
+      this.needForm.medication = !this.needForm.medication;
     },
-    addPet() {
-      this.$v.petForm.$touch();
-      this.$v.animalForm.$touch();
+    addPetNeed() {
+      this.$v.needForm.$touch();
+      this.$v.scheduleForm.$touch();
       let needForm = this.needForm;
       let scheduleForm = this.scheduleForm;
       let need = {};
       need.type = needForm.type;
       need.notified = needForm.notified;
-      petForm.schedule = scheduleForm;
-      let userId = this.user;
-      let params = { needForm, userId };
-      if (!this.$v.petForm.$invalid) {
+      need.schedule = scheduleForm;
+      let userId = this.user.id;
+      let petId = this.pet.id;
+      let params = { needForm, userId, petId };
+      if (!this.$v.needForm.$invalid || !this.$v.scheduleForm.$invalid) {
         this.$store
           .dispatch("pets/addNeedToPet", params)
           .then(() => this.navigateToMain())
@@ -163,30 +145,30 @@ export default {
       }
     },
     navigateToMain() {
-      this.navigation.navigate("Main", {
-        message: "Succesfully added new pet!",
+      this.navigation.navigate("Schema", {
+        message: "Succesfully added new need for pet!",
       });
     },
   },
 
   computed: {
-    animals() {
-      return this.$store.state.animals.items;
+    types() {
+      return this.$store.state.types.items;
     },
 
     ifMedication() {
-      return this.petForm.medication;
+      return this.needForm.medication;
     },
     ifDog() {
-      if (this.animalSelection === 1) {
+      if (this.typeSelection === 1) {
         return true;
       }
     },
   },
   created() {
     this.$store
-      .dispatch("animals/fetchAnimals")
-      .then((animals) => alert(JSON.stringify(animals)));
+      .dispatch("types/fetchtypes")
+      .then((types) => alert(JSON.stringify(types)));
   },
 };
 </script>

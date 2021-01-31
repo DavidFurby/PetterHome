@@ -1,6 +1,6 @@
 <template>
   <nb-container v-if="isNeedsLoaded">
-    <AppHeader :screen="schemaScreen" />
+    <AppHeader :screen="pet.petName" />
     <nb-content
       ><nb-card v-for="need in needs" :key="need.id"
         ><nb-card-item
@@ -21,7 +21,9 @@
           >
         </nb-card-item>
       </nb-card>
-      <nb-button><nb-text>Add new Schedule</nb-text></nb-button>
+      <nb-button :on-press="goToAddScheduleScreen"
+        ><nb-text>Add new Schedule</nb-text></nb-button
+      >
     </nb-content>
   </nb-container>
 </template>
@@ -69,10 +71,10 @@ export default {
     changeAssignment() {
       alert("change assigned user");
     },
-    goToAddNeedScreen() {
+    goToAddScheduleScreen() {
       user = this.user;
       pet = this.pet;
-      this.navigation.navigate("addSchedule", { user: user, pet: { pet } });
+      this.navigation.navigate("AddSchema", { user: user, pet: pet });
     },
   },
 };

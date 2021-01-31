@@ -40,11 +40,19 @@ export default {
       }).catch((err) => {
       });
     },
+    addNeedToPet(context, params) {
+      let needForm = params.needForm; 
+      let userId = params.userId;
+      let petId = params.petId;
+      console.log(petId)
+      console.log(userId)
+      return axiosInstance.post(`/user/addNeedToPet?userId=${userId}&petId=${petId}`, needForm).then((res) => {
+      }).catch((err) => {
+      });
+    },
     fetchPetById({ commit, state }, params) {
       const petId = params.petId;
       const userId = params.userId; 
-      console.log(petId);
-      console.log(userId)
       commit("setPet", {});
       return axiosInstance.get(`/user/getPetById?userId=${userId}&petId=${petId}`).then((res) => {
         const pet = res.data;

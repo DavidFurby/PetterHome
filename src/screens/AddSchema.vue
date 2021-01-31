@@ -9,7 +9,7 @@
   </nb-container>
 </template>
 <script>
-import { Picker, Toast } from "native-base";
+import { Picker } from "native-base";
 import AddScheduleForm from "../components/AddScheduleForm";
 export default {
   components: { Item: Picker.Item, AddScheduleForm },
@@ -26,8 +26,8 @@ export default {
     };
   },
   created() {
-    this.userId = this.navigation.getParam("userId", "undefined");
-    this.petsId = this.navigation.getParam("petId", "undefined");
+    this.user = this.navigation.getParam("user", "undefined");
+    this.pet = this.navigation.getParam("pet", "undefined");
   },
   methods: {
     goBack() {
