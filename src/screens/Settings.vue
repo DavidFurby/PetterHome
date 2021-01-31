@@ -1,6 +1,6 @@
 <template>
   <nb-container>
-    <AppHeader screen="Settings"/>
+    <AppHeader screen="Settings" />
     <nb-content padder>
       <nb-button block light :on-press="goToAccount">
         <nb-text>Account Settings</nb-text>
@@ -16,16 +16,28 @@
 </template>
 
 <script>
-
 export default {
   props: {
     navigation: {
       type: Object,
     },
   },
+  computed: {
+    user() {
+      return this.$store.state.auth.user;
+    },
+    pets() {
+      return this.user.pets;
+    },
+  },
+  created() {
+    this.$store.dispatch("pets/fetchPets");
+    this.$store.dispatch("auth/fetchCurrentUser");
+  },
   methods: {
     goToAccount() {
-      this.navigation.navigate("Account");
+      let user = this.user;
+      this.navigation.navigate("Account", {user: user});
     },
     goToNotificationSettings() {
       this.navigation.navigate("NotificationSettings");

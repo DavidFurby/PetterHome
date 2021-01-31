@@ -4,46 +4,57 @@
     <nb-content>
       <nb-form>
         <InputWithError
+          :error="$v.passwordForm.oldPassword.$dirty && !$v.passwordForm.oldPassword.required"
+          msg="assigning old password is required!"
+        >
+          <nb-input
+            secure-text-entry
+            v-model="passwordForm.oldPassword"
+            placeholder="Old Password"
+            :on-blur="() => $v.passwordForm.oldPassword.$touch()"
+          />
+        </InputWithError>
+        <InputWithError
           :error="
-            $v.form.oldPasswordConfirmation.$dirty &&
-            !$v.form.oldPasswordConfirmation.sameAsOldPassword
+            $v.passwordForm.oldPasswordConfirmation.$dirty &&
+            !$v.passwordForm.oldPasswordConfirmation.sameAsOldPassword
           "
           msg="Must match old password!"
         >
           <nb-input
             secure-text-entry
-            v-model="form.passwordConfirmation"
+            v-model="passwordForm.passwordConfirmation"
             placeholder="Old Password Confirmation"
-            :on-blur="() => $v.form.oldPasswordConfirmation.$touch()"
+            :on-blur="() => $v.passwordForm.oldPasswordConfirmation.$touch()"
           />
         </InputWithError>
         <InputWithError
-          :error="$v.form.newPassword.$dirty && !$v.form.newPassword.required"
+          :error="$v.passwordForm.newPassword.$dirty && !$v.passwordForm.newPassword.required"
           msg="Password is required!"
         >
           <nb-input
             secure-text-entry
-            v-model="form.password"
+            v-model="passwordForm.password"
             placeholder="Password"
-            :on-blur="() => $v.form.newPassword.$touch()"
+            :on-blur="() => $v.passwordForm.newPassword.$touch()"
           />
         </InputWithError>
         <InputWithError
           :error="
-            $v.form.newPasswordConfirmation.$dirty &&
-            !$v.form.newPasswordConfirmation.required &&
-            !$v.form.newPasswordConfirmation.sameAsNewPassword
+            $v.passwordForm.newPasswordConfirmation.$dirty &&
+            !$v.passwordForm.newPasswordConfirmation.required &&
+            !$v.passwordForm.newPasswordConfirmation.sameAsNewPassword
           "
           msg="Password is required!"
         >
           <nb-input
             secure-text-entry
-            v-model="form.password"
+            v-model="passwordForm.password"
             placeholder="Password"
-            :on-blur="() => $v.form.newPasswordConfirmation.$touch()"
+            :on-blur="() => $v.passwordForm.newPasswordConfirmation.$touch()"
           />
         </InputWithError>
-        <nb-button :on-press="updatePassword"
+        <nb-button :on-press="changePassword"
           ><nb-text>Update</nb-text>
         </nb-button>
       </nb-form>
@@ -53,7 +64,6 @@
 <script>
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 import { Toast } from "native-base";
-import user from "../data/userMock.json";
 export default {
   props: {
     navigation: {
@@ -62,9 +72,11 @@ export default {
   },
   data() {
     return {
-      user: user,
-      form: {
-        oldPassword: user.password,
+      user: {
+        type: Object,
+      },
+      passwordForm: {
+        oldPassword: "",
         oldPasswordConfirmation: "",
         newPassword: "",
         newPasswordConfirmation: "",
@@ -73,7 +85,10 @@ export default {
   },
 
   validations: {
-    form: {
+    passwordForm: {
+      oldPassword: {
+        required,
+      },
       oldPasswordConfirmation: {
         required,
         sameAsOldPassword: sameAs("oldPassword"),
@@ -85,12 +100,21 @@ export default {
       },
     },
   },
+ created() {
+    this.user = this.navigation.getParam("user", "undefined");
+    console.log(this.user)
+  },
+
   methods: {
-    updatePassword() {
-      this.$v.form.$touch();
-      if (this.$v.form.$invalid) {
+    changePassword() {
+      this.$v.passwordForm.$touch();
+      console.log(this.user); 
+      if (this.$v.passwordForm.$invalid) {
+        const userId = this.user.id;
+        const passwordForm = this.$v.passwordForm;
+        const params = { userId, passwordForm };
         this.$store
-          .dispatch("auth/updatePassword")
+          .dispatch("user/changePassword", params)
           .then(() => this.navigateToMain())
           .catch(() => {
             Toast.show({
@@ -101,9 +125,9 @@ export default {
             });
           });
       }
-      alert(JSON.stringify(this.form));
+      alert(JSON.stringify(this.passwordForm));
     },
-  
+
     navigateToMain() {
       this.navigation.navigate("Main", {
         message: "Succesfull password update",

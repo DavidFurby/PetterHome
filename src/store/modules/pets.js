@@ -50,6 +50,11 @@ export default {
       }).catch((err) => {
       });
     },
+    changePassword(context, params) {
+      const userId = params.userId;
+      const passwordRequest = params.passwordForm
+      return axiosInstance.put(`/user/changePassword?userId=${userId}`, passwordRequest)
+    },
     fetchPetById({ commit, state }, params) {
       const petId = params.petId;
       const userId = params.userId; 

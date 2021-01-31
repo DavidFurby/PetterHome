@@ -47,7 +47,7 @@ export default {
     },
  
     updatePassword(context, userData) {
-      return axiosInstance.post(`/user/updatePassword`, userData);
+      return axiosInstance.put(`/user/recoverPassword`, userData);
     },
     logout({ commit }) {
       return new Promise((resolve) => {

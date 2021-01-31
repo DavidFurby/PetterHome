@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import userData from "../data/userMock.json";
 import { AsyncStorage } from "react-native";
 import AccountInformation from "../components/AccountInformation.vue";
 export default {
@@ -28,21 +27,20 @@ export default {
   },
   data() {
     return {
-      user: userData,
+      user: {
+        type: Object,
+      },
     };
   },
-  computed: {
-    user() {
-      let user = this.$store.state.auth.user; 
-      return user; 
-    }
-  },
   created() {
-    this.$store.dispatch("auth/fetchCurrentUser");
+    this.user = this.navigation.getParam("user", "undefined");
   },
+
   methods: {
     changePassword() {
-      this.navigation.navigate("ChangePassword");
+      const user = this.user; 
+      console.log(user)
+      this.navigation.navigate("ChangePassword", {user: user});
     },
 
     logout() {
