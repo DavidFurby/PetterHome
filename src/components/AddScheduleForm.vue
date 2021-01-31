@@ -70,7 +70,6 @@
           <nb-text>Add Pet</nb-text> 
         </nb-button>-->
       </nb-form>
-   
       <nb-button block :on-press="addPet">
         <nb-text>Add Pet</nb-text>
       </nb-button>
@@ -90,14 +89,14 @@ export default {
   data() {
     return {
       breedSelection: "",
-      petForm: {
+      needForm: {
         petName: "",
         petAge: "",
         gender: "",
         weight: "",
         height: "",
       },
-      animalForm: {
+      scheduleForm: {
         animal: "",
         breed: "",
       },
@@ -139,18 +138,17 @@ export default {
     addPet() {
       this.$v.petForm.$touch();
       this.$v.animalForm.$touch();
-      let petForm = this.petForm;
-      let animalForm = this.animalForm;
-      let animal = {};
-      animal.animal = animalForm.animal;
-      animal.breed = animalForm.breed;
-   
-      petForm.animal = animal;
+      let needForm = this.needForm;
+      let scheduleForm = this.scheduleForm;
+      let need = {};
+      need.type = needForm.type;
+      need.notified = needForm.notified;
+      petForm.schedule = scheduleForm;
       let userId = this.user;
-      let params = { petForm, userId };
+      let params = { needForm, userId };
       if (!this.$v.petForm.$invalid) {
         this.$store
-          .dispatch("pets/addPetToUser", params)
+          .dispatch("pets/addNeedToPet", params)
           .then(() => this.navigateToMain())
           .catch(() => {
             Toast.show({

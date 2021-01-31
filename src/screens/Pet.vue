@@ -22,6 +22,13 @@ export default {
   components: {
     PetPage,
   },
+  data() {
+    return {
+      pet: {
+        type: Object
+      }
+    }
+  },
   props: {
     navigation: {
       type: Object,
@@ -35,10 +42,6 @@ export default {
     };
   },
   computed: {
-    pet() {
-      let pet = this.$store.state.pets.pet;
-      return pet;
-    },
     animal() {
       return this.pet.animal || {};
     },
@@ -47,13 +50,7 @@ export default {
     },
   },
   created() {
-    const userId = this.navigation.getParam("userId", "undefined");
-    const petId = this.navigation.getParam("petId", "undefined");
-
-    let params = {};
-    params.userId = userId;
-    params.petId = petId;
-    this.$store.dispatch("pets/fetchPetById", params);
+    this.pet = this.navigation.getParam("pet", "undefined");
   },
   methods: {
     deleteFromApp() {

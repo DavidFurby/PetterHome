@@ -1,37 +1,45 @@
 <template>
-  <nb-container>
+  <nb-container v-if="isNeedsLoaded">
     <AppHeader :screen="schemaScreen" />
     <nb-content
-      ><nb-card v-for="need in petTemp[0].needs" :key="need.id"
+      ><nb-card v-for="need in needs" :key="need.id"
         ><nb-card-item
           ><nb-text>{{ need.type }}</nb-text
           ><nb-body /><nb-card
-            ><nb-card-item v-for="time in need.time" :key="time.id"
+            ><nb-card-item v-for="schedule in need.schedules" :key="schedule.id"
               ><nb-text
                 >at
                 <nb-button :on-press="changeTime">
-                  <nb-text> {{ time.clock }}</nb-text></nb-button
+                  <nb-text> {{ schedule.time }}</nb-text></nb-button
                 >
                 assigned to
-                <nb-button :on-press="changeAssignment"
-                  ><nb-text>{{ time.assigned }}</nb-text></nb-button
+                <nb-button
+                  ><nb-text>{{ schedule.assignedTo }}</nb-text></nb-button
                 ></nb-text
               ></nb-card-item
             ></nb-card
           >
-        </nb-card-item></nb-card
-      >
+        </nb-card-item>
+      </nb-card>
+      <nb-button><nb-text>Add new Schedule</nb-text></nb-button>
     </nb-content>
   </nb-container>
 </template>
 
 <script>
-import petMock from "../data/userMock.json";
+import AddSchema from "./AddSchema";
 export default {
+  components: {
+    AddSchema,
+  },
   data() {
     return {
-      petTemp: petMock[0].pets,
-      schemaScreen: petMock[0].petName + " schedule",
+      pet: {
+        type: Object,
+      },
+      user: {
+        type: Object,
+      },
     };
   },
   props: {
@@ -40,13 +48,18 @@ export default {
     },
   },
   computed: {
-    pet() {
-      return this.store.state.pets;
+    needs() {
+      let needs = this.pet.needs;
+      console.log(needs);
+      return needs;
+    },
+    isNeedsLoaded() {
+      return Object.keys(this.pet).length > 0;
     },
   },
   created() {
-    const petId = this.navigation.getParam("petId", "undefined");
-    //this.$store.dispatch("pets/fetchPetById", petId);
+    this.pet = this.navigation.getParam("pet", "undefined");
+    this.user = this.navigation.getParam("user", "undefined");
   },
 
   methods: {
@@ -55,6 +68,11 @@ export default {
     },
     changeAssignment() {
       alert("change assigned user");
+    },
+    goToAddNeedScreen() {
+      user = this.user;
+      pet = this.pet;
+      this.navigation.navigate("addSchedule", { user: user, pet: { pet } });
     },
   },
 };

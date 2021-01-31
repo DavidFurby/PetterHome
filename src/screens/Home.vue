@@ -43,16 +43,19 @@ export default {
     this.$store.dispatch("auth/fetchCurrentUser");
   },
   methods: {
-    goToPetScreen(petId) {
-      let userId = this.user.id;
-      this.navigation.navigate("Pet", { userId: userId, petId: petId });
+    goToPetScreen(pet) {
+      this.navigation.navigate("Pet", { pet: pet });
     },
     goToAddPetScreen() {
       let user = this.user.id;
       this.navigation.navigate("AddPet", { user: { user } });
     },
-    goToPetSchema(petId) {
-      this.navigation.navigate("Schema", { petId: { petId } });
+    goToPetSchema(petData) {
+      let user = this.user;
+      let pet = petData; 
+      console.log(user);
+      console.log(pet);
+      this.navigation.navigate("Schema", { pet: pet, user: user });
     },
   },
 };

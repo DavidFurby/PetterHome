@@ -43,9 +43,12 @@ export default {
     fetchPetById({ commit, state }, params) {
       const petId = params.petId;
       const userId = params.userId; 
+      console.log(petId);
+      console.log(userId)
       commit("setPet", {});
       return axiosInstance.get(`/user/getPetById?userId=${userId}&petId=${petId}`).then((res) => {
         const pet = res.data;
+        console.log(pet); 
         commit("setPet", pet);
         return state.pet;
       }).catch((error) => {
