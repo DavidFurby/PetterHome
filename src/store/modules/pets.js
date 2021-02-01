@@ -7,7 +7,7 @@ export default {
 
   state: {
     pets: [],
-    pet: {}
+    pet: {},
   },
   getters: {},
   actions: {
@@ -33,40 +33,44 @@ export default {
         });
     },
     addPetToUser(context, params) {
-      let petData = params.petForm; 
+      let petData = params.petForm;
       let userId = params.userId.user;
-      console.log(petData);
-      return axiosInstance.post(`/user/addPetToUser?userId=${userId}`, petData).then((res) => {
-      }).catch((err) => {
-      });
+      return axiosInstance
+        .post(`/user/addPetToUser?userId=${userId}`, petData)
+        .then((res) => {})
+        .catch((err) => {});
     },
     addNeedToPet(context, params) {
-      let needForm = params.needForm; 
+      let needForm = params.need;
       let userId = params.userId;
       let petId = params.petId;
-      console.log(petId)
-      console.log(userId)
-      return axiosInstance.post(`/user/addNeedToPet?userId=${userId}&petId=${petId}`, needForm).then((res) => {
-      }).catch((err) => {
-      });
+      return axiosInstance
+        .post(`/user/addNeedToPet?userId=${userId}&petId=${petId}`, needForm)
+        .then((res) => {})
+        .catch((err) => {});
     },
     changePassword(context, params) {
       const userId = params.userId;
-      const passwordRequest = params.passwordForm
-      return axiosInstance.put(`/user/changePassword?userId=${userId}`, passwordRequest)
+      const passwordRequest = params.passwordForm;
+      return axiosInstance.put(
+        `/user/changePassword?userId=${userId}`,
+        passwordRequest
+      );
     },
     fetchPetById({ commit, state }, params) {
       const petId = params.petId;
-      const userId = params.userId; 
+      const userId = params.userId;
       commit("setPet", {});
-      return axiosInstance.get(`/user/getPetById?userId=${userId}&petId=${petId}`).then((res) => {
-        const pet = res.data;
-        console.log(pet); 
-        commit("setPet", pet);
-        return state.pet;
-      }).catch((error) => {
-console.log(error)
-      })
+      return axiosInstance
+        .get(`/user/getPetById?userId=${userId}&petId=${petId}`)
+        .then((res) => {
+          const pet = res.data;
+          commit("setPet", pet);
+          return state.pet;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
   mutations: {

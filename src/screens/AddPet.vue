@@ -1,37 +1,46 @@
 <template>
-  <nb-container>
+  <nb-container v-if="hasAnimals">
     <AppHeader
       screen="Add Pet"
       leftButton="return"
       :leftButtonFunction="goBack"
     />
-    <AddPetForm :user="user" />
+    <AddPetForm :user="user" :animals="animals" />
   </nb-container>
 </template>
 <script>
-import { Picker, Toast } from "native-base";
 import AddPetForm from "../components/AddPetForm";
 export default {
-  components: { Item: Picker.Item, AddPetForm },
+  components: { AddPetForm },
 
   props: {
     navigation: {
       type: Object,
     },
   },
-  data: function () {
+  data() {
     return {
       selected: "key0",
-      user: null, 
+      user: null,
     };
   },
   created() {
-     this.user = this.navigation.getParam("user", "undefined");
+    this.user = this.navigation.getParam("user", "undefined");
+    this.$store
+      .dispatch("animals/fetchAnimals");
   },
   methods: {
     goBack() {
       this.navigation.goBack();
     },
+  },
+  computed: {
+    animals() {
+      return this.$store.state.animals.animals;
+    },
+    hasAnimals() {
+      return this.animals && this.animals.length > 0
+    }
   },
 };
 </script>

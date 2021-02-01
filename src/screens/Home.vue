@@ -1,7 +1,7 @@
 <template>
   <nb-container>
     <AppHeader :screen="user.username" />
-    <nb-text v-if="user" :style="{ paddingLeft: 20 }"
+    <nb-text v-if="hasUser" :style="{ paddingLeft: 20 }"
       >Welcome {{ user.username }}</nb-text
     >
     <scroll-view>
@@ -30,14 +30,7 @@ export default {
       type: Object,
     },
   },
-  computed: {
-    user() {
-      return this.$store.state.auth.user;
-    },
-    pets() {
-      return this.user.pets;
-    },
-  },
+
   created() {
     this.$store.dispatch("pets/fetchPets");
     this.$store.dispatch("auth/fetchCurrentUser");
@@ -52,10 +45,19 @@ export default {
     },
     goToPetSchema(petData) {
       let user = this.user;
-      let pet = petData; 
-      console.log(user);
-      console.log(pet);
+      let pet = petData;
       this.navigation.navigate("Schema", { pet: pet, user: user });
+    },
+  },
+  computed: {
+    user() {
+      return this.$store.state.auth.user;
+    },
+    pets() {
+      return this.user.pets;
+    },
+    hasUser() {
+      return this.user && this.user.length > 0;
     },
   },
 };

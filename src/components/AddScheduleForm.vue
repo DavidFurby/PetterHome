@@ -4,7 +4,7 @@
       <nb-form>
         <InputWithError
           :error="$v.needForm.type.$dirty && !$v.needForm.type.required"
-          msg="Must select an type"
+          msg="Must select a type"
         >
           <nb-item stackedLabel
             ><nb-input
@@ -33,7 +33,9 @@
         </InputWithError>
 
         <nb-item stackedLabel
-          ><nb-input placeholder="Assigned to" v-model="scheduleForm.assignedTo"
+          ><nb-input
+            placeholder="Assigned to"
+            v-model="scheduleForm.assignedTo"
         /></nb-item>
 
         <!-- <nb-list-item>
@@ -119,16 +121,18 @@ export default {
     addPetNeed() {
       this.$v.needForm.$touch();
       this.$v.scheduleForm.$touch();
-      let needForm = this.needForm;
-      let scheduleForm = this.scheduleForm;
-      let need = {};
-      need.type = needForm.type;
-      need.notified = needForm.notified;
-      need.schedule = scheduleForm;
-      let userId = this.user.id;
-      let petId = this.pet.id;
-      let params = { needForm, userId, petId };
       if (!this.$v.needForm.$invalid || !this.$v.scheduleForm.$invalid) {
+        let needForm = this.needForm;
+        let scheduleForm = this.scheduleForm;
+        let need = {};
+        let schedule = [];
+        schedule.push(scheduleForm);
+        need.type = needForm.type;
+        need.notified = needForm.notified;
+        need.schedule = schedule;
+        let userId = this.user.id;
+        let petId = this.pet.id;
+        let params = { need, userId, petId };
         this.$store
           .dispatch("pets/addNeedToPet", params)
           .then(() => this.navigateToMain())
@@ -149,26 +153,6 @@ export default {
         message: "Succesfully added new need for pet!",
       });
     },
-  },
-
-  computed: {
-    types() {
-      return this.$store.state.types.items;
-    },
-
-    ifMedication() {
-      return this.needForm.medication;
-    },
-    ifDog() {
-      if (this.typeSelection === 1) {
-        return true;
-      }
-    },
-  },
-  created() {
-    this.$store
-      .dispatch("types/fetchtypes")
-      .then((types) => alert(JSON.stringify(types)));
   },
 };
 </script>

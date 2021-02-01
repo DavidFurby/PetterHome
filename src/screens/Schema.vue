@@ -4,23 +4,20 @@
     <nb-content
       ><nb-card v-for="need in needs" :key="need.id"
         ><nb-card-item
-          ><nb-text>{{ need.type }}</nb-text
-          ><nb-body /><nb-card
-            ><nb-card-item v-for="schedule in need.schedules" :key="schedule.id"
-              ><nb-text
-                >at
+          ><nb-text>{{ need.type }}</nb-text>
+          <nb-card-item v-for="schedule in schedules(need)" :key="schedule.id"
+              ><nb-text>
+                at
                 <nb-button :on-press="changeTime">
                   <nb-text> {{ schedule.time }}</nb-text></nb-button
                 >
                 assigned to
                 <nb-button
-                  ><nb-text>{{ schedule.assignedTo }}</nb-text></nb-button
-                ></nb-text
-              ></nb-card-item
-            ></nb-card
-          >
-        </nb-card-item>
-      </nb-card>
+                  ><nb-text>{{ schedule.assignedTo }}</nb-text>
+                  </nb-button>
+                </nb-text>
+              </nb-card-item>
+            </nb-card>
       <nb-button :on-press="goToAddScheduleScreen"
         ><nb-text>Add new Schedule</nb-text></nb-button
       >
@@ -52,9 +49,9 @@ export default {
   computed: {
     needs() {
       let needs = this.pet.needs;
-      console.log(needs);
       return needs;
     },
+
     isNeedsLoaded() {
       return Object.keys(this.pet).length > 0;
     },
@@ -65,6 +62,9 @@ export default {
   },
 
   methods: {
+        schedules(need) {
+      return need.schedule;
+    },
     changeTime() {
       alert("change Time");
     },

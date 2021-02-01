@@ -102,13 +102,11 @@ export default {
   },
  created() {
     this.user = this.navigation.getParam("user", "undefined");
-    console.log(this.user)
   },
 
   methods: {
     changePassword() {
       this.$v.passwordForm.$touch();
-      console.log(this.user); 
       if (this.$v.passwordForm.$invalid) {
         const userId = this.user.id;
         const passwordForm = this.$v.passwordForm;

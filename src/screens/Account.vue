@@ -39,7 +39,6 @@ export default {
   methods: {
     changePassword() {
       const user = this.user; 
-      console.log(user)
       this.navigation.navigate("ChangePassword", {user: user});
     },
 

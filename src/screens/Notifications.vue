@@ -14,7 +14,6 @@
 
 <script>
 import NotificationCard from "../components/NotificationCard";
-import petData from "../data/petMock.json";
 const hour = new Date().getHours();
 const min = new Date().getMinutes();
 
@@ -28,6 +27,18 @@ export default {
 
       time: hour + ":" + min,
     };
+  },
+  computed: {
+    user() {
+      return this.$store.state.auth.user;
+    },
+    pets() {
+      return this.user.pets;
+    },
+  },
+  created() {
+    this.$store.dispatch("pets/fetchPets");
+    this.$store.dispatch("auth/fetchCurrentUser");
   },
 };
 </script>

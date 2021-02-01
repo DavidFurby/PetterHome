@@ -2,23 +2,34 @@
   <nb-container>
     <scroll-view>
       <nb-form>
-        <InputWithError
-          :error="$v.animalForm.animal.$dirty && !$v.animalForm.animal.required"
-          msg="Must select an animal"
-        >
-          <nb-item stackedLabel
-            ><nb-input
-              placeholder="Animal"
-              v-model="animalForm.animal"
-              :on-blur="() => $v.animalForm.animal.$touch()"
-          /></nb-item>
-        </InputWithError>
-
-        <nb-item stackedLabel
-          ><nb-input placeholder="Breed" v-model="animalForm.breed"
-        /></nb-item>
-      </nb-form>
-
+          <nb-picker
+            note
+            mode="dropdown"
+            :style="{ width: 120 }"
+            :selectedValue="selectedAnimal"
+            :onValueChange="onAnimalChange"
+          >
+            <item
+              v-for="(animal, animalIndex) in animalBreed(animal)"
+              :key="animalIndex"
+              :label="animal.animal"
+              :value="animal"
+            />
+          </nb-picker>
+            <nb-picker
+            note
+            mode="dropdown"
+            :style="{ width: 120 }"
+            :selectedValue="selectedBreed"
+            :onValueChange="onBreedChange"
+          >
+            <item
+              v-for="(breed, breedIndex) in breeds()"
+              :key="breedIndex"
+              :label="breed"
+              :value="breed"
+            />
+          </nb-picker> 
       <nb-form>
         <InputWithError
           :error="$v.petForm.petName.$dirty && !$v.petForm.petName.required"
@@ -70,7 +81,7 @@
           <nb-text>Add Pet</nb-text> 
         </nb-button>-->
       </nb-form>
-   
+
       <nb-button block :on-press="addPet">
         <nb-text>Add Pet</nb-text>
       </nb-button>
@@ -107,6 +118,9 @@ export default {
     user: {
       type: Object,
     },
+    animals: {
+      type: Array,
+    },
   },
   validations: {
     petForm: {
@@ -124,11 +138,14 @@ export default {
     },
   },
   methods: {
-    onAnimalChange(animalValue) {
-      this.animalForm.animal = animalValue;
+    animalBreed(animal) {
+      console.log(animal.breeds);
     },
-    onBreedChange(breedValue) {
-      this.breedSelection = breedValue;
+    onAnimalChange(animal) {
+      this.animalForm.animal = animal;
+    },
+    onBreedChange(breed) {
+      this.animalForm.breed = breed;
     },
     getIosIcon() {
       return <Icon name="ios-arrow-down-outline" />;
@@ -144,7 +161,7 @@ export default {
       let animal = {};
       animal.animal = animalForm.animal;
       animal.breed = animalForm.breed;
-   
+
       petForm.animal = animal;
       let userId = this.user;
       let params = { petForm, userId };
@@ -172,10 +189,12 @@ export default {
   },
 
   computed: {
-    animals() {
-      return this.$store.state.animals.items;
+    selectedAnimal() {
+      return this.animalForm.animal;
     },
-
+    selectedBreed() {
+      return this.animalForm.breed;
+    },
     ifMedication() {
       return this.petForm.medication;
     },
@@ -184,11 +203,6 @@ export default {
         return true;
       }
     },
-  },
-  created() {
-    this.$store
-      .dispatch("animals/fetchAnimals")
-      .then((animals) => alert(JSON.stringify(animals)));
   },
 };
 </script>
