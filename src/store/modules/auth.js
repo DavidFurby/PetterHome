@@ -5,7 +5,10 @@ import { Platform } from "react-native";
 import { AsyncStorage } from "react-native";
 import jwtDecode from "jwt-decode";
 import axiosInstance from "../../services/axios";
-
+const BASE_URL =
+  Platform.OS === "ios"
+    ? "http://192.168.10.206:8080"
+    : "http://192.168.10.206:8080";
 const isTokenValid = (token) => {
   if (token) {
     const decodedToken = jwtDecode(token);
@@ -54,7 +57,7 @@ export default {
       });
     },
     fetchUsers({ commit, state }) {
-      return axiosInstance.get(`${BASE_URL}/users`)
+      return Axios.get(`${BASE_URL}/users`)
         .then((res) => {
           const users = res.data;
           commit("setUsers", users);

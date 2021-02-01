@@ -26,7 +26,7 @@ export default {
     },
     fetchAnimalById({ commit, state }, animalId) {
       commit("setAnimals", {});
-      return axiosInstance.get(`${BASE_URL}/animals/${animalId}`).then((res) => {
+      return axios.get(`${BASE_URL}/animals/${animalId}`).then((res) => {
         const animal = res.data;
         commit("setAnimals", animal);
         return state.item;

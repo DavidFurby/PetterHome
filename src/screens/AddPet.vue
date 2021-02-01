@@ -26,7 +26,8 @@ export default {
   },
   created() {
     this.user = this.navigation.getParam("user", "undefined");
-    this.$store.dispatch("animals/fetchAnimals");
+    this.$store
+      .dispatch("animals/fetchAnimals");
   },
   methods: {
     goBack() {
@@ -35,12 +36,11 @@ export default {
   },
   computed: {
     animals() {
-      let animals = this.$store.state.animals.animals;
-      return animals;
+      return this.$store.state.animals.animals;
     },
     hasAnimals() {
-      return this.animals && this.animals.length > 0;
-    },
+      return this.animals && this.animals.length > 0
+    }
   },
 };
 </script>

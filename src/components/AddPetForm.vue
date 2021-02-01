@@ -10,13 +10,13 @@
             :onValueChange="onAnimalChange"
           >
             <item
-              v-for="(setAnimal, animalIndex) in animals"
+              v-for="(animal, animalIndex) in animalBreed(animal)"
               :key="animalIndex"
-              :label="setAnimal.animal"
-              :value="setAnimal.animal"
+              :label="animal.animal"
+              :value="animal"
             />
           </nb-picker>
-              <nb-picker
+            <nb-picker
             note
             mode="dropdown"
             :style="{ width: 120 }"
@@ -24,11 +24,10 @@
             :onValueChange="onBreedChange"
           >
             <item
-            :v-if="selectedAnimal"
-              v-for="(breeds, breedIndex) in animal.breeds"
+              v-for="(breed, breedIndex) in breeds()"
               :key="breedIndex"
-              :label="breeds.breeds"
-              :value="breeds.breeds"
+              :label="breed"
+              :value="breed"
             />
           </nb-picker> 
       <nb-form>
@@ -139,9 +138,8 @@ export default {
     },
   },
   methods: {
-    animalBreeds(animal) {
-      console.log(animal);
-      return animal;
+    animalBreed(animal) {
+      console.log(animal.breeds);
     },
     onAnimalChange(animal) {
       this.animalForm.animal = animal;
