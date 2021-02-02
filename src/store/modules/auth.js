@@ -1,10 +1,14 @@
 import Axios from "axios";
 import Vue from "vue-native-core";
 
-import { Platform } from "react-native";
 import { AsyncStorage } from "react-native";
 import jwtDecode from "jwt-decode";
 import axiosInstance from "../../services/axios";
+
+const BASE_URL =
+  Platform.OS === "ios"
+    ? "http://192.168.10.206:8080"
+    : "http://192.168.10.206:8080";
 
 const isTokenValid = (token) => {
   if (token) {
@@ -28,10 +32,14 @@ export default {
   },
   actions: {
     login({ commit, state }, userData) {
-      return axiosInstance.post(`/auth/login`, userData)
-        .then(async (res) => {
+      console.log(userData);
+      return axiosInstance
+        .post(`/auth/login`, userData)
+        .then((res) => {
+          console.log(res);
           const user = res.data;
-          await AsyncStorage.setItem("petterhome-jwt", user.accessToken);
+          console.log(user);
+          AsyncStorage.setItem("petterhome-jwt", user.accessToken);
           commit("setAuthUser", user);
           return state.user;
         })
@@ -39,10 +47,18 @@ export default {
           console.log(error);
         });
     },
-    register(context, userData) { 
-      return axiosInstance.post(`/auth/register`, userData);
+    register(context, userData) {
+      console.log(userData);
+      return axiosInstance
+        .post(`/auth/register`, userData)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
- 
+
     updatePassword(context, userData) {
       return axiosInstance.put(`/user/recoverPassword`, userData);
     },
@@ -54,7 +70,7 @@ export default {
       });
     },
     fetchUsers({ commit, state }) {
-      return axiosInstance.get(`${BASE_URL}/users`)
+      return Axios.get(`${BASE_URL}/user`)
         .then((res) => {
           const users = res.data;
           commit("setUsers", users);

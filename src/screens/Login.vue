@@ -75,9 +75,11 @@ export default {
       return users;
     },
   },
-   created() {
-      const isAuth = this.$store.getters['auth/isAuth']
-      if (isAuth) { this.navigation.navigate('Home') }
+  created() {
+    const isAuth = this.$store.getters["auth/isAuth"];
+    if (isAuth) {
+      this.navigation.navigate("Home");
+    }
 
     //await AsyncStorage.removeItem('petterhome-jwt')
     /*this.isCheckingUser = true;
@@ -91,7 +93,6 @@ export default {
   methods: {
     login() {
       this.$v.form.$touch();
-
       if (!this.$v.form.$invalid) {
         this.$store
           .dispatch("auth/login", this.form)
@@ -99,6 +100,7 @@ export default {
             this.navigation.navigate("Main");
           })
           .catch((err) => {
+            console.log(err);
             Toast.show({
               text: "Wrong password!",
               buttonText: "Okay",
@@ -107,7 +109,7 @@ export default {
             });
           });
       } else {
-        return alert("something went woring")
+        return alert("something went wrong");
       }
     },
 

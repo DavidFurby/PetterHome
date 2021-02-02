@@ -1,11 +1,10 @@
 import axios from "axios";
-import { AsyncStorage } from "react-native";
+import { AsyncStorage } from "@react-native-async-storage/async-storage";
 
-const BASE_URL = __DEV__
-  ? Platform.OS === "ios"
+const BASE_URL =
+  Platform.OS === "ios"
     ? "http://192.168.10.206:8080/api"
-    : "http://10.0.2.2:8080/api"
-  : "https://vue-meetuper-server.herokuapp.com/api";
+    : "http://192.168.10.206:8080/api";
 
 const axiosInstance = axios.create({
   timeout: 3000,
