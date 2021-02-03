@@ -15,6 +15,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   async (config) => {
     const token = await AsyncStorage.getItem("petterhome-jwt");
+    console.log(token, "axios")
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

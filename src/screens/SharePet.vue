@@ -2,7 +2,7 @@
   <nb-container>
     <scroll-view>
       <AppHeader screen="Share Pet" />
-      <SharePetCard
+      <SharePetCard :v-if="hasUser"
         v-for="pet in pets"
         :key="pet.id"
         :pet="pet"
@@ -13,30 +13,33 @@
 </template>
 <script>
 import SharePetCard from "../components/SharePetCard";
-import petMock from "../data/petMock.json";
 export default {
   components: {
     SharePetCard,
-  },
-  data() {
-    return {
-      pets: petMock,
-    };
   },
   props: {
     navigation: {
       type: Object,
     },
   },
+  created() {
+    this.$store.dispatch("auth/fetchCurrentUser");
+  },
   computed: {
-    petStore() {
-      let petTemp = this.$store.state.pets;
-      return petTemp;
+    user() {
+      return this.$store.state.auth.user;
+    },
+    pets() {
+      return this.user.pets;
+    },
+    hasUser() {
+      return this.user && this.user.length > 0;
     },
   },
   methods: {
-    goToShareList(petId) {
-      this.navigation.navigate("ShareList", { petId: { petId } });
+    goToShareList(pet) {
+      const user = this.user;
+      this.navigation.navigate("ShareList", { pet: pet, user: user });
     },
   },
 };

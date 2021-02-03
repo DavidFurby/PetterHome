@@ -1,9 +1,9 @@
 <template>
   <view>
-    <nb-card-item v-for="request in requests" :key="request.id">
+    <nb-card-item v-for="invite in invites" :key="invite.id">
       <nb-body full info>
         <nb-text
-          >{{ request.user }} want to share their {{ request.pet }}
+          >{{ invite.user }} want to share their {{ invite.pet }}
         </nb-text>
         <nb-button :on-press="acceptRequest"
           ><nb-text>Accept</nb-text></nb-button
@@ -15,13 +15,13 @@
 <script>
 export default {
   props: {
-    requests: {
+    invites: {
       type: Array,
       default: () => [],
     },
     acceptRequest: {
-        type: Function,
-    }
+      type: Function,
+    },
   },
 };
 </script>

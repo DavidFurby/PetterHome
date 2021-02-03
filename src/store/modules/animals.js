@@ -1,6 +1,4 @@
 import Vue from "vue-native-core";
-import axios from "axios";
-import { Platform } from "react-native";
 import axiosInstance from "../../services/axios";
 
 
@@ -26,7 +24,7 @@ export default {
     },
     fetchAnimalById({ commit, state }, animalId) {
       commit("setAnimals", {});
-      return axiosInstance.get(`${BASE_URL}/animals/${animalId}`).then((res) => {
+      return axiosInstance.get(`/user/${animalId}`).then((res) => {
         const animal = res.data;
         commit("setAnimals", animal);
         return state.item;

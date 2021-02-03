@@ -32,17 +32,16 @@ export default {
   },
   actions: {
     login({ commit, state }, userData) {
-      console.log(userData)
-      return axiosInstance.post(`/auth/login`, userData).then((res) => {
+      return axiosInstance.post(`/auth/login`, userData).then(async (res) => {
         const user = res.data;
-        console.log(user);
-        AsyncStorage.setItem("petterhome-jwt", user.token);
+        await AsyncStorage.setItem("petterhome-jwt", user.accessToken);
+        const token = await AsyncStorage.getItem("petterhome-jwt");
+        console.log(token, "auth");
         commit("setAuthUser", user);
         return state.user;
       });
     },
     register(context, userData) {
-      console.log(userData);
       return axiosInstance
         .post(`/auth/register`, userData)
         .then((res) => {
@@ -64,7 +63,8 @@ export default {
       });
     },
     fetchUsers({ commit, state }) {
-      return Axios.get(`${BASE_URL}/user`)
+      return axiosInstance
+        .get(`/user/getAllUsers`)
         .then((res) => {
           const users = res.data;
           commit("setUsers", users);

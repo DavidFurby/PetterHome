@@ -100,7 +100,6 @@ export default {
             this.navigation.navigate("Main");
           })
           .catch((err) => {
-            console.log(err);
             Toast.show({
               text: "Wrong password!",
               buttonText: "Okay",
@@ -112,7 +111,7 @@ export default {
         return alert("something went wrong");
       }
     },
-
+    
     checkForMessage() {
       const message = this.navigation.getParam("message");
       if (message) {

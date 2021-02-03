@@ -32,15 +32,14 @@ export default {
   },
 
   created() {
-    this.$store.dispatch("pets/fetchPets");
-    this.$store.dispatch("auth/fetchCurrentUser");
+    this.$store.dispatch("auth/fetchCurrentUser", this.user.id);
   },
   methods: {
     goToPetScreen(pet) {
       this.navigation.navigate("Pet", { pet: pet });
     },
     goToAddPetScreen() {
-      let user = this.user.id;
+      let user = this.user;
       this.navigation.navigate("AddPet", { user: { user } });
     },
     goToPetSchema(petData) {

@@ -140,7 +140,6 @@ export default {
   },
   methods: {
     animalBreeds(animal) {
-      console.log(animal);
       return animal;
     },
     onAnimalChange(animal) {
