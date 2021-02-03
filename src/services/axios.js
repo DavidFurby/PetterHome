@@ -1,10 +1,11 @@
 import axios from "axios";
-import { AsyncStorage } from "@react-native-async-storage/async-storage";
+import { AsyncStorage } from "react-native";
 
-const BASE_URL =
-  Platform.OS === "ios"
-    ? "http://192.168.10.206:8080/api"
-    : "http://192.168.10.206:8080/api";
+const BASE_URL = __DEV__
+  ? Platform.OS === "ios"
+    ? "http://localhost:8080/api"
+    : "http://10.0.2.2:8080/api"
+  : "https://petterhome.herokuapp.com/api";
 
 const axiosInstance = axios.create({
   timeout: 3000,

@@ -4,11 +4,11 @@ import Vue from "vue-native-core";
 import { AsyncStorage } from "react-native";
 import jwtDecode from "jwt-decode";
 import axiosInstance from "../../services/axios";
-
-const BASE_URL =
-  Platform.OS === "ios"
-    ? "http://192.168.10.206:8080"
-    : "http://192.168.10.206:8080";
+const BASE_URL = __DEV__
+  ? Platform.OS === "ios"
+    ? "http://localhost:8080/api"
+    : "http://10.0.2.2:8080/api"
+  : "https://petterhome.herokuapp.com/api";
 
 const isTokenValid = (token) => {
   if (token) {
@@ -32,20 +32,14 @@ export default {
   },
   actions: {
     login({ commit, state }, userData) {
-      console.log(userData);
-      return axiosInstance
-        .post(`/auth/login`, userData)
-        .then((res) => {
-          console.log(res);
-          const user = res.data;
-          console.log(user);
-          AsyncStorage.setItem("petterhome-jwt", user.accessToken);
-          commit("setAuthUser", user);
-          return state.user;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      console.log(userData)
+      return axiosInstance.post(`/auth/login`, userData).then((res) => {
+        const user = res.data;
+        console.log(user);
+        AsyncStorage.setItem("petterhome-jwt", user.token);
+        commit("setAuthUser", user);
+        return state.user;
+      });
     },
     register(context, userData) {
       console.log(userData);
