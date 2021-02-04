@@ -6,7 +6,8 @@
         <InputWithError
           :error="
             $v.form.usernameConfirmation.$dirty &&
-            !$v.form.usernameConfirmation.sameAsUsername"
+            !$v.form.usernameConfirmation.sameAsUsername
+          "
           msg="Username doesn't match any in the register!"
         >
           <nb-input
@@ -58,6 +59,9 @@
         <nb-button :on-press="updatePassword"
           ><nb-text>Update</nb-text>
         </nb-button>
+        <nb-button transparent :on-press="goToLogin"
+          ><nb-text>Return to login</nb-text></nb-button
+        >
       </nb-form>
     </nb-content>
   </nb-container>
@@ -121,7 +125,9 @@ export default {
       }
       alert(JSON.stringify(this.form));
     },
-
+    goToLogin() {
+      this.navigation.navigate("Login");
+    },
     navigateToLogin() {
       this.navigation.navigate("Login", {
         message: "Succesfull password update",

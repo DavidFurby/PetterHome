@@ -23,7 +23,7 @@ export default {
   props: {
     screen: {
       type: String,
-      default: null,
+      default: "Header",
     },
     leftButton: {
       type: String,

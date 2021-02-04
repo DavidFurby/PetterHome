@@ -1,6 +1,6 @@
 <template>
   <nb-container>
-    <AppHeader :screen="user.username" />
+    <AppHeader root :screen="user.username" />
     <nb-text v-if="hasUser" :style="{ paddingLeft: 20 }"
       >Welcome {{ user.username }}</nb-text
     >
@@ -40,7 +40,7 @@ export default {
     },
     goToAddPetScreen() {
       let user = this.user;
-      this.navigation.navigate("AddPet", { user: { user } });
+      this.navigation.navigate("AddPet", { user: user });
     },
     goToPetSchema(petData) {
       let user = this.user;

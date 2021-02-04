@@ -1,50 +1,75 @@
 <template>
   <nb-container>
     <scroll-view>
-      <AppHeader screen="Request Page" />
+      <AppHeader screen="Invites" />
       <RequestCard
-        v-if="hasInvites"
+        v-if="ifInvites"
         :invites="invites"
-        :requests="requests"
         :acceptRequest="acceptRequest"
       />
+      <nb-text v-else>No Invites available</nb-text>
     </scroll-view>
   </nb-container>
 </template>
 <script>
-import requestMock from "../data/requestMock.json";
 import RequestCard from "../components/RequestCard";
 export default {
   components: {
     RequestCard,
   },
-  data: {
-    requests: requestMock,
+  data() {
+    return {
+      user: {
+        type: Object,
+      },
+    };
   },
   props: {
     requestData: {
       type: Array,
       default: () => [],
     },
-  },
-  created() {
-    this.$store.dispatch("auth/fetchCurrentUser");
-    this.$store.dispatch("invites/fetchInvites");
-  },
-  methods: {
-    acceptRequest() {
-      alert("accepted");
+    navigation: {
+      type: Object,
     },
+  },
+
+  methods: {
+    acceptRequest(inviteId) {
+      let params = {};
+      params.inviteId = inviteId;
+      params.userId = this.user.id;
+      this.$store
+        .dispatch("invites/acceptInvite", params)
+        .then((res) => {
+          Toast.show({
+            text: "Invite was accepted",
+            buttonText: "ok",
+            type: "success",
+            duration: 3000,
+          });
+        })
+        .catch(() => {
+          Toast.show({
+            text: "Invite could not be accepted",
+            buttonText: "ok",
+            type: "danger",
+            duration: 3000,
+          });
+        });
+    },
+  },
+  async created() {
+    this.user = await this.navigation.getParam("user", "undefined");
+    const userId = this.user.id;
+    await this.$store.dispatch("invites/fetchInvites", userId);
   },
   computed: {
-    user() {
-      return this.$store.state.auth.user;
-    },
     invites() {
       return this.$store.state.invites.invites;
     },
-    hasInvites() {
-      return this.invites && this.user.length > 0;
+    ifInvites() {
+      return Object.keys(this.invites).length > 0;
     },
   },
 };

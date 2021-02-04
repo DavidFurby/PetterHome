@@ -1,14 +1,17 @@
 <template>
-  <nb-container v-if="isPetsLoaded">
-    <AppHeader screen="Sharelist" />
-    <nb-card v-for="user in sharedWith" :key="user.id">
-      <nb-card-item button>
-        <nb-body full info>
-          <nb-text>{{ user.username }} </nb-text>
+  <nb-container>
+    <AppHeader :screen="Sharelist" />
+    <nb-content v-if="hasUsers">
+      <nb-card v-for="user in sharedWith" :key="user.id">
+        <nb-card-item button>
+          <nb-body full info>
+            <nb-text>{{ user.username }} </nb-text>
+            <nb-text>{{ user.email }} </nb-text>
+          </nb-body>
           <nb-button><nb-text>Delete</nb-text></nb-button>
-        </nb-body>
-      </nb-card-item>
-    </nb-card>
+        </nb-card-item>
+      </nb-card>
+    </nb-content>
     <nb-button block :on-press="setShare">
       <nb-text>Share Pet</nb-text>
     </nb-button>
@@ -55,9 +58,13 @@ export default {
       type: Object,
     },
   },
-  created() {
+  async created() {
     this.pet = this.navigation.getParam("pet", "undefined");
     this.user = this.navigation.getParam("user", "undefined");
+    let params = {};
+    params.userId = this.user.id;
+    params.petId = this.pet.id;
+    await this.$store.dispatch("sharedWith/fetchSharedWithUsers", params);
   },
 
   methods: {
@@ -71,7 +78,7 @@ export default {
       const userId = this.user.id;
       let params = { userId, petId, username };
       this.$store
-        .dispatch("pets/sendInvite", params)
+        .dispatch("invites/sendInvite", params)
         .then(() =>
           Toast.show({
             text: "Invite was sent successfully",
@@ -95,7 +102,11 @@ export default {
       return Object.keys(this.pet).length > 0;
     },
     sharedWith() {
-      return this.pet.sharedWith;
+      console.log(this.$store.state.sharedWith.sharedWithUsers);
+      return this.$store.state.sharedWith.sharedWithUsers;
+    },
+    hasUsers() {
+      return Object.keys(this.sharedWith).length > 0;
     },
   },
 };

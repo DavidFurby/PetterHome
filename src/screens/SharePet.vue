@@ -2,7 +2,7 @@
   <nb-container>
     <scroll-view>
       <AppHeader screen="Share Pet" />
-      <SharePetCard :v-if="hasUser"
+      <SharePetCard
         v-for="pet in pets"
         :key="pet.id"
         :pet="pet"
@@ -22,19 +22,16 @@ export default {
       type: Object,
     },
   },
-  created() {
-    this.$store.dispatch("auth/fetchCurrentUser");
-  },
+
   computed: {
     user() {
       return this.$store.state.auth.user;
     },
     pets() {
+      console.log(this.user);
       return this.user.pets;
     },
-    hasUser() {
-      return this.user && this.user.length > 0;
-    },
+   
   },
   methods: {
     goToShareList(pet) {

@@ -10,10 +10,10 @@
             :onValueChange="onAnimalChange"
           >
             <item
-              v-for="(setAnimal, animalIndex) in animals"
+              v-for="(animal, animalIndex) in animals"
               :key="animalIndex"
-              :label="setAnimal.animal"
-              :value="setAnimal.animal"
+              :label="animal.animal"
+              :value="animal.animal"
             />
           </nb-picker>
               <nb-picker
@@ -24,11 +24,10 @@
             :onValueChange="onBreedChange"
           >
             <item
-            :v-if="selectedAnimal"
-              v-for="(breeds, breedIndex) in animal.breeds"
+              v-for="(breed, breedIndex) in animals[currentAnimal].breeds"
               :key="breedIndex"
-              :label="breeds.breeds"
-              :value="breeds.breeds"
+              :label="breed"
+              :value="breed"
             />
           </nb-picker> 
       <nb-form>
@@ -48,14 +47,16 @@
           ><nb-input placeholder="Age" v-model="petForm.petAge"
         /></nb-item>
 
-        <InputWithError
-          :error="$v.petForm.gender.$dirty && !$v.petForm.gender.required"
-          msg="A gender must be given for the pet"
+    <nb-picker
+          note
+          mode="dropdown"
+          :style="{ width: 120 }"
+          :selectedValue="selectedGender"
+          :onValueChange="onGenderChange"
         >
-          <nb-item stackedLabel
-            ><nb-input placeholder="Gender" v-model="petForm.gender"
-          /></nb-item>
-        </InputWithError>
+          <item label="Male" value="MALE" />
+          <item label="Female" value="FEMALE" />
+        </nb-picker>
 
         <nb-item stackedLabel
           ><nb-input v-model="petForm.height" placeholder="Height"
@@ -102,16 +103,17 @@ export default {
   data() {
     return {
       breedSelection: "",
+      currentAnimal: 0,
       petForm: {
         petName: "",
         petAge: "",
-        gender: "",
+        gender: "MALE",
         weight: "",
         height: "",
       },
       animalForm: {
-        animal: "",
-        breed: "",
+        animal: this.animals[0].animal,
+        breed: this.animals[0].breeds[0],
       },
     };
   },
@@ -139,14 +141,15 @@ export default {
     },
   },
   methods: {
-    animalBreeds(animal) {
-      return animal;
-    },
-    onAnimalChange(animal) {
+    onAnimalChange(animal, index) {
       this.animalForm.animal = animal;
+      this.currentAnimal = index;
     },
     onBreedChange(breed) {
       this.animalForm.breed = breed;
+    },
+    onGenderChange(gender) {
+      this.petForm.gender = gender;
     },
     getIosIcon() {
       return <Icon name="ios-arrow-down-outline" />;
@@ -164,22 +167,21 @@ export default {
       animal.breed = animalForm.breed;
 
       petForm.animal = animal;
-      let userId = this.user;
+      let userId = this.user.id;
+      console.log(userId);
       let params = { petForm, userId };
+
       if (!this.$v.petForm.$invalid) {
         this.$store
           .dispatch("pets/addPetToUser", params)
-          .then(() => this.navigateToMain())
-          .catch(() => {
-            Toast.show({
-              text: "Something went wrong",
-              buttonText: "okay",
-              type: "danger",
-              duration: 3000,
-            });
-          });
+          .then(() => this.navigateToMain());
       } else {
-        return alert("something went wrong");
+        Toast.show({
+          text: "Pet could not be added",
+          buttonText: "ok",
+          type: "danger",
+          duration: 3000,
+        });
       }
     },
     navigateToMain() {
@@ -196,6 +198,10 @@ export default {
     selectedBreed() {
       return this.animalForm.breed;
     },
+    selectedGender() {
+      return this.petForm.gender;
+    },
+
     ifMedication() {
       return this.petForm.medication;
     },

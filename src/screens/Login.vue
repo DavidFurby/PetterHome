@@ -1,7 +1,7 @@
 <template>
   <nb-container>
     <AppNavigationEvents :onDidFocus="checkForMessage" />
-    <AppHeader screen="Login" />
+    <AppHeader root screen="Login" />
     <nb-content>
       <nb-form>
         <InputWithError

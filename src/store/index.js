@@ -1,9 +1,10 @@
 import Vuex from "vuex";
 import Vue from "vue-native-core";
-import pets from "./modules/pets"
+import pets from "./modules/pets";
 import animals from "./modules/animals";
-import invites from "./modules/invites"
+import invites from "./modules/invites";
 import auth from "./modules/auth";
+import sharedWith from "./modules/sharedWith";
 import Vuelidate from "vuelidate";
 
 Vue.use(Vuex);
@@ -14,12 +15,11 @@ export default new Vuex.Store({
     pets,
     animals,
     auth,
-    invites, 
+    invites,
+    sharedWith,
   },
   state: {},
   getters: {},
-  actions: {
-  },
-  mutations: {
-  },
+  actions: {},
+  mutations: {},
 });

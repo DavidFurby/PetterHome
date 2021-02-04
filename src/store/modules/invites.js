@@ -11,17 +11,43 @@ export default {
   getters: {},
   actions: {
     sendInvite(context, params) {
+      console.log(params);
       let petId = params.petId;
       let userId = params.userId;
       let username = params.username;
-      return axiosInstance.post(
-        `/user/sendInvite?petId=${petId}&userId=${userId}`,
-        username
-      );
+      return axiosInstance
+        .post(`/user/sendInvite?userId=${userId}&petId=${petId}`, { username })
+        .then((res) => {
+          console.log(res, "res");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
-    fetchInvites(context, params) {
+    acceptInvite(context, params) {
+      console.log(params);
       let userId = params.userId;
-      return axiosInstance.get(`/user/getAllInvites?userId=${userId}`);
+      let inviteId = params.inviteId;
+      return axiosInstance
+        .post(`/user/acceptInvite?userId=${userId}&inviteId=${inviteId}`)
+        .then((res) => {
+          console.log(res, "res");
+        })
+        .catch((err) => {
+          console.log(err, "error");
+        });
+    },
+    fetchInvites({ commit, state }, userId) {
+      return axiosInstance
+        .get(`/user/getAllInvites?userId=${userId}`)
+        .then((res) => {
+          const invites = res.data;
+          commit("setInvites", invites);
+          return state.invites;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
   mutations: {

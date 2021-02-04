@@ -8,7 +8,7 @@
       <nb-button block light :on-press="goToNotificationSettings">
         <nb-text>Notification Settings</nb-text>
       </nb-button>
-      <nb-button block light :on-press="goToSharePet">
+      <nb-button block light :on-press="() => goToSharePet(this.user)">
         <nb-text>Share Pet</nb-text>
       </nb-button>
     </nb-content>
@@ -37,13 +37,14 @@ export default {
   methods: {
     goToAccount() {
       let user = this.user;
-      this.navigation.navigate("Account", {user: user});
+      this.navigation.navigate("Account", { user: user });
     },
     goToNotificationSettings() {
       this.navigation.navigate("NotificationSettings");
     },
     goToSharePet() {
-      this.navigation.navigate("SharePet");
+      let user = this.user 
+      this.navigation.navigate("SharePet", {user});
     },
   },
 };

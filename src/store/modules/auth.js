@@ -36,7 +36,6 @@ export default {
         const user = res.data;
         await AsyncStorage.setItem("petterhome-jwt", user.accessToken);
         const token = await AsyncStorage.getItem("petterhome-jwt");
-        console.log(token, "auth");
         commit("setAuthUser", user);
         return state.user;
       });

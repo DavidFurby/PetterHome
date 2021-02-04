@@ -24,9 +24,15 @@ export default {
     },
     addPetToUser(context, params) {
       let petData = params.petForm;
-      let userId = params.userId.user;
-      return axiosInstance.post(`/user/addPetToUser?userId=${userId}`, petData);
-    },
+      let userId = params.userId;
+      return axiosInstance
+        .post(`/user/addPetToUser?userId=${userId}`, petData)
+        .then((res) => {
+          console.log(res, "success");
+        }).catch((err) => {
+          console.log(err, "error")
+        })
+      }, 
     addNeedToPet(context, params) {
       let needForm = params.need;
       let userId = params.userId;
@@ -43,12 +49,6 @@ export default {
         `/user/changePassword?userId=${userId}`,
         passwordRequest
       );
-    },
-    sendInvite(context, params) {
-      let petId = params.petId;
-      let userId = params.userId;
-      let username = params.username; 
-      return axiosInstance.post(`/user/sendInvite?petId=${petId}&userId=${userId}`, username)
     },
     fetchPetById({ commit, state }, params) {
       const petId = params.petId;

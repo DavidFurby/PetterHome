@@ -30,7 +30,8 @@ import SchemaScreen from "./screens/Schema";
 import LoginScreen from "./screens/Login";
 import RegistrationScreen from "./screens/Register";
 import RecoverPasswordScreen from "./screens/RecoverPassword";
-import AddSchedule from "./screens/AddSchema"
+import AddSchedule from "./screens/AddSchema";
+import ReceivedPetsScreen from "./screens/ReceivedPets";
 
 const MainNavigator = createStackNavigator(
   {
@@ -51,11 +52,12 @@ const MainNavigator = createStackNavigator(
 
 const RequestNavigation = createBottomTabNavigator(
   {
-    Request: RequestScreen,
+    Requests: RequestScreen,
     SharePet: SharePetScreen,
+    ReceivedPets: ReceivedPetsScreen,
   },
   {
-    initialRouteName: "Request",
+    initialRouteName: "SharePet",
     headerMode: "none",
     navigationOptions: {
       headerVisible: false,
@@ -91,11 +93,20 @@ const SettingsNavigator = createStackNavigator(
     },
   }
 );
-const LoginNavigator = createStackNavigator({
-  Login: LoginScreen,
-  Register: RegistrationScreen,
-  RecoverPassword: RecoverPasswordScreen,
-});
+const LoginNavigator = createStackNavigator(
+  {
+    Login: LoginScreen,
+    Register: RegistrationScreen,
+    RecoverPassword: RecoverPasswordScreen,
+  },
+  {
+    initialRouteName: "Login",
+    headerMode: "none",
+    navigationOptions: {
+      headerVisible: false,
+    },
+  }
+);
 const TabNavigation = createBottomTabNavigator(
   {
     Notification: NotificationScreen,
