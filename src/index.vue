@@ -13,12 +13,14 @@ import axios from "axios";
 import AppHeader from "./components/AppHeader";
 import InputWithError from "./components/InputWithError";
 import PickerWithError from "./components/PickerWithError";
+import AppTimePicker from "./components/AppTimePicker"
 // registering all native-base components to the global scope of the Vue
 Vue.use(VueNativeBase, axios);
 Vue.prototype.$store = store;
 Vue.component("AppHeader", AppHeader);
 Vue.component("InputWithError", InputWithError);
 Vue.component("PickerWithError", PickerWithError);
+Vue.component("AppTimePicker", AppTimePicker);
 
 export default {
   components: {

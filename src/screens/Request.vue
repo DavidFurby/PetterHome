@@ -1,12 +1,8 @@
 <template>
   <nb-container>
+    <AppHeader screen="Invites" />
     <scroll-view>
-      <AppHeader screen="Invites" />
-      <RequestCard
-        v-if="ifInvites"
-        :invites="invites"
-        :acceptRequest="acceptRequest"
-      />
+      <RequestCard v-if="ifUser" :acceptRequest="acceptRequest" :user="user" />
       <nb-text v-else>No Invites available</nb-text>
     </scroll-view>
   </nb-container>
@@ -17,23 +13,21 @@ export default {
   components: {
     RequestCard,
   },
-  data() {
-    return {
-      user: {
-        type: Object,
-      },
-    };
-  },
   props: {
-    requestData: {
-      type: Array,
-      default: () => [],
-    },
     navigation: {
       type: Object,
     },
   },
 
+  computed: {
+    user() {
+      return this.$store.state.auth.user;
+    },
+
+    ifUser() {
+      return (this.user = {});
+    },
+  },
   methods: {
     acceptRequest(inviteId) {
       let params = {};
@@ -57,19 +51,6 @@ export default {
             duration: 3000,
           });
         });
-    },
-  },
-  async created() {
-    this.user = await this.navigation.getParam("user", "undefined");
-    const userId = this.user.id;
-    await this.$store.dispatch("invites/fetchInvites", userId);
-  },
-  computed: {
-    invites() {
-      return this.$store.state.invites.invites;
-    },
-    ifInvites() {
-      return Object.keys(this.invites).length > 0;
     },
   },
 };

@@ -1,7 +1,6 @@
 <template>
   <nb-container>
     <AppHeader screen="Notifications" />
-
     <scroll-view>
       <NotificationCard :time="time" :pets="pets" />
     </scroll-view>
@@ -14,19 +13,18 @@
 
 <script>
 import NotificationCard from "../components/NotificationCard";
-const hour = new Date().getHours();
-const min = new Date().getMinutes();
 
 export default {
   components: {
     NotificationCard,
   },
-  data() {
-    return {
-      pets: petData,
-
-      time: hour + ":" + min,
-    };
+  async updated() {
+   await checkSchedule();
+  },
+  methods: {
+    checkSchedule() {
+      console.log("test")
+    },
   },
   computed: {
     user() {
@@ -35,10 +33,6 @@ export default {
     pets() {
       return this.user.pets;
     },
-  },
-  created() {
-    this.$store.dispatch("pets/fetchPets");
-    this.$store.dispatch("auth/fetchCurrentUser");
   },
 };
 </script>

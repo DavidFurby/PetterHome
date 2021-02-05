@@ -77,6 +77,7 @@ export default {
   },
   created() {
     const isAuth = this.$store.getters["auth/isAuth"];
+    console.log(isAuth);
     if (isAuth) {
       this.navigation.navigate("Home");
     }
@@ -111,7 +112,7 @@ export default {
         return alert("something went wrong");
       }
     },
-    
+
     checkForMessage() {
       const message = this.navigation.getParam("message");
       if (message) {

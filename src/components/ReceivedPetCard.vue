@@ -7,16 +7,13 @@
       <nb-card>
         <nb-card-item>
           <nb-body full info>
-            <nb-text>{{ receivedPet.pet.petName }}</nb-text>
-            <nb-text>{{ receivedPet.pet.petAge }}</nb-text>
-            <nb-text>{{ receivedPet.pet.animal.animal }}</nb-text>
-            <nb-text>{{ receivedPet.pet.animal.breed }}</nb-text>
-            <nb-text>{{ receivedPet.pet.gender }}</nb-text>
-            <nb-text>{{ receivedPet.pet.height }}</nb-text>
-            <nb-text>{{ receivedPet.pet.weight }}</nb-text>
-            <nb-button :on-press="() => acceptRequest(invite.inviteId)"
-              ><nb-text>Accept</nb-text>
-            </nb-button>
+            <nb-text>name: {{ receivedPet }}</nb-text>
+            <nb-text>age:{{ receivedPet.pet.petAge }}</nb-text>
+            <nb-text>animal: {{ receivedPet.pet.animal.animal }}</nb-text>
+            <nb-text>breed: {{ receivedPet.pet.animal.breed }}</nb-text>
+            <nb-text>gender: {{ receivedPet.pet.gender }}</nb-text>
+            <nb-text>height: {{ receivedPet.pet.height }}</nb-text>
+            <nb-text>weight: {{ receivedPet.pet.weight }}</nb-text>
           </nb-body>
         </nb-card-item>
       </nb-card>
@@ -25,8 +22,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  computed: {
+    receivedPets() {
+      const receivedPets = this.$store.state.receivedPets.receivedPets;
+      console.log(receivedPets, "pets");
+      return receivedPets;
+    },
+  },
+};
 </script>
-
-<style>
-</style>

@@ -168,7 +168,6 @@ export default {
 
       petForm.animal = animal;
       let userId = this.user.id;
-      console.log(userId);
       let params = { petForm, userId };
 
       if (!this.$v.petForm.$invalid) {

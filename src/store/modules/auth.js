@@ -35,7 +35,6 @@ export default {
       return axiosInstance.post(`/auth/login`, userData).then(async (res) => {
         const user = res.data;
         await AsyncStorage.setItem("petterhome-jwt", user.accessToken);
-        const token = await AsyncStorage.getItem("petterhome-jwt");
         commit("setAuthUser", user);
         return state.user;
       });
@@ -73,9 +72,9 @@ export default {
           console.log(error);
         });
     },
-    fetchCurrentUser({ commit, state }) {
+    fetchCurrentUser({ commit, state }, userId) {
       return axiosInstance
-        .get(`/user/getCurrentUser`)
+        .get(`/user/getCurrentUser`, userId)
         .then((res) => {
           const user = res.data;
           AsyncStorage.setItem("petterhome-jwt", user.token);
@@ -84,21 +83,18 @@ export default {
         })
         .catch((error) => error);
     },
-    async verifyUser({ dispatch }) {
-      const jwt = await AsyncStorage.getItem("petterhome-jwt");
+    async verifyUser({ dispatch, commit }) {
+      const jwt = await AsyncStorage.getItem("meetuper-jwt");
+
       if (jwt && isTokenValid(jwt)) {
-        return user
-          ? Promise.resolve(jwt)
-          : Promise.reject("cannot fetch user");
+        Promise.resolve(jwt);
       } else {
+        commit("resolveAuth");
         return Promise.reject("Token is not valid");
       }
     },
   },
   mutations: {
-    setUsers(state, users) {
-      Vue.set(state, "users", users);
-    },
     setAuthUser(state, user) {
       return (state.user = user);
     },

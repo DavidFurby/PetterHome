@@ -6,36 +6,33 @@
           :error="$v.needForm.type.$dirty && !$v.needForm.type.required"
           msg="Must select a type"
         >
-          <nb-item stackedLabel
-            ><nb-input
+          <nb-item stackedLabel>
+            <nb-label>Name of the pets need</nb-label>
+            <nb-input
               placeholder="type"
               v-model="needForm.type"
               :on-blur="() => $v.needForm.type.$touch()"
           /></nb-item>
         </InputWithError>
 
-        <nb-item stackedLabel
-          ><nb-input placeholder="Notified" v-model="needForm.notified"
-        /></nb-item>
+        <nb-list-item stackedLabel>
+          <nb-checkbox
+            :checked="needForm.notified"
+            :on-press="setNotification"
+          />
+          <nb-label>Do you want to be notified about this need?</nb-label>
+        </nb-list-item>
       </nb-form>
 
       <nb-form>
-        <InputWithError
-          :error="$v.scheduleForm.time.$dirty && !$v.scheduleForm.time.required"
-          msg="A time must be given for the schedule"
-        >
-          <nb-item stackedLabel
-            ><nb-input
-              placeholder="Time"
-              v-model="scheduleForm.time"
-              :on-blur="() => $v.scheduleForm.time.$touch()"
-          /></nb-item>
-        </InputWithError>
+        <nb-item stackedLabel>
+          <nb-label>Time of day</nb-label>
+          <AppTimePicker :onValueChange="(time) => setTime(time, 'time')" />
+        </nb-item>
 
-        <nb-item stackedLabel
-          ><nb-input
-            placeholder="Assigned to"
-            v-model="scheduleForm.assignedTo"
+        <nb-item stackedLabel>
+          <nb-label>Assigne to which user</nb-label>
+          <nb-input placeholder="User" v-model="scheduleForm.assignedTo"
         /></nb-item>
 
         <!-- <nb-list-item>
@@ -57,7 +54,7 @@
         </nb-button>-->
       </nb-form>
       <nb-button block :on-press="addPetNeed">
-        <nb-text>Add PetNeed</nb-text>
+        <nb-text>Add Schedule </nb-text>
       </nb-button>
     </scroll-view>
   </nb-container>
@@ -74,14 +71,14 @@ export default {
   components: { Item: Picker.Item, DogForm, Medication },
   data() {
     return {
-      breedSelection: "",
+      breedSelection: null,
       needForm: {
-        type: "",
-        notified: "false",
+        type: null,
+        notified: false,
       },
       scheduleForm: {
-        time: "",
-        assignedTo: "",
+        time: null,
+        assignedTo: null,
       },
     };
   },
@@ -152,6 +149,13 @@ export default {
       this.navigation.navigate("Schema", {
         message: "Succesfully added new need for pet!",
       });
+    },
+    setTime(time, label) {
+      this.scheduleForm[label] = time;
+    },
+    setNotification() {
+      this.needForm.notified = !this.needForm.notified;
+      console.log(this.needForm.notified);
     },
   },
 };

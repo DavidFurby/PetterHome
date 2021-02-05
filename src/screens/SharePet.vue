@@ -28,7 +28,6 @@ export default {
       return this.$store.state.auth.user;
     },
     pets() {
-      console.log(this.user);
       return this.user.pets;
     },
    

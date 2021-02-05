@@ -1,34 +1,38 @@
 <template>
   <nb-container>
-    <AppHeader :screen="Sharelist" />
-    <nb-content v-if="hasUsers">
-      <nb-card v-for="user in sharedWith" :key="user.id">
-        <nb-card-item button>
-          <nb-body full info>
-            <nb-text>{{ user.username }} </nb-text>
-            <nb-text>{{ user.email }} </nb-text>
-          </nb-body>
-          <nb-button><nb-text>Delete</nb-text></nb-button>
-        </nb-card-item>
-      </nb-card>
-    </nb-content>
-    <nb-button block :on-press="setShare">
-      <nb-text>Share Pet</nb-text>
-    </nb-button>
-    <nb-content v-if="share">
-      <nb-text>Add sharing account</nb-text>
-      <nb-item
-        ><nb-form
-          ><nb-input
-            placeholder="username"
-            v-model="userForm.username"
-            :on-blur="() => $v.userForm.username.$touch()"
-          />
-        </nb-form>
-      </nb-item>
-      <nb-button :on-press="() => sharePet()"
-        ><nb-text>Send invite</nb-text>
+    <AppHeader :screen="header" />
+    <scroll-view>
+      <nb-content v-if="hasUsers">
+        <nb-card v-for="user in sharedWith" :key="user.id">
+          <nb-card-item button>
+            <nb-body full info>
+              <nb-text>{{ user.username }} </nb-text>
+              <nb-text>{{ user.email }} </nb-text>
+            </nb-body>
+            <nb-button><nb-text>Delete</nb-text></nb-button>
+          </nb-card-item>
+        </nb-card>
+      </nb-content>
+    </scroll-view>
+    <nb-content>
+      <nb-button block :on-press="setShare">
+        <nb-text>Share Pet</nb-text>
       </nb-button>
+      <nb-content v-if="share">
+        <nb-text>Add sharing account</nb-text>
+        <nb-item
+          ><nb-form
+            ><nb-input
+              placeholder="username"
+              v-model="userForm.username"
+              :on-blur="() => $v.userForm.username.$touch()"
+            />
+          </nb-form>
+        </nb-item>
+        <nb-button :on-press="() => sharePet()"
+          ><nb-text>Send invite</nb-text>
+        </nb-button>
+      </nb-content>
     </nb-content>
   </nb-container>
 </template>
@@ -39,6 +43,7 @@ import { Toast } from "native-base";
 export default {
   data() {
     return {
+      header: "Share list",
       pet: {
         type: Object,
         default: () => {},
@@ -102,7 +107,6 @@ export default {
       return Object.keys(this.pet).length > 0;
     },
     sharedWith() {
-      console.log(this.$store.state.sharedWith.sharedWithUsers);
       return this.$store.state.sharedWith.sharedWithUsers;
     },
     hasUsers() {
