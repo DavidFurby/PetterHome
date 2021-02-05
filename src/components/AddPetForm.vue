@@ -16,6 +16,7 @@
               :value="animal.animal"
             />
           </nb-picker>
+
               <nb-picker
             note
             mode="dropdown"
@@ -31,10 +32,12 @@
             />
           </nb-picker> 
       <nb-form>
+
         <InputWithError
           :error="$v.petForm.petName.$dirty && !$v.petForm.petName.required"
           msg="A name must be given for the pet"
         >
+        
           <nb-item stackedLabel
             ><nb-input
               placeholder="Name"
@@ -124,6 +127,9 @@ export default {
     animals: {
       type: Array,
     },
+    navigation: {
+      type: Object,
+    },
   },
   validations: {
     petForm: {
@@ -184,9 +190,7 @@ export default {
       }
     },
     navigateToMain() {
-      this.navigation.navigate("Main", {
-        message: "Succesfully added new pet!",
-      });
+      this.navigation.navigate("Main");
     },
   },
 

@@ -20,7 +20,7 @@
             :checked="needForm.notified"
             :on-press="setNotification"
           />
-          <nb-label>Do you want to be notified about this need?</nb-label>
+          <nb-label>  Do you want to be notified about this need?</nb-label>
         </nb-list-item>
       </nb-form>
 
