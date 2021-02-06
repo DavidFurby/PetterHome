@@ -21,11 +21,6 @@ export default {
   async updated() {
    await checkSchedule();
   },
-  methods: {
-    checkSchedule() {
-      console.log("test")
-    },
-  },
   computed: {
     user() {
       return this.$store.state.auth.user;

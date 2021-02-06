@@ -1,33 +1,53 @@
 <template>
   <nb-container>
     <AppHeader
-      screen="Add Schema"
+      screen="Add Need"
       leftButton="return"
       :leftButtonFunction="goBack"
     />
-    <AddScheduleForm :user="user" :pet="pet" />
+    <AddNeedForm :user="user" :petId="petId" :availableUsers="availableUsers" />
   </nb-container>
 </template>
 <script>
 import { Picker } from "native-base";
-import AddScheduleForm from "../components/AddScheduleForm";
+import AddNeedForm from "../components/AddNeedForm";
 export default {
-  components: { Item: Picker.Item, AddScheduleForm },
+  components: { Item: Picker.Item, AddNeedForm },
 
   props: {
     navigation: {
       type: Object,
     },
   },
-  data: function () {
+  data: () => {
     return {
       selected: "key0",
-      user: null,
+      user: {
+        type: String,
+      },
+      petId: {
+        type: String,
+      },
+      availableUsers: {
+        type: Array,
+        default: () => [],
+      },
     };
   },
-  created() {
-    this.user = this.navigation.getParam("user", "undefined");
-    this.pet = this.navigation.getParam("pet", "undefined");
+  async created() {
+    this.user = await this.navigation.getParam("user", "undefined");
+    this.petId = await this.navigation.getParam("petId", "undefined");
+    let sharedWithUsers = await this.navigation.getParam(
+      "sharedWith",
+      "undefined"
+    );
+    let arr = [];
+    arr.push(this.user.username);
+    sharedWithUsers.map((user) => {
+      arr.push(user.username);
+    });
+    console.log(arr, "arr");
+    this.availableUsers = arr;
   },
   methods: {
     goBack() {

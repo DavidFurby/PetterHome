@@ -103,12 +103,17 @@ export default {
             });
           });
       }
-      alert(JSON.stringify(this.form));
     },
     goToLogin() {
       this.navigation.navigate("Login");
     },
     navigateToLogin() {
+      Toast.show({
+        text: "Registration succeeded",
+        buttonText: "ok",
+        type: "success",
+        duration: 3000,
+      });
       this.navigation.navigate("Login", { message: "Succesfull registration" });
     },
   },

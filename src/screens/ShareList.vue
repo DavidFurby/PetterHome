@@ -1,18 +1,9 @@
 <template>
   <nb-container>
-    <AppHeader :screen="header" />
+    <AppHeader :screen="header" :sharedWith="sharedWith" />
     <scroll-view>
-      <nb-content v-if="hasUsers">
-        <nb-card v-for="user in sharedWith" :key="user.id">
-          <nb-card-item button>
-            <nb-body full info>
-              <nb-text>{{ user.username }} </nb-text>
-              <nb-text>{{ user.email }} </nb-text>
-            </nb-body>
-            <nb-button><nb-text>Delete</nb-text></nb-button>
-          </nb-card-item>
-        </nb-card>
-      </nb-content>
+      <SharedWithUserCard v-if="hasUsers" />
+      <nb-text v-else>You haven't shared this pet with anyone yet</nb-text>
     </scroll-view>
     <nb-content>
       <nb-button block :on-press="setShare">
@@ -39,8 +30,11 @@
 
 <script>
 import { Toast } from "native-base";
-
+import SharedWithUserCard from "../components/SharedWithUserCard";
 export default {
+  components: {
+    SharedWithUserCard,
+  },
   data() {
     return {
       header: "Share list",
@@ -66,9 +60,11 @@ export default {
   async created() {
     this.pet = this.navigation.getParam("pet", "undefined");
     this.user = this.navigation.getParam("user", "undefined");
+
     let params = {};
     params.userId = this.user.id;
     params.petId = this.pet.id;
+    console.log(params);
     await this.$store.dispatch("sharedWith/fetchSharedWithUsers", params);
   },
 
@@ -77,29 +73,56 @@ export default {
       return (this.share = !this.share);
     },
     sharePet() {
-      let userForm = this.userForm;
-      let username = userForm.username;
-      const petId = this.pet.id;
-      const userId = this.user.id;
-      let params = { userId, petId, username };
-      this.$store
-        .dispatch("invites/sendInvite", params)
-        .then(() =>
-          Toast.show({
-            text: "Invite was sent successfully",
-            buttonText: "ok",
-            type: "success",
-            duration: 3000,
+      if (this.user.username != this.userForm.username) {
+        let userForm = this.userForm;
+        let username = userForm.username;
+        const petId = this.pet.id;
+        const userId = this.user.id;
+        let params = { userId, petId, username };
+        this.$store
+          .dispatch("invites/sendInvite", params)
+          .then((res) => {
+            if ((res = "Invite for this pet has already been sent!")) {
+              Toast.show({
+                text: res,
+                buttonText: "ok",
+                type: "danger",
+                duration: 3000,
+              });
+            } else if (
+              (res = "This pet has already been received by that user!")
+            ) {
+              Toast.show({
+                text: res,
+                buttonText: "ok",
+                type: "danger",
+                duration: 3000,
+              });
+            } else {
+              Toast.show({
+                text: res,
+                buttonText: "ok",
+                type: "success",
+                duration: 3000,
+              });
+            }
           })
-        )
-        .catch(() => {
-          Toast.show({
-            text: "Invite couldn't send",
-            buttonText: "ok",
-            type: "danger",
-            duration: 3000,
+          .catch(() => {
+            Toast.show({
+              text: "Invite couldn't send",
+              buttonText: "ok",
+              type: "danger",
+              duration: 3000,
+            });
           });
+      } else {
+        Toast.show({
+          text: "Can't invite yourself",
+          buttonText: "ok",
+          type: "danger",
+          duration: 3000,
         });
+      }
     },
   },
   computed: {
@@ -107,6 +130,7 @@ export default {
       return Object.keys(this.pet).length > 0;
     },
     sharedWith() {
+      console.log(this.$store.state);
       return this.$store.state.sharedWith.sharedWithUsers;
     },
     hasUsers() {

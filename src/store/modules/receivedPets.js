@@ -19,7 +19,7 @@ export default {
           return state.receivedPets;
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err, "err");
         });
     },
   },

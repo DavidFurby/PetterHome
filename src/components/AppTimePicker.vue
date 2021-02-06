@@ -45,19 +45,18 @@ export default {
       this.onValueChange(time);
     },
     generateTimes() {
-      const times = []; 
+      const times = [];
       let tt = 0;
 
-   
       for (let i = 0; tt < 24 * 60; i++) {
-        const hh = Math.floor(tt / 60); 
-        const mm = tt % 60; 
-     
+        const hh = Math.floor(tt / 60);
+        const mm = tt % 60;
+
         times[i] =
           ("0" + (hh >= 12 ? hh % 24 : hh % 12)).slice(-2) +
           ":" +
           ("0" + mm).slice(-2);
-        tt += this.interval; 
+        tt += this.interval;
       }
       times.push("23:59");
       return times;

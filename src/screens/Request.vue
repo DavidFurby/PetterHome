@@ -2,13 +2,19 @@
   <nb-container>
     <AppHeader screen="Invites" />
     <scroll-view>
-      <RequestCard v-if="ifUser" :acceptRequest="acceptRequest" :user="user" />
+      <RequestCard
+        v-if="ifInvites"
+        :acceptRequest="acceptRequest"
+        :user="user"
+        :invites="invites"
+      />
       <nb-text v-else>No Invites available</nb-text>
     </scroll-view>
   </nb-container>
 </template>
 <script>
 import RequestCard from "../components/RequestCard";
+import { Toast } from "native-base";
 export default {
   components: {
     RequestCard,
@@ -26,6 +32,13 @@ export default {
 
     ifUser() {
       return (this.user = {});
+    },
+    invites() {
+      const invites = this.$store.state.invites.invites;
+      return invites;
+    },
+    ifInvites() {
+      return Object.keys(this.invites).length > 0;
     },
   },
   methods: {

@@ -18,6 +18,8 @@
 <script>
 import { ActionSheet } from "native-base";
 import PetPage from ".././components/PetPage";
+import { Toast } from "native-base";
+
 export default {
   components: {
     PetPage,
@@ -25,9 +27,12 @@ export default {
   data() {
     return {
       pet: {
-        type: Object
-      }
-    }
+        type: Object,
+      },
+      user: {
+        type: Object,
+      },
+    };
   },
   props: {
     navigation: {
@@ -46,11 +51,12 @@ export default {
       return this.pet.animal || {};
     },
     isPetPageLoaded() {
-      return Object.keys(this.pet).length > 0
+      return Object.keys(this.pet).length > 0;
     },
   },
   created() {
     this.pet = this.navigation.getParam("pet", "undefined");
+    this.user = this.navigation.getParam("user", "undefined");
   },
   methods: {
     deleteFromApp() {
@@ -67,6 +73,24 @@ export default {
         },
         (buttonIndex) => {
           this.clicked = this.btnOptions[buttonIndex];
+          if (this.clicked == this.btnOptions[0]) {
+            let params = {};
+            params.petId = this.pet.id;
+            params.userId = this.user.id;
+            this.$store
+              .dispatch("pets/deletePetFromUser", params)
+              .then(() => {
+                this.navigation.goBack();
+              })
+              .catch(() => {
+                Toast.show({
+                  text: "Pet could not be deleted",
+                  buttonText: "ok",
+                  type: "danger",
+                  duration: 3000,
+                });
+              });
+          }
         }
       );
     },

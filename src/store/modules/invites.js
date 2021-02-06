@@ -17,7 +17,8 @@ export default {
       return axiosInstance
         .post(`/user/sendInvite?userId=${userId}&petId=${petId}`, { username })
         .then((res) => {
-          console.log(res, "res");
+          console.log(res.data.message);
+          return res.data.message;
         })
         .catch((err) => {
           console.log(err);

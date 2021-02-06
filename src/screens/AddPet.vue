@@ -5,7 +5,7 @@
       leftButton="return"
       :leftButtonFunction="goBack"
     />
-    <AddPetForm :user="user" :animals="animals" />
+    <AddPetForm :user="user" :animals="animals" :navigation="navigation" />
   </nb-container>
 </template>
 <script>

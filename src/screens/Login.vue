@@ -77,9 +77,8 @@ export default {
   },
   created() {
     const isAuth = this.$store.getters["auth/isAuth"];
-    console.log(isAuth);
     if (isAuth) {
-      this.navigation.navigate("Home");
+      this.navigation.navigate("Main");
     }
 
     //await AsyncStorage.removeItem('petterhome-jwt')

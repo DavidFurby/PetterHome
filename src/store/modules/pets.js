@@ -29,14 +29,28 @@ export default {
         .post(`/user/addPetToUser?userId=${userId}`, petData)
         .then((res) => {
           console.log(res, "success");
-        }).catch((err) => {
-          console.log(err, "error")
         })
-      }, 
+        .catch((err) => {
+          console.log(err, "error");
+        });
+    },
+    deletePetFromUser(context, params) {
+      let petId = params.petId;
+      let userId = params.userId;
+      return axiosInstance
+        .delete(`/user/deletePetFromUser?userId=${userId}&petId=${petId}`)
+        .then((res) => {
+          console.log(res, "success");
+        })
+        .catch((err) => {
+          console.log(err, "error");
+        });
+    },
     addNeedToPet(context, params) {
       let needForm = params.need;
       let userId = params.userId;
       let petId = params.petId;
+      console.log(params);
       return axiosInstance.post(
         `/user/addNeedToPet?userId=${userId}&petId=${petId}`,
         needForm

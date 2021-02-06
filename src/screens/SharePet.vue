@@ -6,7 +6,8 @@
         v-for="pet in pets"
         :key="pet.id"
         :pet="pet"
-        :navigateToShareList="goToShareList"
+        :navigateToShareList="() => goToShareList()"
+        :navigateToPet="() => navigateToPet()"
       />
     </scroll-view>
   </nb-container>
@@ -30,12 +31,15 @@ export default {
     pets() {
       return this.user.pets;
     },
-   
   },
   methods: {
     goToShareList(pet) {
       const user = this.user;
       this.navigation.navigate("ShareList", { pet: pet, user: user });
+    },
+    navigateToPet(pet) {
+      const user = this.user; 
+      this.navigation.navigate("Pet", { pet: pet, user: user });
     },
   },
 };

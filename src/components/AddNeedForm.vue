@@ -20,7 +20,7 @@
             :checked="needForm.notified"
             :on-press="setNotification"
           />
-          <nb-label>  Do you want to be notified about this need?</nb-label>
+          <nb-label> Do you want to be notified about this need?</nb-label>
         </nb-list-item>
       </nb-form>
 
@@ -31,10 +31,22 @@
         </nb-item>
 
         <nb-item stackedLabel>
-          <nb-label>Assigne to which user</nb-label>
-          <nb-input placeholder="User" v-model="scheduleForm.assignedTo"
-        /></nb-item>
-
+          <nb-label>Assign time to user</nb-label>
+          <nb-picker
+            note
+            mode="dropdown"
+            :style="{ width: 120 }"
+            :selectedValue="selectedUser"
+            :onValueChange="onUserChange"
+          >
+            <item
+              v-for="(availableUser, availableUserIndex) in availableUsers"
+              :key="availableUserIndex"
+              :label="availableUser"
+              :value="availableUser"
+            />
+          </nb-picker>
+        </nb-item>
         <!-- <nb-list-item>
           <nb-text>Medication ?</nb-text>
           <nb-body> </nb-body>
@@ -54,7 +66,7 @@
         </nb-button>-->
       </nb-form>
       <nb-button block :on-press="addPetNeed">
-        <nb-text>Add Schedule </nb-text>
+        <nb-text>Add Need </nb-text>
       </nb-button>
     </scroll-view>
   </nb-container>
@@ -62,13 +74,11 @@
 <script>
 import React from "react";
 import { Picker, Icon } from "native-base";
-import DogForm from "./DogForm";
-import Medication from "./Medication";
 import { required } from "vuelidate/lib/validators";
 import { Toast } from "native-base";
 
 export default {
-  components: { Item: Picker.Item, DogForm, Medication },
+  components: { Item: Picker.Item },
   data() {
     return {
       breedSelection: null,
@@ -77,17 +87,20 @@ export default {
         notified: false,
       },
       scheduleForm: {
-        time: null,
-        assignedTo: null,
+        time: "00:00",
+        assignedTo: this.availableUsers[0],
       },
     };
   },
   props: {
+    availableUsers: {
+      type: Array,
+    },
     user: {
       type: Object,
     },
-    pet: {
-      type: Object,
+    petId: {
+      type: String,
     },
   },
   validations: {
@@ -109,6 +122,9 @@ export default {
     onBreedChange(breedValue) {
       this.breedSelection = breedValue;
     },
+    onUserChange(userValue) {
+      this.assignedTo = userValue;
+    },
     getIosIcon() {
       return <Icon name="ios-arrow-down-outline" />;
     },
@@ -128,7 +144,7 @@ export default {
         need.notified = needForm.notified;
         need.schedule = schedule;
         let userId = this.user.id;
-        let petId = this.pet.id;
+        let petId = this.petId;
         let params = { need, userId, petId };
         this.$store
           .dispatch("pets/addNeedToPet", params)
@@ -151,11 +167,17 @@ export default {
       });
     },
     setTime(time, label) {
+      console.log(time);
+      console.log(label);
       this.scheduleForm[label] = time;
     },
     setNotification() {
       this.needForm.notified = !this.needForm.notified;
-      console.log(this.needForm.notified);
+    },
+  },
+  computed: {
+    selectedUser() {
+      return this.scheduleForm.assignedTo;
     },
   },
 };

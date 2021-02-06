@@ -62,11 +62,11 @@
         </nb-picker>
 
         <nb-item stackedLabel
-          ><nb-input v-model="petForm.height" placeholder="Height"
+          ><nb-input v-model="petForm.height" placeholder="Height cm"
         /></nb-item>
 
         <nb-item stackedLabel>
-          <nb-input v-model="petForm.weight" placeholder="Weight" />
+          <nb-input v-model="petForm.weight" placeholder="Weight kg" />
         </nb-item>
         <!-- <nb-list-item>
           <nb-text>Medication ?</nb-text>
@@ -177,9 +177,9 @@ export default {
       let params = { petForm, userId };
 
       if (!this.$v.petForm.$invalid) {
-        this.$store
-          .dispatch("pets/addPetToUser", params)
-          .then(() => this.navigateToMain());
+        this.$store.dispatch("pets/addPetToUser", params).then(() => {
+          this.navigation.navigate("Main");
+        });
       } else {
         Toast.show({
           text: "Pet could not be added",
@@ -190,7 +190,7 @@ export default {
       }
     },
     navigateToMain() {
-      this.navigation.navigate("Main");
+      this.navigation.goBack();
     },
   },
 

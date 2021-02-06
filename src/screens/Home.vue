@@ -1,9 +1,7 @@
 <template>
   <nb-container>
     <AppHeader root :screen="title" />
-    <nb-text class="text-color-primary">{{
-      JSON.stringify(notification.data)
-    }}</nb-text>
+
     <scroll-view>
       <PetCard
         v-for="pet in pets"
@@ -36,47 +34,11 @@ export default {
       title: "Home Screen",
     };
   },
-  created() {
-    this.registerForPushNotificationsAsync();
-    this._notificationSubscription = Notification.addListener(
-      this._handleNotification
-    );
-  },
   methods: {
-    registerForPushNotifications: async () => {
-      const { status: existingStatus } = await Permissions.getAsync(
-        Permissions.NOTIFICATIONS
-      );
-      let finalStatus = existingStatus;
-
-      // only ask if permissions have not already been determined, because
-      // iOS won't necessarily prompt the user a second time.
-      if (existingStatus !== "granted") {
-        // Android remote notification permissions are granted during the app
-        // install, so this will only ask on iOS
-        const { status } = await Permissions.askAsync(
-          Permissions.NOTIFICATIONS
-        );
-        finalStatus = status;
-      }
-
-      // Stop here if the user did not grant permissions
-      if (finalStatus !== "granted") {
-        return;
-      }
-
-      // Get the token that uniquely identifies this device
-      Notifications.getExpoPushTokenAsync().then((token) => {
-        console.log(token);
-      });
-    },
-
-    _handleNotification(notification) {
-      console.log(notification, "notification");
-      this.notifications = notification;
-    },
     goToPetScreen(pet) {
-      this.navigation.navigate("Pet", { pet: pet });
+      let user = this.user;
+
+      this.navigation.navigate("Pet", { pet: pet, user: user });
     },
     goToAddPetScreen() {
       let user = this.user;
@@ -90,11 +52,11 @@ export default {
   },
   async created() {
     const userId = this.user.id;
-    console.log("object");
-    console.log(userId);
     await this.$store.dispatch("receivedPets/fetchReceivedPets", userId);
     await this.$store.dispatch("users/fetchCurrentUser", userId);
     await this.$store.dispatch("invites/fetchInvites", userId);
+    await this.$store.dispatch("notifications/fetchNotifications", userId);
+    
   },
   computed: {
     user() {

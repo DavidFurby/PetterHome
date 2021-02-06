@@ -1,13 +1,13 @@
 <template>
   <view>
     <nb-content
-      v-for="(receivedPet, receivedPetIndex) in receivedPets"
+      v-for="(receivedPet, receivedPetIndex) in desperation"
       :key="receivedPetIndex"
     >
       <nb-card>
         <nb-card-item>
           <nb-body full info>
-            <nb-text>name: {{ receivedPet }}</nb-text>
+            <nb-text>name: {{ receivedPets }}</nb-text>
             <nb-text>age:{{ receivedPet.pet.petAge }}</nb-text>
             <nb-text>animal: {{ receivedPet.pet.animal.animal }}</nb-text>
             <nb-text>breed: {{ receivedPet.pet.animal.breed }}</nb-text>
@@ -23,12 +23,19 @@
 
 <script>
 export default {
-  computed: {
-    receivedPets() {
-      const receivedPets = this.$store.state.receivedPets.receivedPets;
-      console.log(receivedPets, "pets");
-      return receivedPets;
+  data() {
+    return {
+      desperation: [],
+    };
+  },
+  props: {
+    receivedPets: {
+      type: Array,
+      default: () => [],
     },
+  },
+  mounted() {
+    this.desperation = this.receivedPets;
   },
 };
 </script>

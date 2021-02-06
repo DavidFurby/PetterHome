@@ -1,25 +1,26 @@
 <template>
   <nb-container v-if="isNeedsLoaded">
-    <AppHeader :screen="pet.petName" />
+    <AppHeader :screen="head" />
     <nb-content
-      ><nb-card v-for="need in needs" :key="need.id"
+      ><nb-card v-for="(need, needIndex) in needs" :key="needIndex"
         ><nb-card-item
-          ><nb-text>{{ need.type }}</nb-text>
-          <nb-card-item v-for="schedule in schedules(need)" :key="schedule.id"
-              ><nb-text>
-                at
-                <nb-button :on-press="changeTime">
-                  <nb-text> {{ schedule.time }}</nb-text></nb-button
-                >
-                assigned to
-                <nb-button
-                  ><nb-text>{{ schedule.assignedTo }}</nb-text>
-                  </nb-button>
-                </nb-text>
-              </nb-card-item>
-            </nb-card>
-      <nb-button :on-press="goToAddScheduleScreen"
-        ><nb-text>Add new Schedule</nb-text></nb-button
+          ><nb-label>{{ need.type }} </nb-label>
+          <nb-label> Notified: {{ need.notified }}</nb-label>
+        </nb-card-item>
+        <nb-button><nb-text>Add new schedule</nb-text></nb-button>
+        <nb-card
+          v-for="(schedule, scheduleIndex) in need.schedule"
+          :key="scheduleIndex"
+          ><nb-card-item
+            ><nb-label
+              >{{ schedule.time }} assigned to
+              {{ schedule.assignedTo }}</nb-label
+            >
+          </nb-card-item>
+        </nb-card>
+      </nb-card>
+      <nb-button :on-press="() => goToAddNeedScreen(pet.id)"
+        ><nb-text>Add new Need</nb-text></nb-button
       >
     </nb-content>
   </nb-container>
@@ -35,10 +36,13 @@ export default {
     return {
       pet: {
         type: Object,
+        default: () => {},
       },
       user: {
         type: Object,
+        default: () => {},
       },
+      head: "schedules",
     };
   },
   props: {
@@ -49,32 +53,42 @@ export default {
   computed: {
     needs() {
       let needs = this.pet.needs;
+      console.log(needs);
       return needs;
     },
-
+    schedule() {},
     isNeedsLoaded() {
       return Object.keys(this.pet).length > 0;
     },
+    sharedWith() {
+      return this.$store.state.sharedWith.sharedWithUsers;
+    },
   },
-  created() {
+  async created() {
     this.pet = this.navigation.getParam("pet", "undefined");
     this.user = this.navigation.getParam("user", "undefined");
+    let params = {};
+    params.userId = this.user.id;
+    params.petId = this.pet.id;
+    await this.$store.dispatch("sharedWith/fetchSharedWithUsers", params);
   },
 
   methods: {
-        schedules(need) {
-      return need.schedule;
-    },
     changeTime() {
       alert("change Time");
     },
     changeAssignment() {
       alert("change assigned user");
     },
-    goToAddScheduleScreen() {
-      user = this.user;
-      pet = this.pet;
-      this.navigation.navigate("AddSchema", { user: user, pet: pet });
+    goToAddNeedScreen(petId) {
+      const user = this.user;
+      const sharedWith = this.sharedWith;
+      console.log(petId);
+      this.navigation.navigate("AddNeed", {
+        user: user,
+        petId: petId,
+        sharedWith: sharedWith,
+      });
     },
   },
 };

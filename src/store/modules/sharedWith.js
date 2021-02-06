@@ -11,7 +11,7 @@ export default {
   getters: {},
   actions: {
     fetchSharedWithUsers({ commit, state }, params) {
-      console.log(params); 
+      console.log(params);
       const userId = params.userId;
       const petId = params.petId;
       return axiosInstance

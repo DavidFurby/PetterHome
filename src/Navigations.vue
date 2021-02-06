@@ -9,8 +9,6 @@ import {
   createAppContainer,
   createBottomTabNavigator,
   createStackNavigator,
-  createDrawerNavigator,
-  createMaterialTopTabNavigator,
   createSwitchNavigator,
 } from "vue-native-router";
 
@@ -39,7 +37,7 @@ const MainNavigator = createStackNavigator(
     Pet: PetScreen,
     AddPet: AddPetScreen,
     Schema: SchemaScreen,
-    AddSchema: AddSchedule,
+    AddNeed: AddSchedule,
   },
   {
     initialRouteName: "Main",
