@@ -22,9 +22,9 @@ export default {
           console.log(error);
         });
     },
-    createNotifications(context, params) {
+    createNotifications({rootState}, params) {
       let petData = params.petForm;
-      let userId = params.userId;
+      let userId = rootState.auth.user.id;
       return axiosInstance
         .post(`/user/createNotifications?userId=${userId}`, petData)
         .then((res) => {

@@ -1,6 +1,6 @@
 <template>
   <view class="container">
-    <Navigation  />
+    <Navigation />
   </view>
 </template>
 
@@ -35,14 +35,14 @@ export default {
   },
   computed: {
     isAuthResolved() {
-      console.log(this.$store.state.auth.isAuthResolved, "auth");
       return this.$store.state.auth.isAuthResolved;
     },
   },
-    created () {
-      this.$store.dispatch('auth/verifyUser')
-        .catch((err) => {console.log(err, "verify");})
-    }
+  created() {
+    this.$store.dispatch("auth/verifyUser").catch((err) => {
+      console.log(err, "verify");
+    });
+  },
 };
 </script>
 

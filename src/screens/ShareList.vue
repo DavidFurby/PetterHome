@@ -1,8 +1,8 @@
 <template>
   <nb-container>
-    <AppHeader :screen="header" :sharedWith="sharedWith" />
+    <AppHeader :screen="header" />
     <scroll-view>
-      <SharedWithUserCard v-if="isSharedWithLoaded" />
+      <SharedWithUserCard v-if="isSharedWithLoaded" :sharedWith="sharedWith" />
       <nb-text v-else>You haven't shared this pet with anyone yet</nb-text>
     </scroll-view>
     <nb-content>

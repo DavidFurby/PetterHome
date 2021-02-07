@@ -29,6 +29,7 @@ import LoginScreen from "./screens/Login";
 import RegistrationScreen from "./screens/Register";
 import RecoverPasswordScreen from "./screens/RecoverPassword";
 import AddNeed from "./screens/AddNeed";
+import AddSchedule from "./screens/AddSchedule";
 import ReceivedPetsScreen from "./screens/ReceivedPets";
 
 const MainNavigator = createStackNavigator(
@@ -38,6 +39,7 @@ const MainNavigator = createStackNavigator(
     AddPet: AddPetScreen,
     Needs: NeedsScreen,
     AddNeed: AddNeed,
+    AddSchedule: AddSchedule,
   },
   {
     initialRouteName: "Main",

@@ -30,10 +30,6 @@ export default {
       return this.user.pets;
     },
   },
-  created() {
-    this.$store.dispatch("pets/fetchPets");
-    this.$store.dispatch("auth/fetchCurrentUser");
-  },
   methods: {
     goToAccount() {
       let user = this.user;
@@ -43,8 +39,9 @@ export default {
       this.navigation.navigate("NotificationSettings");
     },
     goToSharePet() {
-      let user = this.user 
-      this.navigation.navigate("SharePet", {user});
+      const userId = this.user.id;
+      console.log(userId)
+      this.navigation.navigate("SharePet", { userId: userId });
     },
   },
 };

@@ -7,14 +7,16 @@
           ><nb-label>{{ need.type }} </nb-label>
           <nb-label> Notified: {{ need.notified }}</nb-label>
         </nb-card-item>
-        <nb-button><nb-text>Add new schedule</nb-text></nb-button>
+        <nb-button :on-press="() => goToAddScheduleScreen(pet.id, need.id)"
+          ><nb-text>Add new schedule</nb-text></nb-button
+        >
         <nb-card
-          v-for="(schedule, scheduleIndex) in need.schedule"
+          v-for="(schedule, scheduleIndex) in need.schedules"
           :key="scheduleIndex"
           ><nb-card-item
             ><nb-label
               >{{ schedule.time }} assigned to
-              {{ schedule.assignedTo }}</nb-label
+              {{ schedule.assignedUser }}</nb-label
             >
           </nb-card-item>
         </nb-card>
@@ -79,6 +81,16 @@ export default {
       this.navigation.navigate("AddNeed", {
         user: user,
         petId: petId,
+        sharedWith: sharedWith,
+      });
+    },
+    goToAddScheduleScreen(petId, needId) {
+      const sharedWith = this.sharedWith;
+      const user = this.user;
+      this.navigation.navigate("AddSchedule", {
+        user: user,
+        petId: petId,
+        needId: needId,
         sharedWith: sharedWith,
       });
     },

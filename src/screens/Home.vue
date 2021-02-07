@@ -52,13 +52,6 @@ export default {
       this.navigation.navigate("Needs", { petId: petId, userId: userId });
     },
   },
-  async created() {
-    const userId = this.user.id;
-    await this.$store.dispatch("receivedPets/fetchReceivedPets", userId);
-    await this.$store.dispatch("auth/fetchCurrentUser", userId);
-    await this.$store.dispatch("invites/fetchInvites", userId);
-    await this.$store.dispatch("notifications/fetchNotifications", userId);
-  },
   computed: {
     user() {
       return this.$store.state.auth.user;

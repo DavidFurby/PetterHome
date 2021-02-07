@@ -2,29 +2,6 @@
   <nb-container>
     <scroll-view>
       <nb-form>
-        <InputWithError
-          :error="$v.needForm.type.$dirty && !$v.needForm.type.required"
-          msg="Must select a type"
-        >
-          <nb-item stackedLabel>
-            <nb-label>Name of the pets need</nb-label>
-            <nb-input
-              placeholder="type"
-              v-model="needForm.type"
-              :on-blur="() => $v.needForm.type.$touch()"
-          /></nb-item>
-        </InputWithError>
-
-        <nb-list-item stackedLabel>
-          <nb-checkbox
-            :checked="needForm.notified"
-            :on-press="setNotification"
-          />
-          <nb-label> Do you want to be notified about this need?</nb-label>
-        </nb-list-item>
-      </nb-form>
-
-      <nb-form>
         <nb-label>Create schedule</nb-label>
         <nb-item stackedLabel>
           <nb-label>Time of day</nb-label>
@@ -65,14 +42,13 @@
           <nb-text>Add Pet</nb-text> 
         </nb-button>-->
       </nb-form>
-      <nb-button block :on-press="addPetNeed">
+      <nb-button block :on-press="addPetSchedule">
         <nb-text>Add Need </nb-text>
       </nb-button>
     </scroll-view>
   </nb-container>
 </template>
 <script>
-import React from "react";
 import { Picker, Icon } from "native-base";
 import { required } from "vuelidate/lib/validators";
 import { Toast } from "native-base";
@@ -81,13 +57,9 @@ export default {
   components: { Item: Picker.Item },
   data() {
     return {
-      needForm: {
-        type: null,
-        notified: false,
-      },
       scheduleForm: {
         time: "00:00",
-        assignedTo: this.availableUsers[0],
+        assignedUser: this.availableUsers[0],
       },
     };
   },
@@ -95,10 +67,10 @@ export default {
     availableUsers: {
       type: Array,
     },
-    userId: {
-      type: Object,
-    },
     petId: {
+      type: String,
+    },
+    needId: {
       type: String,
     },
     navigation: {
@@ -106,11 +78,6 @@ export default {
     },
   },
   validations: {
-    needForm: {
-      type: {
-        required,
-      },
-    },
     scheduleForm: {
       time: {
         required,
@@ -118,54 +85,33 @@ export default {
     },
   },
   methods: {
-    ontypeChange(typeValue) {
-      this.needForm.type = typeValue;
-    },
     onUserChange(userValue) {
-      this.scheduleForm.assignedTo = userValue;
+      this.scheduleForm.assignedUser = userValue;
+      console.log(this.scheduleForm.assignedUser);
     },
-    getIosIcon() {
-      return <Icon name="ios-arrow-down-outline" />;
-    },
-    setMedication() {
-      this.needForm.medication = !this.needForm.medication;
-    },
-    addPetNeed() {
-      this.$v.needForm.$touch();
+    addPetSchedule() {
       this.$v.scheduleForm.$touch();
-      if (!this.$v.needForm.$invalid || !this.$v.scheduleForm.$invalid) {
-        let needForm = this.needForm;
-        let scheduleForm = this.scheduleForm;
-        let need = {};
-        let schedule = [];
-        schedule.push(scheduleForm);
-        need.type = needForm.type;
-        need.notified = needForm.notified;
-        need.schedule = schedule;
-        let userId = this.userId;
+      if (!this.$v.scheduleForm.$invalid) {
+        let schedule = this.scheduleForm;
         let petId = this.petId;
-        let params = { need, userId, petId };
+        let needId = this.needId;
+        let params = { schedule, petId, needId };
+        console.log(params);
         this.$store
-          .dispatch("pets/addNeedToPet", params)
+          .dispatch("pets/addScheduleToNeed", params)
           .then((res) => {
-            if (res == "Pets need added successfully!") {
-              Toast.show({
-                text: res,
-                buttonText: "ok",
-                type: "success",
-                duration: 3000,
-              });
+            if (res == "Schedule added to pets need") {
               this.navigateToMain();
-            } else if (
-              res == "Error: A name for the pets need must be selected"
-            ) {
+            } else if (res == "Error: time of day must be selected") {
               Toast.show({
                 text: res,
                 buttonText: "ok",
                 type: "danger",
                 duration: 3000,
               });
-            } else if (res == "Error: No schedule has been made") {
+            } else if (
+              res == "Error: A user must be assigned to the schedule"
+            ) {
               Toast.show({
                 text: res,
                 buttonText: "ok",
@@ -177,13 +123,18 @@ export default {
           .catch(() => {
             Toast.show({
               text: "Something went wrong",
-              buttonText: "okay",
+              buttonText: "ok",
               type: "danger",
               duration: 3000,
             });
           });
       } else {
-        return alert("something went wrong");
+        Toast.show({
+          text: "Information is invalid",
+          buttonText: "ok",
+          type: "danger",
+          duration: 3000,
+        });
       }
     },
     navigateToMain() {
@@ -192,13 +143,11 @@ export default {
     setTime(time, label) {
       this.scheduleForm[label] = time;
     },
-    setNotification() {
-      this.needForm.notified = !this.needForm.notified;
-    },
   },
   computed: {
     selectedUser() {
-      return this.scheduleForm.assignedTo;
+      console.log(this.scheduleForm.assignedUser);
+      return this.scheduleForm.assignedUser;
     },
   },
 };

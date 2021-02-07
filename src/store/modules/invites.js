@@ -10,23 +10,21 @@ export default {
   },
   getters: {},
   actions: {
-    sendInvite(context, params) {
-      console.log(params);
+    sendInvite({rootState}, params) {
       let petId = params.petId;
-      let userId = params.userId;
+      let userId = rootState.auth.user.id;
       let username = params.username;
       return axiosInstance
         .post(`/user/sendInvite?userId=${userId}&petId=${petId}`, { username })
         .then((res) => {
-          console.log(res.data.message);
           return res.data.message;
         })
         .catch((err) => {
           console.log(err);
         });
     },
-    acceptInvite(context, params) {
-      let userId = params.userId;
+    acceptInvite({rootState}, params) {
+      let userId = rootState.auth.user.id;
       let inviteId = params.inviteId;
       return axiosInstance
         .post(`/user/acceptInvite?userId=${userId}&inviteId=${inviteId}`)
@@ -38,6 +36,7 @@ export default {
         });
     },
     fetchInvites({ commit, state }, userId) {
+      console.log(userId);
       return axiosInstance
         .get(`/user/getAllInvites?userId=${userId}`)
         .then((res) => {

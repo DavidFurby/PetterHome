@@ -38,16 +38,18 @@ export default {
       return Object.keys(this.pets).length > 0;
     },
   },
+  created() {
+    this.$store.dispatch("invites/fetchInvites", this.user.id);
+    this.$store.dispatch("receivedPets/fetchReceivedPets", this.user.id);
+  },
   methods: {
     goToShareList(petId) {
       const userId = this.user.id;
-      console.log(petId);
 
       this.navigation.navigate("ShareList", { petId: petId, userId: userId });
     },
     navigateToPet(petId) {
       const userId = this.user.id;
-      console.log(petId);
       this.navigation.navigate("Pet", { petId: petId, userId: userId });
     },
   },

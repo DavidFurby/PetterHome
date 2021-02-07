@@ -77,7 +77,6 @@ export default {
   },
   created() {
     const isAuth = this.$store.getters["auth/isAuth"];
-    console.log(isAuth)
     if (isAuth) {
       this.navigation.navigate("Main");
     }
@@ -98,7 +97,6 @@ export default {
         this.$store
           .dispatch("auth/login", this.form)
           .then((user) => {
-            console.log(user);
             this.navigation.navigate("Main");
           })
           .catch((err) => {

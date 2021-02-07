@@ -72,12 +72,11 @@ export default {
         });
     },
     fetchCurrentUser({ commit, state }, userId) {
-      console.log("object")
+      console.log(userId);
       return axiosInstance
-        .get(`/user/getCurrentUser`, userId)
+        .get(`/user/getCurrentUser?userId=${userId}`)
         .then((res) => {
           const user = res.data;
-          AsyncStorage.setItem("petterhome-jwt", user.token);
           commit("setAuthUser", user);
           return state.user;
         })

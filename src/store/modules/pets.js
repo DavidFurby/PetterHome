@@ -22,21 +22,23 @@ export default {
           console.log(error);
         });
     },
-    addPetToUser({ rootState }, params) {
+    addPetToUser({ rootState, commit }, params) {
       let petData = params.petForm;
       let userId = rootState.auth.user.id;
       return axiosInstance
         .post(`/user/addPetToUser?userId=${userId}`, petData)
         .then((res) => {
-          console.log(res, "success");
+          const pet = res.data;
+          commit("addPet", pet);
+          return pet;
         })
         .catch((err) => {
           console.log(err, "error");
         });
     },
-    deletePetFromUser(context, params) {
+    deletePetFromUser({ rootState }, params) {
       let petId = params.petId;
-      let userId = params.userId;
+      let userId = rootState.auth.user.id;
       return axiosInstance
         .delete(`/user/deletePetFromUser?userId=${userId}&petId=${petId}`)
         .then((res) => {
@@ -46,15 +48,36 @@ export default {
           console.log(err, "error");
         });
     },
-    addNeedToPet(context, params) {
+    addNeedToPet({ rootState }, params) {
       let needForm = params.need;
-      let userId = params.userId;
+      let userId = rootState.auth.user.id;
       let petId = params.petId;
       console.log(params);
-      return axiosInstance.post(
-        `/user/addNeedToPet?userId=${userId}&petId=${petId}`,
-        needForm
-      );
+      return axiosInstance
+        .post(`/user/addNeedToPet?userId=${userId}&petId=${petId}`, needForm)
+        .then((res) => {
+          return res.data.message;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    addScheduleToNeed({ rootState }, params) {
+      let schedule = params.schedule;
+      let userId = rootState.auth.user.id;
+      let petId = params.petId;
+      let needId = params.needId;
+      return axiosInstance
+        .post(
+          `/user/addScheduleToNeed?userId=${userId}&petId=${petId}&needId=${needId}`,
+          schedule
+        )
+        .then((res) => {
+          return res.data.message;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     changePassword(context, params) {
       const userId = params.userId;
@@ -64,9 +87,9 @@ export default {
         passwordRequest
       );
     },
-    fetchPetById({ commit, state }, params) {
+    fetchPetById({ rootState, commit, state }, params) {
       const petId = params.petId;
-      const userId = params.userId;
+      const userId = rootState.auth.user.id;
       return axiosInstance
         .get(`/user/getPetById?userId=${userId}&petId=${petId}`)
         .then((res) => {
@@ -85,6 +108,10 @@ export default {
     },
     setPet(state, pet) {
       Vue.set(state, "pet", pet);
+    },
+    addPet(state, pet) {
+      state.pets.unshift(pet);
+      console.log(state.pets);
     },
   },
 };

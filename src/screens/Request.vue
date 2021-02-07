@@ -35,6 +35,7 @@ export default {
     },
     invites() {
       const invites = this.$store.state.invites.invites;
+      console.log(invites, "invites");
       return invites;
     },
     ifInvites() {
