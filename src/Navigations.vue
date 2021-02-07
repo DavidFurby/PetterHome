@@ -24,11 +24,11 @@ import AddPetScreen from "./screens/AddPet";
 import { Root } from "native-base";
 import ShareListScreen from "./screens/ShareList";
 import RequestScreen from "./screens/Request";
-import SchemaScreen from "./screens/Schema";
+import NeedsScreen from "./screens/Needs";
 import LoginScreen from "./screens/Login";
 import RegistrationScreen from "./screens/Register";
 import RecoverPasswordScreen from "./screens/RecoverPassword";
-import AddSchedule from "./screens/AddSchema";
+import AddNeed from "./screens/AddNeed";
 import ReceivedPetsScreen from "./screens/ReceivedPets";
 
 const MainNavigator = createStackNavigator(
@@ -36,8 +36,8 @@ const MainNavigator = createStackNavigator(
     Main: MainScreen,
     Pet: PetScreen,
     AddPet: AddPetScreen,
-    Schema: SchemaScreen,
-    AddNeed: AddSchedule,
+    Needs: NeedsScreen,
+    AddNeed: AddNeed,
   },
   {
     initialRouteName: "Main",

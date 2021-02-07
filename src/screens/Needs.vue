@@ -1,6 +1,6 @@
 <template>
   <nb-container v-if="isNeedsLoaded">
-    <AppHeader :screen="head" />
+    <AppHeader :screen="pet.petName" />
     <nb-content
       ><nb-card v-for="(need, needIndex) in needs" :key="needIndex"
         ><nb-card-item
@@ -27,36 +27,28 @@
 </template>
 
 <script>
-import AddSchema from "./AddSchema";
+import AddNeed from "./AddNeed";
 export default {
   components: {
-    AddSchema,
+    AddNeed,
   },
-  data() {
-    return {
-      pet: {
-        type: Object,
-        default: () => {},
-      },
-      user: {
-        type: Object,
-        default: () => {},
-      },
-      head: "schedules",
-    };
-  },
+
   props: {
     navigation: {
       type: Object,
     },
   },
   computed: {
+    user() {
+      return this.$store.state.auth.user;
+    },
+    pet() {
+      return this.$store.state.pets.pet;
+    },
     needs() {
       let needs = this.pet.needs;
-      console.log(needs);
       return needs;
     },
-    schedule() {},
     isNeedsLoaded() {
       return Object.keys(this.pet).length > 0;
     },
@@ -65,11 +57,12 @@ export default {
     },
   },
   async created() {
-    this.pet = this.navigation.getParam("pet", "undefined");
-    this.user = this.navigation.getParam("user", "undefined");
+    const petId = this.navigation.getParam("petId", "undefined");
+    const userId = this.navigation.getParam("userId", "undefined");
     let params = {};
-    params.userId = this.user.id;
-    params.petId = this.pet.id;
+    params.userId = userId;
+    params.petId = petId;
+    this.$store.dispatch("pets/fetchPetById", params);
     await this.$store.dispatch("sharedWith/fetchSharedWithUsers", params);
   },
 
@@ -81,9 +74,8 @@ export default {
       alert("change assigned user");
     },
     goToAddNeedScreen(petId) {
-      const user = this.user;
       const sharedWith = this.sharedWith;
-      console.log(petId);
+      const user = this.user;
       this.navigation.navigate("AddNeed", {
         user: user,
         petId: petId,

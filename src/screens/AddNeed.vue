@@ -5,7 +5,15 @@
       leftButton="return"
       :leftButtonFunction="goBack"
     />
-    <AddNeedForm :user="user" :petId="petId" :availableUsers="availableUsers" />
+    <AddNeedForm
+      v-if="ifAvailableUsers"
+      :userId="userId"
+      :petId="petId"
+      :availableUsers="availableUsers"
+    />
+    <nb-container v-else class="spinner-container">
+      <nb-spinner color="blue" />
+    </nb-container>
   </nb-container>
 </template>
 <script>
@@ -13,20 +21,20 @@ import { Picker } from "native-base";
 import AddNeedForm from "../components/AddNeedForm";
 export default {
   components: { Item: Picker.Item, AddNeedForm },
-
   props: {
     navigation: {
       type: Object,
     },
   },
-  data: () => {
+  data() {
     return {
-      selected: "key0",
-      user: {
+      userId: {
         type: String,
+        default: "",
       },
       petId: {
         type: String,
+        default: "",
       },
       availableUsers: {
         type: Array,
@@ -35,23 +43,27 @@ export default {
     };
   },
   async created() {
-    this.user = await this.navigation.getParam("user", "undefined");
-    this.petId = await this.navigation.getParam("petId", "undefined");
-    let sharedWithUsers = await this.navigation.getParam(
+    const user = await this.navigation.getParam("user", "undefined");
+    const petId = await this.navigation.getParam("petId", "undefined");
+    const sharedWithUsers = await this.navigation.getParam(
       "sharedWith",
       "undefined"
     );
     let arr = [];
-    arr.push(this.user.username);
+    arr.push(user.username);
     sharedWithUsers.map((user) => {
       arr.push(user.username);
     });
-    console.log(arr, "arr");
     this.availableUsers = arr;
+    this.petId = petId;
+    this.userId = user.id;
   },
   methods: {
     goBack() {
       this.navigation.goBack();
+    },
+    ifAvailableUsers() {
+      return Object.keys(this.availableUsers).length > 0;
     },
   },
 };

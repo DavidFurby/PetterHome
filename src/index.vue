@@ -1,6 +1,6 @@
 <template>
   <view class="container">
-    <Navigation />
+    <Navigation  />
   </view>
 </template>
 
@@ -8,12 +8,14 @@
 import Navigation from "./Navigations";
 import Vue from "vue-native-core";
 import { VueNativeBase } from "native-base";
+import { Platform } from "react-native";
+
 import store from "./store";
 import axios from "axios";
 import AppHeader from "./components/AppHeader";
 import InputWithError from "./components/InputWithError";
 import PickerWithError from "./components/PickerWithError";
-import AppTimePicker from "./components/AppTimePicker"
+import AppTimePicker from "./components/AppTimePicker";
 // registering all native-base components to the global scope of the Vue
 Vue.use(VueNativeBase, axios);
 Vue.prototype.$store = store;
@@ -26,14 +28,21 @@ export default {
   components: {
     Navigation,
   },
+  data() {
+    return {
+      Platform,
+    };
+  },
   computed: {
     isAuthResolved() {
+      console.log(this.$store.state.auth.isAuthResolved, "auth");
       return this.$store.state.auth.isAuthResolved;
     },
   },
-  create() {
-    this.$store.dispatch("auth/verifyUser").catch(() => {});
-  },
+    created () {
+      this.$store.dispatch('auth/verifyUser')
+        .catch((err) => {console.log(err, "verify");})
+    }
 };
 </script>
 

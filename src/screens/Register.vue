@@ -114,7 +114,7 @@ export default {
         type: "success",
         duration: 3000,
       });
-      this.navigation.navigate("Login", { message: "Succesfull registration" });
+      this.navigation.navigate("Login");
     },
   },
 };

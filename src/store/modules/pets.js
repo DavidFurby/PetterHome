@@ -22,9 +22,9 @@ export default {
           console.log(error);
         });
     },
-    addPetToUser(context, params) {
+    addPetToUser({ rootState }, params) {
       let petData = params.petForm;
-      let userId = params.userId;
+      let userId = rootState.auth.user.id;
       return axiosInstance
         .post(`/user/addPetToUser?userId=${userId}`, petData)
         .then((res) => {
@@ -67,7 +67,6 @@ export default {
     fetchPetById({ commit, state }, params) {
       const petId = params.petId;
       const userId = params.userId;
-      commit("setPet", {});
       return axiosInstance
         .get(`/user/getPetById?userId=${userId}&petId=${petId}`)
         .then((res) => {

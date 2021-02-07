@@ -1,15 +1,18 @@
 <template>
   <nb-container>
-    <scroll-view>
-      <AppHeader screen="Share Pet" />
-      <SharePetCard
-        v-for="pet in pets"
-        :key="pet.id"
-        :pet="pet"
-        :navigateToShareList="() => goToShareList()"
-        :navigateToPet="() => navigateToPet()"
-      />
-    </scroll-view>
+    <AppHeader screen="Share Pet" />
+    <nb-content v-if="ifPets">
+      <scroll-view>
+        <SharePetCard
+          v-for="pet in pets"
+          :key="pet.id"
+          :pet="pet"
+          :navigateToShareList="goToShareList"
+          :navigateToPet="navigateToPet"
+        />
+      </scroll-view>
+    </nb-content>
+    <nb-text v-else></nb-text>
   </nb-container>
 </template>
 <script>
@@ -31,15 +34,21 @@ export default {
     pets() {
       return this.user.pets;
     },
+    ifPets() {
+      return Object.keys(this.pets).length > 0;
+    },
   },
   methods: {
-    goToShareList(pet) {
-      const user = this.user;
-      this.navigation.navigate("ShareList", { pet: pet, user: user });
+    goToShareList(petId) {
+      const userId = this.user.id;
+      console.log(petId);
+
+      this.navigation.navigate("ShareList", { petId: petId, userId: userId });
     },
-    navigateToPet(pet) {
-      const user = this.user; 
-      this.navigation.navigate("Pet", { pet: pet, user: user });
+    navigateToPet(petId) {
+      const userId = this.user.id;
+      console.log(petId);
+      this.navigation.navigate("Pet", { petId: petId, userId: userId });
     },
   },
 };

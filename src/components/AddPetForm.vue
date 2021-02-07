@@ -178,7 +178,7 @@ export default {
 
       if (!this.$v.petForm.$invalid) {
         this.$store.dispatch("pets/addPetToUser", params).then(() => {
-          this.navigation.navigate("Main");
+          this.navigation.navigate("Pet", { pet: this.pet });
         });
       } else {
         Toast.show({

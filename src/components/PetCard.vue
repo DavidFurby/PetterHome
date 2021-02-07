@@ -1,6 +1,6 @@
 <template>
   <nb-card>
-    <nb-card-item info button :on-press="() => navigateToPet(pet)">
+    <nb-card-item info button :on-press="() => navigateToPet(pet.id)">
       <nb-body full>
         <nb-text>{{ pet.petName }} </nb-text>
         <nb-text>Animal: {{ animal.animal }} </nb-text>
@@ -8,7 +8,7 @@
         <nb-text>Gender: {{ pet.gender }} </nb-text>
         <nb-text>Breed: {{ animal.breed }} </nb-text>
       </nb-body>
-      <nb-button :on-press="() => navigateToPetSchema(pet)"
+      <nb-button :on-press="() => navigateToPetSchema(pet.id)"
         ><nb-text>Calender</nb-text></nb-button
       >
     </nb-card-item>
@@ -31,8 +31,8 @@ export default {
   },
   computed: {
     animal() {
-      return this.pet.animal
-    }
-     }
+      return this.pet.animal;
+    },
+  },
 };
 </script>

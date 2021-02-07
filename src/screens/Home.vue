@@ -1,5 +1,5 @@
 <template>
-  <nb-container>
+  <nb-container v-if="hasUser">
     <AppHeader root :screen="title" />
 
     <scroll-view>
@@ -14,6 +14,9 @@
     <nb-button block :on-press="goToAddPetScreen" :pets="pets">
       <nb-text>Add Pet</nb-text>
     </nb-button>
+  </nb-container>
+  <nb-container v-else class="spinner-container">
+    <nb-spinner color="blue" />
   </nb-container>
 </template>
 <script>
@@ -35,28 +38,26 @@ export default {
     };
   },
   methods: {
-    goToPetScreen(pet) {
-      let user = this.user;
-
-      this.navigation.navigate("Pet", { pet: pet, user: user });
+    goToPetScreen(petId) {
+      const userId = this.user.id;
+      this.navigation.navigate("Pet", { petId: petId, userId: userId });
     },
     goToAddPetScreen() {
       let user = this.user;
       this.navigation.navigate("AddPet", { user: user });
     },
-    goToPetSchema(petData) {
-      let user = this.user;
-      let pet = petData;
-      this.navigation.navigate("Schema", { pet: pet, user: user });
+    goToPetSchema(petId) {
+      const userId = this.user.id;
+
+      this.navigation.navigate("Needs", { petId: petId, userId: userId });
     },
   },
   async created() {
     const userId = this.user.id;
     await this.$store.dispatch("receivedPets/fetchReceivedPets", userId);
-    await this.$store.dispatch("users/fetchCurrentUser", userId);
+    await this.$store.dispatch("auth/fetchCurrentUser", userId);
     await this.$store.dispatch("invites/fetchInvites", userId);
     await this.$store.dispatch("notifications/fetchNotifications", userId);
-    
   },
   computed: {
     user() {
@@ -66,7 +67,7 @@ export default {
       return this.user.pets;
     },
     hasUser() {
-      return this.user && this.user.length > 0;
+      return Object.keys(this.user).length > 0;
     },
   },
 };

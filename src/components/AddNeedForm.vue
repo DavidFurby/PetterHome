@@ -25,13 +25,14 @@
       </nb-form>
 
       <nb-form>
+        <nb-label>Create schedule</nb-label>
         <nb-item stackedLabel>
           <nb-label>Time of day</nb-label>
           <AppTimePicker :onValueChange="(time) => setTime(time, 'time')" />
         </nb-item>
 
         <nb-item stackedLabel>
-          <nb-label>Assign time to user</nb-label>
+          <nb-label>Assign schedule to user</nb-label>
           <nb-picker
             note
             mode="dropdown"
@@ -96,11 +97,14 @@ export default {
     availableUsers: {
       type: Array,
     },
-    user: {
+    userId: {
       type: Object,
     },
     petId: {
       type: String,
+    },
+    navigation: {
+      type: Object,
     },
   },
   validations: {
@@ -143,7 +147,7 @@ export default {
         need.type = needForm.type;
         need.notified = needForm.notified;
         need.schedule = schedule;
-        let userId = this.user.id;
+        let userId = this.userId;
         let petId = this.petId;
         let params = { need, userId, petId };
         this.$store
@@ -162,13 +166,10 @@ export default {
       }
     },
     navigateToMain() {
-      this.navigation.navigate("Schema", {
-        message: "Succesfully added new need for pet!",
-      });
+      this.navigation.goBack();
     },
     setTime(time, label) {
-      console.log(time);
-      console.log(label);
+   
       this.scheduleForm[label] = time;
     },
     setNotification() {

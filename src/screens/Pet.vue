@@ -14,6 +14,7 @@
       :goBack="goBack"
     />
   </nb-container>
+  <nb-text v-else>Pet can't be loaded yet</nb-text>
 </template>
 <script>
 import { ActionSheet } from "native-base";
@@ -47,6 +48,9 @@ export default {
     };
   },
   computed: {
+    pet() {
+      return this.$store.state.pets.pet;
+    },
     animal() {
       return this.pet.animal || {};
     },
@@ -55,8 +59,12 @@ export default {
     },
   },
   created() {
-    this.pet = this.navigation.getParam("pet", "undefined");
-    this.user = this.navigation.getParam("user", "undefined");
+    const petId = this.navigation.getParam("petId", "undefined");
+    const userId = this.navigation.getParam("userId", "undefined");
+    let params = {};
+    params.petId = petId;
+    params.userId = userId;
+    this.$store.dispatch("pets/fetchPetById", params);
   },
   methods: {
     deleteFromApp() {

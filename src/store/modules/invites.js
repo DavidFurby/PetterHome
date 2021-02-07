@@ -11,6 +11,7 @@ export default {
   getters: {},
   actions: {
     sendInvite(context, params) {
+      console.log(params);
       let petId = params.petId;
       let userId = params.userId;
       let username = params.username;

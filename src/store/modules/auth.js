@@ -21,9 +21,8 @@ export default {
   namespaced: true,
 
   state: {
-    users: [],
     user: null,
-    isAuth: false,
+    isAuthResolved: false,
   },
   getters: {
     isAuth(state) {
@@ -73,6 +72,7 @@ export default {
         });
     },
     fetchCurrentUser({ commit, state }, userId) {
+      console.log("object")
       return axiosInstance
         .get(`/user/getCurrentUser`, userId)
         .then((res) => {
@@ -84,10 +84,13 @@ export default {
         .catch((error) => error);
     },
     async verifyUser({ dispatch, commit }) {
-      const jwt = await AsyncStorage.getItem("meetuper-jwt");
-
+      const jwt = await AsyncStorage.getItem("petterhome-jwt");
       if (jwt && isTokenValid(jwt)) {
-        Promise.resolve(jwt);
+        const user = await dispatch("fetchCurrentUser");
+
+        return user
+          ? Promise.resolve(jwt)
+          : Promise.reject("Cannot fetch user");
       } else {
         commit("resolveAuth");
         return Promise.reject("Token is not valid");
