@@ -1,5 +1,5 @@
 <template>
-  <nb-container v-if="hasUser">
+  <nb-container v-if="hasPets">
     <AppHeader root :screen="title" />
 
     <scroll-view>
@@ -37,19 +37,19 @@ export default {
       title: "Home Screen",
     };
   },
+  created() {
+    this.$store.dispatch("pets/fetchPets", this.user.id);
+  },
   methods: {
     goToPetScreen(petId) {
-      const userId = this.user.id;
-      this.navigation.navigate("Pet", { petId: petId, userId: userId });
+      this.navigation.navigate("Pet", { petId: petId});
     },
     goToAddPetScreen() {
-      let user = this.user;
-      this.navigation.navigate("AddPet", { user: user });
+      this.navigation.navigate("AddPet");
     },
     goToPetSchema(petId) {
-      const userId = this.user.id;
 
-      this.navigation.navigate("Needs", { petId: petId, userId: userId });
+      this.navigation.navigate("Needs", { petId: petId });
     },
   },
   computed: {
@@ -57,10 +57,10 @@ export default {
       return this.$store.state.auth.user;
     },
     pets() {
-      return this.user.pets;
+      return this.$store.state.pets.items;
     },
-    hasUser() {
-      return Object.keys(this.user).length > 0;
+     hasPets() {
+      return  Object.keys(this.pets).length > 0;
     },
   },
 };

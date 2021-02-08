@@ -40,7 +40,6 @@ export default {
     },
     goToSharePet() {
       const userId = this.user.id;
-      console.log(userId)
       this.navigation.navigate("SharePet", { userId: userId });
     },
   },

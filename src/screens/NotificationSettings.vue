@@ -28,7 +28,7 @@ export default {
   },
   computed: {
     pets() {
-      let petData = this.$store.state.pets;
+      let petData = this.$store.state.pets.items;
       return petData;
     },
   },

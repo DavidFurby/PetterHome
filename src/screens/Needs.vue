@@ -45,7 +45,7 @@ export default {
       return this.$store.state.auth.user;
     },
     pet() {
-      return this.$store.state.pets.pet;
+      return this.$store.state.pets.item;
     },
     needs() {
       let needs = this.pet.needs;
@@ -60,9 +60,7 @@ export default {
   },
   async created() {
     const petId = this.navigation.getParam("petId", "undefined");
-    const userId = this.navigation.getParam("userId", "undefined");
     let params = {};
-    params.userId = userId;
     params.petId = petId;
     this.$store.dispatch("pets/fetchPetById", params);
     await this.$store.dispatch("sharedWith/fetchSharedWithUsers", params);

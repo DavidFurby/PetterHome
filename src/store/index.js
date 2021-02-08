@@ -23,5 +23,9 @@ export default new Vuex.Store({
   state: {},
   getters: {},
   actions: {},
-  mutations: {},
+  mutations: {
+    setItems(state, { items, resource }) {
+      Vue.set(state[resource], "items", items);
+    },
+  },
 });

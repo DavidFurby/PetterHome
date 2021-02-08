@@ -5,44 +5,42 @@ export default {
   namespaced: true,
 
   state: {
-    pets: [],
-    pet: {},
+    items: [],
+    item: {},
   },
   getters: {},
   actions: {
-    fetchPets({ commit, state }) {
+    fetchPets({ commit, state }, userId) {
       return axiosInstance
-        .get(`/user/getAllPets`)
+        .get(`/user/getAllPets?userId=${userId}`)
         .then((res) => {
           const pets = res.data;
-          commit("setPets", pets);
-          return state.pets;
-        })
-        .catch((error) => {
-          console.log(error);
+          commit("setItems", { items: pets, resource: "pets" }, { root: true });
+          return state.items;
         });
     },
-    addPetToUser({ rootState, commit }, params) {
-      let petData = params.petForm;
+    addPetToUser({ rootState, commit }, petForm) {
+      let petData = petForm
       let userId = rootState.auth.user.id;
       return axiosInstance
         .post(`/user/addPetToUser?userId=${userId}`, petData)
         .then((res) => {
-          const pet = res.data;
+          const pet = res.data.pet;
           commit("addPet", pet);
-          return pet;
+          return res.data.message;
         })
         .catch((err) => {
           console.log(err, "error");
         });
     },
-    deletePetFromUser({ rootState }, params) {
-      let petId = params.petId;
-      let userId = rootState.auth.user.id;
+    deletePetFromUser({ rootState, commit }, petId) {
+      const userId = rootState.auth.user.id;
       return axiosInstance
         .delete(`/user/deletePetFromUser?userId=${userId}&petId=${petId}`)
         .then((res) => {
-          console.log(res, "success");
+          const pet = res.data.objectId;
+          commit("deletePet", pet);
+          return res.data.message;
         })
         .catch((err) => {
           console.log(err, "error");
@@ -95,7 +93,7 @@ export default {
         .then((res) => {
           const pet = res.data;
           commit("setPet", pet);
-          return state.pet;
+          return state.item;
         })
         .catch((error) => {
           console.log(error);
@@ -103,15 +101,22 @@ export default {
     },
   },
   mutations: {
-    setPets(state, pets) {
-      Vue.set(state, "pets", pets);
-    },
     setPet(state, pet) {
-      Vue.set(state, "pet", pet);
+      Vue.set(state, "item", pet);
     },
     addPet(state, pet) {
-      state.pets.unshift(pet);
-      console.log(state.pets);
+      state.items.push(pet);
+    },
+    deletePet(state, pet) {
+      let newPetArr = [];
+      state.items.filter((filterPet) => {
+        if (filterPet.id !== pet) {
+          console.log(filterPet);
+          newPetArr.add(filterPet);
+        }
+      });
+      state.items === newPetArr;
+      console.log(state.items);
     },
   },
 };

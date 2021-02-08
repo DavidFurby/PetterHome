@@ -7,6 +7,9 @@
     />
     <AddPetForm :user="user" :animals="animals" :navigation="navigation" />
   </nb-container>
+  <nb-container v-else class="spinner-container">
+    <nb-spinner color="blue" />
+  </nb-container>
 </template>
 <script>
 import AddPetForm from "../components/AddPetForm";
@@ -25,7 +28,6 @@ export default {
     };
   },
   created() {
-    this.user = this.navigation.getParam("user", "undefined");
     this.$store.dispatch("animals/fetchAnimals");
   },
   methods: {
@@ -34,8 +36,11 @@ export default {
     },
   },
   computed: {
+    user() {
+      return this.$store.state.auth.user;
+    },
     animals() {
-      let animals = this.$store.state.animals.animals;
+      let animals = this.$store.state.animals.items;
       return animals;
     },
     hasAnimals() {

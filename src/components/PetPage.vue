@@ -46,12 +46,6 @@ export default {
       type: Object,
     },
     animal: { type: Object },
-    deleteFromApp: {
-      type: Function,
-    },
-    goBack: {
-      type: Function,
-    },
   },
 };
 </script>

@@ -30,7 +30,6 @@ export default {
   },
   computed: {
     receivedPets() {
-      console.log(this.$store.state.receivedPets.receivedPets);
       return this.$store.state.receivedPets.receivedPets;
     },
     ifReceivedPets() {

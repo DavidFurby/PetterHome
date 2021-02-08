@@ -87,7 +87,6 @@ export default {
   methods: {
     onUserChange(userValue) {
       this.scheduleForm.assignedUser = userValue;
-      console.log(this.scheduleForm.assignedUser);
     },
     addPetSchedule() {
       this.$v.scheduleForm.$touch();
@@ -96,7 +95,6 @@ export default {
         let petId = this.petId;
         let needId = this.needId;
         let params = { schedule, petId, needId };
-        console.log(params);
         this.$store
           .dispatch("pets/addScheduleToNeed", params)
           .then((res) => {
@@ -146,7 +144,6 @@ export default {
   },
   computed: {
     selectedUser() {
-      console.log(this.scheduleForm.assignedUser);
       return this.scheduleForm.assignedUser;
     },
   },

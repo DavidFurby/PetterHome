@@ -173,11 +173,9 @@ export default {
       animal.breed = animalForm.breed;
 
       petForm.animal = animal;
-      let userId = this.user.id;
-      let params = { petForm, userId };
 
       if (!this.$v.petForm.$invalid) {
-        this.$store.dispatch("pets/addPetToUser", params).then(() => {
+        this.$store.dispatch("pets/addPetToUser", petForm).then(() => {
           this.navigation.navigate("Main");
         });
       } else {

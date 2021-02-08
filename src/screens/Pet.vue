@@ -7,12 +7,7 @@
       :rightButtonFunction="deleteFromApp"
       :leftButtonFunction="goBack"
     />
-    <PetPage
-      :animal="animal"
-      :pet="pet"
-      :deleteFromApp="deleteFromApp"
-      :goBack="goBack"
-    />
+    <PetPage :animal="animal" :pet="pet" />
   </nb-container>
   <nb-text v-else>Pet can't be loaded yet</nb-text>
 </template>
@@ -49,7 +44,7 @@ export default {
   },
   computed: {
     pet() {
-      return this.$store.state.pets.pet;
+      return this.$store.state.pets.item;
     },
     animal() {
       return this.pet.animal || {};
@@ -60,10 +55,8 @@ export default {
   },
   created() {
     const petId = this.navigation.getParam("petId", "undefined");
-    const userId = this.navigation.getParam("userId", "undefined");
     let params = {};
     params.petId = petId;
-    params.userId = userId;
     this.$store.dispatch("pets/fetchPetById", params);
   },
   methods: {
@@ -82,13 +75,22 @@ export default {
         (buttonIndex) => {
           this.clicked = this.btnOptions[buttonIndex];
           if (this.clicked == this.btnOptions[0]) {
-            let params = {};
-            params.petId = this.pet.id;
-            params.userId = this.user.id;
+            const petId = this.pet.id;
             this.$store
-              .dispatch("pets/deletePetFromUser", params)
-              .then(() => {
-                this.navigation.goBack();
+              .dispatch("pets/deletePetFromUser", petId)
+              .then((res) => {
+                console.log(res);
+                {
+                  if (res == "Pet has been deleted! :(") {
+                    Toast.show({
+                      text: res,
+                      buttonText: "ok",
+                      type: "success",
+                      duration: 3000,
+                    });
+                    this.navigation.goBack();
+                  }
+                }
               })
               .catch(() => {
                 Toast.show({

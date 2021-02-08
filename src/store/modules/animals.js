@@ -1,12 +1,11 @@
 import Vue from "vue-native-core";
 import axiosInstance from "../../services/axios";
 
-
 export default {
   namespaced: true,
 
   state: {
-    animals: [],
+    items: [],
   },
   getters: {},
   actions: {
@@ -15,7 +14,11 @@ export default {
         .get(`/user/getAllAnimals`)
         .then((res) => {
           const animals = res.data;
-          commit("setAnimals", animals);
+          commit(
+            "setItems",
+            { items: animals, resource: "animals" },
+            { root: true }
+          );
           return state.animals;
         })
         .catch((error) => {

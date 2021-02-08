@@ -1,14 +1,7 @@
-import Axios from "axios";
-import Vue from "vue-native-core";
-
 import { AsyncStorage } from "react-native";
 import jwtDecode from "jwt-decode";
 import axiosInstance from "../../services/axios";
-const BASE_URL = __DEV__
-  ? Platform.OS === "ios"
-    ? "http://localhost:8080/api"
-    : "http://10.0.2.2:8080/api"
-  : "https://petterhome.herokuapp.com/api";
+
 
 const isTokenValid = (token) => {
   if (token) {
