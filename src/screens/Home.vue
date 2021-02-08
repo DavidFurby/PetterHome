@@ -1,22 +1,23 @@
 <template>
-  <nb-container v-if="hasPets">
+  <nb-container>
     <AppHeader root :screen="title" />
-
-    <scroll-view>
-      <PetCard
-        v-for="pet in pets"
-        :key="pet.id"
-        :pet="pet"
-        :navigateToPet="goToPetScreen"
-        :navigateToPetSchema="goToPetSchema"
-      />
-    </scroll-view>
+    <nb-content v-if="hasPets">
+      <scroll-view>
+        <PetCard
+          v-for="pet in pets"
+          :key="pet.id"
+          :pet="pet"
+          :navigateToPet="goToPetScreen"
+          :navigateToPetSchema="goToPetSchema"
+        />
+      </scroll-view>
+    </nb-content>
+    <nb-container v-else c>
+      <nb-text>You haven't added any pets yet</nb-text>
+    </nb-container>
     <nb-button block :on-press="goToAddPetScreen" :pets="pets">
       <nb-text>Add Pet</nb-text>
     </nb-button>
-  </nb-container>
-  <nb-container v-else class="spinner-container">
-    <nb-spinner color="blue" />
   </nb-container>
 </template>
 <script>
@@ -42,13 +43,12 @@ export default {
   },
   methods: {
     goToPetScreen(petId) {
-      this.navigation.navigate("Pet", { petId: petId});
+      this.navigation.navigate("Pet", { petId: petId });
     },
     goToAddPetScreen() {
       this.navigation.navigate("AddPet");
     },
     goToPetSchema(petId) {
-
       this.navigation.navigate("Needs", { petId: petId });
     },
   },
@@ -59,8 +59,8 @@ export default {
     pets() {
       return this.$store.state.pets.items;
     },
-     hasPets() {
-      return  Object.keys(this.pets).length > 0;
+    hasPets() {
+      return Object.keys(this.pets).length > 0;
     },
   },
 };

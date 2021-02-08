@@ -20,7 +20,7 @@ export default {
         });
     },
     addPetToUser({ rootState, commit }, petForm) {
-      let petData = petForm
+      let petData = petForm;
       let userId = rootState.auth.user.id;
       return axiosInstance
         .post(`/user/addPetToUser?userId=${userId}`, petData)
@@ -38,8 +38,8 @@ export default {
       return axiosInstance
         .delete(`/user/deletePetFromUser?userId=${userId}&petId=${petId}`)
         .then((res) => {
-          const pet = res.data.objectId;
-          commit("deletePet", pet);
+          const petId = res.data.objectId;
+          commit("deletePet", petId);
           return res.data.message;
         })
         .catch((err) => {
@@ -107,16 +107,14 @@ export default {
     addPet(state, pet) {
       state.items.push(pet);
     },
-    deletePet(state, pet) {
+    deletePet(state, petId) {
       let newPetArr = [];
       state.items.filter((filterPet) => {
-        if (filterPet.id !== pet) {
-          console.log(filterPet);
-          newPetArr.add(filterPet);
+        if (filterPet.id != petId) {
+          newPetArr.push(filterPet);
         }
       });
-      state.items === newPetArr;
-      console.log(state.items);
+      state.items = newPetArr;
     },
   },
 };
