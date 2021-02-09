@@ -31,7 +31,7 @@ import RecoverPasswordScreen from "./screens/RecoverPassword";
 import AddNeed from "./screens/AddNeed";
 import AddSchedule from "./screens/AddSchedule";
 import ReceivedPetsScreen from "./screens/ReceivedPets";
-
+import ReceivedPetPage from "./screens/ReceivedPetPage";
 const MainNavigator = createStackNavigator(
   {
     Main: MainScreen,
@@ -68,6 +68,7 @@ const ShareNavigation = createStackNavigator(
   {
     ShareList: ShareListScreen,
     ShareMenu: RequestNavigation,
+    ReceivedPetPage: ReceivedPetPage,
   },
   {
     initialRouteName: "ShareMenu",

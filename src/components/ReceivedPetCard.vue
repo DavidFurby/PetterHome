@@ -1,15 +1,20 @@
 <template>
-  <view>
-    <nb-content>
-      <nb-card>
-        <nb-card-item>
-          <nb-body full info>
-            <nb-text>name: {{ receivedPet }}</nb-text>
-          </nb-body>
-        </nb-card-item>
-      </nb-card>
-    </nb-content>
-  </view>
+  <nb-content>
+    <nb-card>
+      <nb-card-item
+        button
+        :on-press="() => navigateToPet(receivedPet.pet.id, receivedPet.user.id)"
+      >
+        <nb-body>
+          <nb-text> {{ receivedPet.pet.petName }}</nb-text>
+          <nb-text>Animal: {{ receivedPet.pet.animal.animal }}</nb-text>
+          <nb-text>Age: {{ receivedPet.pet.age }}</nb-text>
+          <nb-text>Gender: {{ receivedPet.pet.gender }}</nb-text>
+          <nb-text>Breed: {{ receivedPet.pet.animal.breed }}</nb-text>
+        </nb-body>
+      </nb-card-item>
+    </nb-card>
+  </nb-content>
 </template>
 
 <script>
@@ -17,7 +22,10 @@ export default {
   props: {
     receivedPet: {
       type: Object,
-      default: () => [],
+      default: () => {},
+    },
+    navigateToPet: {
+      type: Function,
     },
   },
 };

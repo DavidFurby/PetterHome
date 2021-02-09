@@ -1,12 +1,12 @@
 <template>
   <nb-container>
     <AppHeader screen="Notifications" />
-    <scroll-view>
-      <NotificationCard :time="time" :pets="pets" />
-    </scroll-view>
-    <nb-button block>
-      <nb-text>View More</nb-text>
-    </nb-button>
+    <nb-content v-if="ifNotifications">
+      <scroll-view>
+        <NotificationCard :notifications="notifications" />
+      </scroll-view>
+    </nb-content>
+    <nb-text v-else>No new notifications</nb-text>
   </nb-container>
 </template>
 
@@ -18,10 +18,16 @@ export default {
   components: {
     NotificationCard,
   },
-  async updated() {
-   await checkSchedule();
+  created() {
+    this.$store.dispatch("notifications/fetchNotifications", this.user.id);
   },
   computed: {
+    notifications() {
+      return this.$store.state.notifications.notifications;
+    },
+    ifNotifications() {
+      return Object.keys(this.notifications).length > 0;
+    },
     user() {
       return this.$store.state.auth.user;
     },

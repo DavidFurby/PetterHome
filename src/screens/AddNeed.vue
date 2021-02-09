@@ -6,10 +6,11 @@
       :leftButtonFunction="goBack"
     />
     <AddNeedForm
-      v-if="ifAvailableUsers"
-      :userId="userId"
+      v-if="ifAvailableUsers && ifFirstAvailableUser"
+      :username="username"
       :petId="petId"
       :availableUsers="availableUsers"
+      :ifFirstAvailableUser="ifFirstAvailableUser"
     />
     <nb-container v-else class="spinner-container">
       <nb-spinner color="blue" />
@@ -28,7 +29,7 @@ export default {
   },
   data() {
     return {
-      userId: {
+      username: {
         type: String,
         default: "",
       },
@@ -40,11 +41,15 @@ export default {
         type: Array,
         default: () => [],
       },
+      firstAvailableUser: {
+        type: String,
+        default: "",
+      },
     };
   },
   async created() {
-    const user = await this.navigation.getParam("user", "undefined");
     const petId = await this.navigation.getParam("petId", "undefined");
+    const user = await this.navigation.getParam("user", "undefined");
     const sharedWithUsers = await this.navigation.getParam(
       "sharedWith",
       "undefined"
@@ -55,15 +60,32 @@ export default {
       arr.push(user.username);
     });
     this.availableUsers = arr;
+    const firstUser = arr[0];
+    console.log(firstUser, "first");
     this.petId = petId;
-    this.userId = user.id;
+    this.username = user.username;
+    this.firstAvailableUser = firstUser;
+    console.log(this.firstAvailableUser, "firstAvailableUser");
   },
+  
   methods: {
     goBack() {
       this.navigation.goBack();
     },
     ifAvailableUsers() {
       return Object.keys(this.availableUsers).length > 0;
+    },
+  },
+  computed: {
+    ifFirstAvailableUser() {
+      console.log(
+        typeof this.firstAvailableUser !== "object"
+          ? this.firstAvailableUser
+          : null
+      );
+      return typeof this.firstAvailableUser !== "object"
+        ? this.firstAvailableUser
+        : null;
     },
   },
 };

@@ -1,10 +1,15 @@
 <template>
   <view>
-    <nb-card v-for="pet in pets" v-bind:key="pet.id">
+    <nb-card
+      v-for="(notification, notificationIndex) in notifications"
+      v-bind:key="notificationIndex"
+    >
       <nb-card-item>
-        <nb-body v-for="need in pet.needs" v-bind:key="need.id">
-          <nb-text> {{ pet.petName }} {{need.type}}</nb-text>
-        </nb-body>
+        <nb-label> {{ notification.schedule.time }} </nb-label>
+        <nb-label>Need: {{ notification.need.type }} </nb-label>
+        <nb-label>Pet: {{ notification.pet.petName }} </nb-label>
+        <nb-label>User: {{ notification.schedule.assignedUser }}</nb-label>
+        <nb-button><nb-text>Check</nb-text></nb-button>
       </nb-card-item>
     </nb-card>
   </view>
@@ -12,12 +17,11 @@
 <script>
 export default {
   props: {
-    pets: Array,
-    default: () => [],
-    time: String,
-    default: () => [],
+    notifications: {
+      type: Array,
+      default: () => {},
+    },
   },
-  methods: {
-  },
+  methods: {},
 };
 </script>

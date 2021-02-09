@@ -21,7 +21,7 @@
           </nb-card-item>
         </nb-card>
       </nb-card>
-      <nb-button :on-press="() => goToAddNeedScreen(pet.id)"
+      <nb-button block :on-press="() => goToAddNeedScreen(pet.id)"
         ><nb-text>Add new Need</nb-text></nb-button
       >
     </nb-content>

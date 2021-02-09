@@ -87,7 +87,7 @@ export default {
       },
       scheduleForm: {
         time: "00:00",
-        assignedTo: this.availableUsers[0],
+        assignedUser: this.ifFirstAvailableUser,
       },
     };
   },
@@ -95,8 +95,11 @@ export default {
     availableUsers: {
       type: Array,
     },
-    userId: {
-      type: Object,
+    ifFirstAvailableUser: {
+      type: String
+    },
+    username: {
+      type: String,
     },
     petId: {
       type: String,
@@ -117,12 +120,16 @@ export default {
       },
     },
   },
+  mounted() {
+    console.log(this.ifFirstAvailableUser, "Form")
+  },
   methods: {
     ontypeChange(typeValue) {
       this.needForm.type = typeValue;
     },
     onUserChange(userValue) {
-      this.scheduleForm.assignedTo = userValue;
+      console.log(userValue)
+      this.scheduleForm.assignedUser = userValue;
     },
     getIosIcon() {
       return <Icon name="ios-arrow-down-outline" />;
@@ -136,15 +143,15 @@ export default {
       if (!this.$v.needForm.$invalid || !this.$v.scheduleForm.$invalid) {
         let needForm = this.needForm;
         let scheduleForm = this.scheduleForm;
+        console.log(scheduleForm);
         let need = {};
         let schedule = [];
         schedule.push(scheduleForm);
         need.type = needForm.type;
         need.notified = needForm.notified;
         need.schedule = schedule;
-        let userId = this.userId;
         let petId = this.petId;
-        let params = { need, userId, petId };
+        let params = { need, petId };
         this.$store
           .dispatch("pets/addNeedToPet", params)
           .then((res) => {
@@ -198,7 +205,8 @@ export default {
   },
   computed: {
     selectedUser() {
-      return this.scheduleForm.assignedTo;
+      console.log("test");
+      return this.scheduleForm.assignedUser;
     },
   },
 };

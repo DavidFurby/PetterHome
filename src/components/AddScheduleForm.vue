@@ -49,7 +49,7 @@
   </nb-container>
 </template>
 <script>
-import { Picker, Icon } from "native-base";
+import { Picker } from "native-base";
 import { required } from "vuelidate/lib/validators";
 import { Toast } from "native-base";
 
@@ -95,6 +95,7 @@ export default {
         let petId = this.petId;
         let needId = this.needId;
         let params = { schedule, petId, needId };
+        console.log(params);
         this.$store
           .dispatch("pets/addScheduleToNeed", params)
           .then((res) => {

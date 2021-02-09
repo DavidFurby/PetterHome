@@ -6,6 +6,7 @@ import invites from "./modules/invites";
 import auth from "./modules/auth";
 import sharedWith from "./modules/sharedWith";
 import receivedPets from "./modules/receivedPets";
+import notifications from "./modules/notifications";
 import Vuelidate from "vuelidate";
 
 Vue.use(Vuex);
@@ -19,6 +20,7 @@ export default new Vuex.Store({
     invites,
     sharedWith,
     receivedPets,
+    notifications,
   },
   state: {},
   getters: {},

@@ -1,15 +1,17 @@
 <template>
-  <view>
+  <nb-container>
     <AppHeader :screen="header" />
     <nb-content v-if="ifReceivedPets">
-      <ReceivedPetCard
-        v-for="(receivedPet, receivedPetIndex) in receivedPets"
-        :key="receivedPetIndex"
-        :receivedPet="receivedPet"
-      />
+      <scroll-view>
+        <ReceivedPetCard
+          v-for="(receivedPet, receivedPetIndex) in receivedPets"
+          :key="receivedPetIndex"
+          :receivedPet="receivedPet"
+          :navigateToPet="goToPetScreen"
+        />
+      </scroll-view>
     </nb-content>
-    <nb-text v-else>No Received pets available</nb-text>
-  </view>
+  </nb-container>
 </template>
 <script>
 import ReceivedPetCard from "../components/ReceivedPetCard";
@@ -33,7 +35,13 @@ export default {
       return this.$store.state.receivedPets.receivedPets;
     },
     ifReceivedPets() {
+      console.log(this.$store.state.receivedPets.receivedPet);
       return Object.keys(this.receivedPets).length > 0;
+    },
+  },
+  methods: {
+    goToPetScreen(petId, userId) {
+      this.navigation.navigate("ReceivedPetPage", { petId: petId, userId: userId });
     },
   },
 };

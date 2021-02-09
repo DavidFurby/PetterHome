@@ -10,9 +10,9 @@ export default {
   },
   getters: {},
   actions: {
-    fetchNotifications({ commit, state }) {
+    fetchNotifications({ commit, state }, userId) {
       return axiosInstance
-        .get(`/user/getNotifications`)
+        .get(`/user/getPetNotifications?userId=${userId}`)
         .then((res) => {
           const notifications = res.data;
           commit("setNotifications", notifications);
@@ -22,7 +22,7 @@ export default {
           console.log(error);
         });
     },
-    createNotifications({rootState}, params) {
+    createNotifications({ rootState }, params) {
       let petData = params.petForm;
       let userId = rootState.auth.user.id;
       return axiosInstance
