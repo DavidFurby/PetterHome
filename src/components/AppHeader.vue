@@ -5,7 +5,7 @@
         <nb-text>{{ leftButton }}</nb-text>
       </nb-button>
     </nb-left>
-    <nb-body>
+    <nb-body :class="screen">
       <nb-title>{{ screen }}</nb-title>
     </nb-body>
     <nb-right>
@@ -44,3 +44,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.screen {
+  align-items: center;
+}
+</style>

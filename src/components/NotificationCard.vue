@@ -5,10 +5,10 @@
       v-bind:key="notificationIndex"
     >
       <nb-card-item>
-        <nb-label> {{ notification.schedule.time }} </nb-label>
-        <nb-label>Need: {{ notification.need.type }} </nb-label>
-        <nb-label>Pet: {{ notification.pet.petName }} </nb-label>
-        <nb-label>User: {{ notification.schedule.assignedUser }}</nb-label>
+        <nb-text> {{ notification.schedule.time }} </nb-text>
+        <nb-text>Need: {{ notification.need.type }} </nb-text>
+        <nb-text>Pet: {{ notification.pet.petName }} </nb-text>
+        <nb-text>User: {{ notification.schedule.assignedUser }}</nb-text>
         <nb-button><nb-text>Check</nb-text></nb-button>
       </nb-card-item>
     </nb-card>

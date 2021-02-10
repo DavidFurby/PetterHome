@@ -32,7 +32,7 @@ export default {
       return this.$store.state.auth.user;
     },
     pets() {
-      return this.user.pets;
+      return this.$store.state.pets.items;
     },
     ifPets() {
       return Object.keys(this.pets).length > 0;
@@ -46,7 +46,6 @@ export default {
   methods: {
     goToShareList(petId) {
       const userId = this.user.id;
-
       this.navigation.navigate("ShareList", { petId: petId, userId: userId });
     },
     navigateToPet(petId) {

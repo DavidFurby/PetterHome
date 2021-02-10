@@ -10,7 +10,8 @@
       :username="username"
       :petId="petId"
       :availableUsers="availableUsers"
-      :ifFirstAvailableUser="ifFirstAvailableUser"
+      :firstAvailableUser="ifFirstAvailableUser"
+      :goBack="goBack"
     />
     <nb-container v-else class="spinner-container">
       <nb-spinner color="blue" />
@@ -50,24 +51,21 @@ export default {
   async created() {
     const petId = await this.navigation.getParam("petId", "undefined");
     const user = await this.navigation.getParam("user", "undefined");
-    const sharedWithUsers = await this.navigation.getParam(
-      "sharedWith",
+    const availableUsers = await this.navigation.getParam(
+      "availableUsers",
       "undefined"
     );
-    let arr = [];
-    arr.push(user.username);
-    sharedWithUsers.map((user) => {
-      arr.push(user.username);
-    });
-    this.availableUsers = arr;
-    const firstUser = arr[0];
-    console.log(firstUser, "first");
+    const firstAvailableUser = await this.navigation.getParam(
+      "firstAvailableUser",
+      "undefined"
+    );
     this.petId = petId;
     this.username = user.username;
-    this.firstAvailableUser = firstUser;
-    console.log(this.firstAvailableUser, "firstAvailableUser");
+    this.availableUsers = availableUsers;
+    this.firstAvailableUser = firstAvailableUser;
+    console.log(this.firstAvailableUser, "availableUser");
   },
-  
+
   methods: {
     goBack() {
       this.navigation.goBack();
@@ -78,11 +76,6 @@ export default {
   },
   computed: {
     ifFirstAvailableUser() {
-      console.log(
-        typeof this.firstAvailableUser !== "object"
-          ? this.firstAvailableUser
-          : null
-      );
       return typeof this.firstAvailableUser !== "object"
         ? this.firstAvailableUser
         : null;

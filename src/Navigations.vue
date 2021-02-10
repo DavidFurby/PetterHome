@@ -32,6 +32,7 @@ import AddNeed from "./screens/AddNeed";
 import AddSchedule from "./screens/AddSchedule";
 import ReceivedPetsScreen from "./screens/ReceivedPets";
 import ReceivedPetPage from "./screens/ReceivedPetPage";
+import ReceivedPetNeeds from "./screens/ReceivedPetNeeds";
 const MainNavigator = createStackNavigator(
   {
     Main: MainScreen,
@@ -69,6 +70,7 @@ const ShareNavigation = createStackNavigator(
     ShareList: ShareListScreen,
     ShareMenu: RequestNavigation,
     ReceivedPetPage: ReceivedPetPage,
+    ReceivedPetNeeds: ReceivedPetNeeds,
   },
   {
     initialRouteName: "ShareMenu",

@@ -46,6 +46,18 @@ export default {
           console.log(err, "error");
         });
     },
+    deleteNeed({rootState, commit}, params) {
+      console.log(params)
+
+      const petId = params.petId;
+      const needId = params.needId;
+      const userId = rootState.auth.user.id;
+      
+      return axiosInstance.delete(`/user/deleteNeedFromPet?userId=${userId}&petId=${petId}&needId=${needId}`).then((res) => {
+        const needId = res.data.objectId; 
+        console.log(needId)
+      }) 
+    },
     addNeedToPet({ rootState }, params) {
       let needForm = params.need;
       let userId = rootState.auth.user.id;

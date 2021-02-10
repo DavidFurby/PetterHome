@@ -7,7 +7,7 @@
           msg="Must select a type"
         >
           <nb-item stackedLabel>
-            <nb-label>Name of the pets need</nb-label>
+            <nb-text>Name of the pets need</nb-text>
             <nb-input
               placeholder="type"
               v-model="needForm.type"
@@ -20,18 +20,18 @@
             :checked="needForm.notified"
             :on-press="setNotification"
           />
-          <nb-label> Do you want to be notified about this need?</nb-label>
+          <nb-text> Do you want to be notified about this need?</nb-text>
         </nb-list-item>
       </nb-form>
 
       <nb-form>
-        <nb-label>Create schedule</nb-label>
+        <nb-text>Create schedule</nb-text>
         <nb-item stackedLabel>
-          <nb-label>Time of day</nb-label>
+          <nb-text>Time of day</nb-text>
           <AppTimePicker :onValueChange="(time) => setTime(time, 'time')" />
         </nb-item>
         <nb-item stackedLabel>
-          <nb-label>Assign schedule to user</nb-label>
+          <nb-text>Assign schedule to user</nb-text>
           <nb-picker
             note
             mode="dropdown"
@@ -87,7 +87,7 @@ export default {
       },
       scheduleForm: {
         time: "00:00",
-        assignedUser: this.ifFirstAvailableUser,
+        assignedUser: this.firstAvailableUser,
       },
     };
   },
@@ -95,8 +95,8 @@ export default {
     availableUsers: {
       type: Array,
     },
-    ifFirstAvailableUser: {
-      type: String
+    firstAvailableUser: {
+      type: String,
     },
     username: {
       type: String,
@@ -106,6 +106,9 @@ export default {
     },
     navigation: {
       type: Object,
+    },
+    goBack: {
+      type: Function,
     },
   },
   validations: {
@@ -121,14 +124,14 @@ export default {
     },
   },
   mounted() {
-    console.log(this.ifFirstAvailableUser, "Form")
+    console.log(this.thisFirstAvailableUser, "Form");
   },
   methods: {
     ontypeChange(typeValue) {
       this.needForm.type = typeValue;
     },
     onUserChange(userValue) {
-      console.log(userValue)
+      console.log(userValue);
       this.scheduleForm.assignedUser = userValue;
     },
     getIosIcon() {
@@ -162,7 +165,7 @@ export default {
                 type: "success",
                 duration: 3000,
               });
-              this.navigateToMain();
+              this.goBack();
             } else if (
               res == "Error: A name for the pets need must be selected"
             ) {
@@ -181,7 +184,8 @@ export default {
               });
             }
           })
-          .catch(() => {
+          .catch((err) => {
+            console.log(err);
             Toast.show({
               text: "Something went wrong",
               buttonText: "okay",
@@ -192,9 +196,6 @@ export default {
       } else {
         return alert("something went wrong");
       }
-    },
-    navigateToMain() {
-      this.navigation.goBack();
     },
     setTime(time, label) {
       this.scheduleForm[label] = time;

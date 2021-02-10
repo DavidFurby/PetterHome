@@ -2,6 +2,11 @@
   <nb-content>
     <nb-card>
       <nb-card-item
+        ><nb-body
+          ><nb-text>Owner: {{ receivedPet.user.username }}</nb-text></nb-body
+        ></nb-card-item
+      >
+      <nb-card-item
         button
         :on-press="() => navigateToPet(receivedPet.pet.id, receivedPet.user.id)"
       >
@@ -12,6 +17,9 @@
           <nb-text>Gender: {{ receivedPet.pet.gender }}</nb-text>
           <nb-text>Breed: {{ receivedPet.pet.animal.breed }}</nb-text>
         </nb-body>
+        <nb-button :on-press="() => navigateToPetNeeds(receivedPet.pet.id)"
+          ><nb-text>Shedules</nb-text>
+        </nb-button>
       </nb-card-item>
     </nb-card>
   </nb-content>
@@ -25,6 +33,9 @@ export default {
       default: () => {},
     },
     navigateToPet: {
+      type: Function,
+    },
+    navigateToPetNeeds: {
       type: Function,
     },
   },

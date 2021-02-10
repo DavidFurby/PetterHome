@@ -2,42 +2,41 @@
   <nb-container>
     <scroll-view>
       <nb-form>
-          <nb-picker
-            note
-            mode="dropdown"
-            :style="{ width: 120 }"
-            :selectedValue="selectedAnimal"
-            :onValueChange="onAnimalChange"
-          >
-            <item
-              v-for="(animal, animalIndex) in animals"
-              :key="animalIndex"
-              :label="animal.animal"
-              :value="animal.animal"
-            />
-          </nb-picker>
+        <nb-picker
+          note
+          mode="dropdown"
+          :style="{ width: 120 }"
+          :selectedValue="selectedAnimal"
+          :onValueChange="onAnimalChange"
+        >
+          <item
+            v-for="(animal, animalIndex) in animals"
+            :key="animalIndex"
+            :label="animal.animal"
+            :value="animal.animal"
+          />
+        </nb-picker>
 
-              <nb-picker
-            note
-            mode="dropdown"
-            :style="{ width: 120 }"
-            :selectedValue="selectedBreed"
-            :onValueChange="onBreedChange"
-          >
-            <item
-              v-for="(breed, breedIndex) in animals[currentAnimal].breeds"
-              :key="breedIndex"
-              :label="breed"
-              :value="breed"
-            />
-          </nb-picker> 
+        <nb-picker
+          note
+          mode="dropdown"
+          :style="{ width: 120 }"
+          :selectedValue="selectedBreed"
+          :onValueChange="onBreedChange"
+        >
+          <item
+            v-for="(breed, breedIndex) in animals[currentAnimal].breeds"
+            :key="breedIndex"
+            :label="breed"
+            :value="breed"
+          />
+        </nb-picker>
+      </nb-form>
       <nb-form>
-
         <InputWithError
           :error="$v.petForm.petName.$dirty && !$v.petForm.petName.required"
           msg="A name must be given for the pet"
         >
-        
           <nb-item stackedLabel
             ><nb-input
               placeholder="Name"
@@ -50,7 +49,7 @@
           ><nb-input placeholder="Age" v-model="petForm.petAge"
         /></nb-item>
 
-    <nb-picker
+        <nb-picker
           note
           mode="dropdown"
           :style="{ width: 120 }"
@@ -68,6 +67,7 @@
         <nb-item stackedLabel>
           <nb-input v-model="petForm.weight" placeholder="Weight kg" />
         </nb-item>
+
         <!-- <nb-list-item>
           <nb-text>Medication ?</nb-text>
           <nb-body> </nb-body>

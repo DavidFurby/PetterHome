@@ -9,8 +9,8 @@
         <nb-text>Breed: {{ animal.breed }} </nb-text>
       </nb-body>
       <nb-button :on-press="() => navigateToPetSchema(pet.id)"
-        ><nb-text>Calender</nb-text></nb-button
-      >
+        ><nb-text>Shedules</nb-text>
+      </nb-button>
     </nb-card-item>
   </nb-card>
 </template>

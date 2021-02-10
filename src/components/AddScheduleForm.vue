@@ -2,13 +2,13 @@
   <nb-container>
     <scroll-view>
       <nb-form>
-        <nb-label>Create schedule</nb-label>
+        <nb-text>Create schedule</nb-text>
         <nb-item stackedLabel>
-          <nb-label>Time of day</nb-label>
+          <nb-text>Time of day</nb-text>
           <AppTimePicker :onValueChange="(time) => setTime(time, 'time')" />
         </nb-item>
         <nb-item stackedLabel>
-          <nb-label>Assign schedule to user</nb-label>
+          <nb-text>Assign schedule to user</nb-text>
           <nb-picker
             note
             mode="dropdown"
@@ -43,7 +43,7 @@
         </nb-button>-->
       </nb-form>
       <nb-button block :on-press="addPetSchedule">
-        <nb-text>Add Need </nb-text>
+        <nb-text>Add Schedule </nb-text>
       </nb-button>
     </scroll-view>
   </nb-container>
@@ -59,7 +59,7 @@ export default {
     return {
       scheduleForm: {
         time: "00:00",
-        assignedUser: this.availableUsers[0],
+        assignedUser: this.firstAvailableUser,
       },
     };
   },
@@ -67,14 +67,17 @@ export default {
     availableUsers: {
       type: Array,
     },
+    firstAvailableUser: {
+      type: String,
+    },
     petId: {
       type: String,
     },
     needId: {
       type: String,
     },
-    navigation: {
-      type: Object,
+    goBack: {
+      type: Function,
     },
   },
   validations: {
@@ -95,12 +98,17 @@ export default {
         let petId = this.petId;
         let needId = this.needId;
         let params = { schedule, petId, needId };
-        console.log(params);
         this.$store
           .dispatch("pets/addScheduleToNeed", params)
           .then((res) => {
             if (res == "Schedule added to pets need") {
-              this.navigateToMain();
+              Toast.show({
+                text: res,
+                buttonText: "ok",
+                type: "success",
+                duration: 3000,
+              });
+              this.goBack();
             } else if (res == "Error: time of day must be selected") {
               Toast.show({
                 text: res,
@@ -135,9 +143,6 @@ export default {
           duration: 3000,
         });
       }
-    },
-    navigateToMain() {
-      this.navigation.goBack();
     },
     setTime(time, label) {
       this.scheduleForm[label] = time;

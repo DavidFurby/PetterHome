@@ -1,26 +1,16 @@
 <template>
-  <nb-container v-if="isNeedsLoaded">
-    <AppHeader :screen="pet.petName" />
-    <nb-content
-      ><nb-card v-for="(need, needIndex) in needs" :key="needIndex"
-        ><nb-card-item
-          ><nb-label>{{ need.type }} </nb-label>
-          <nb-label> Notified: {{ need.notified }}</nb-label>
-        </nb-card-item>
-        <nb-button :on-press="() => goToAddScheduleScreen(pet.id, need.id)"
-          ><nb-text>Add new schedule</nb-text></nb-button
-        >
-        <nb-card
-          v-for="(schedule, scheduleIndex) in need.schedules"
-          :key="scheduleIndex"
-          ><nb-card-item
-            ><nb-label
-              >{{ schedule.time }} assigned to
-              {{ schedule.assignedUser }}</nb-label
-            >
-          </nb-card-item>
-        </nb-card>
-      </nb-card>
+  <nb-container>
+    <AppHeader :screen="Needs" />
+    <nb-content v-if="isNeedsLoaded">
+      <NeedPage
+        v-for="(need, needIndex) in needs"
+        :key="needIndex"
+        :need="need"
+        :goToAddScheduleScreen="goToAddScheduleScreen"
+        :deleteNeed="deleteNeed"
+        :deleteSchedule="deleteSchedule"
+        :petId="pet.id"
+      />
       <nb-button block :on-press="() => goToAddNeedScreen(pet.id)"
         ><nb-text>Add new Need</nb-text></nb-button
       >
@@ -30,11 +20,27 @@
 
 <script>
 import AddNeed from "./AddNeed";
+import NeedPage from "../components/NeedPage";
 export default {
   components: {
     AddNeed,
+    NeedPage,
   },
-
+  data() {
+    return {
+      firstAvailableUser: {
+        type: String,
+        default: "",
+      },
+      availableUsers: {
+        type: Array,
+        default: [],
+      },
+      userId: {
+        type: Array,
+      },
+    };
+  },
   props: {
     navigation: {
       type: Object,
@@ -54,7 +60,7 @@ export default {
     isNeedsLoaded() {
       return Object.keys(this.pet).length > 0;
     },
-    sharedWith() {
+    sharedWithUsers() {
       return this.$store.state.sharedWith.sharedWithUsers;
     },
   },
@@ -64,32 +70,90 @@ export default {
     params.petId = petId;
     this.$store.dispatch("pets/fetchPetById", params);
     await this.$store.dispatch("sharedWith/fetchSharedWithUsers", params);
+    console.log("object");
+    const sharedWithUsers = this.sharedWithUsers;
+    let arr = [];
+    arr.push(this.user.username);
+    sharedWithUsers.map((user) => {
+      arr.push(user.username);
+    });
+    const firstUser = arr[0];
+    this.availableUsers = arr;
+    this.firstAvailableUser = firstUser;
+    console.log(firstUser, "test");
   },
 
   methods: {
-    changeTime() {
-      alert("change Time");
-    },
-    changeAssignment() {
-      alert("change assigned user");
-    },
     goToAddNeedScreen(petId) {
-      const sharedWith = this.sharedWith;
+      const sharedWithUsers = this.sharedWithUsers;
+      const firstAvailableUser = this.firstAvailableUser;
+      const availableUsers = this.availableUsers;
       const user = this.user;
       this.navigation.navigate("AddNeed", {
         user: user,
         petId: petId,
-        sharedWith: sharedWith,
+        sharedWithUsers: sharedWithUsers,
+        firstAvailableUser: firstAvailableUser,
+        availableUsers: availableUsers,
       });
     },
     goToAddScheduleScreen(petId, needId) {
-      const sharedWith = this.sharedWith;
+      const sharedWithUsers = this.sharedWithUsers;
+      const firstAvailableUser = this.firstAvailableUser;
+      const availableUsers = this.availableUsers;
       const user = this.user;
       this.navigation.navigate("AddSchedule", {
         user: user,
         petId: petId,
         needId: needId,
-        sharedWith: sharedWith,
+        sharedWithUsers: sharedWithUsers,
+        firstAvailableUser: firstAvailableUser,
+        availableUsers: availableUsers,
+      });
+    },
+    deleteNeed(petId, needId) {
+      params = {};
+      params.petId = petId;
+      params.needId = needId;
+      this.$store.dispatch("pets/deleteNeed", params).then((res) => {
+        if (res == "need was deleted") {
+          Toast.show({
+            text: res,
+            buttonText: "ok",
+            type: "success",
+            duration: 3000,
+          });
+        } else {
+          Toast.show({
+            text: "need could not be deleted",
+            buttonText: "ok",
+            type: "danger",
+            duration: 3000,
+          });
+        }
+      });
+    },
+    deleteSchedule(petId, needId, scheduleId) {
+      params = {};
+      params.petId = petId;
+      params.needId = needId;
+      params.scheduleId = scheduleId;
+      this.$store.dispatch("pets/deleteSchedule", params).then((res) => {
+        if (res == "schedule was deleted") {
+          Toast.show({
+            text: res,
+            buttonText: "ok",
+            type: "success",
+            duration: 3000,
+          });
+        } else {
+          Toast.show({
+            text: "schedule could not be deleted",
+            buttonText: "ok",
+            type: "danger",
+            duration: 3000,
+          });
+        }
       });
     },
   },

@@ -3,9 +3,9 @@
   <nb-card>
     <nb-card-item>
       <nb-body>
-        <nb-text>Name: {{ pet.petName }}</nb-text></nb-body
-      ></nb-card-item
-    >
+        <nb-text>Name: {{ pet.petName }}</nb-text>
+      </nb-body>
+    </nb-card-item>
     <nb-card-item>
       <nb-body>
         <nb-text>Animal: {{ animal.animal }}</nb-text></nb-body

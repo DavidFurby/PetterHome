@@ -8,6 +8,7 @@
           :key="receivedPetIndex"
           :receivedPet="receivedPet"
           :navigateToPet="goToPetScreen"
+          :navigateToPetNeeds="goToPetSchema"
         />
       </scroll-view>
     </nb-content>
@@ -35,13 +36,19 @@ export default {
       return this.$store.state.receivedPets.receivedPets;
     },
     ifReceivedPets() {
-      console.log(this.$store.state.receivedPets.receivedPet);
       return Object.keys(this.receivedPets).length > 0;
     },
   },
   methods: {
     goToPetScreen(petId, userId) {
-      this.navigation.navigate("ReceivedPetPage", { petId: petId, userId: userId });
+      this.navigation.navigate("ReceivedPetPage", {
+        petId: petId,
+        userId: userId,
+      });
+    },
+    goToPetSchema(petId) {
+      console.log(petId)
+      this.navigation.navigate("ReceivedPetNeeds", { petId: petId });
     },
   },
 };
