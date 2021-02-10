@@ -1,31 +1,42 @@
 <template>
   <nb-card
-    ><nb-card-item
-      ><nb-text>{{ need.type }} </nb-text>
-      <nb-text> Notified: {{ need.notified }}</nb-text>
+    ><nb-card-item>
+      <nb-body><nb-text>Name of need: </nb-text> </nb-body>
+      <nb-label>{{ need.type }}</nb-label>
     </nb-card-item>
-    <nb-button :on-press="() => goToAddScheduleScreen(petId, need.id)"
+    <nb-card-item>
+      <nb-body>
+        <nb-text>Notified: </nb-text>
+      </nb-body>
+      <nb-label>{{ need.notified }}</nb-label>
+    </nb-card-item>
+    <nb-button small :on-press="() => goToAddScheduleScreen(petId, need.id)"
       ><nb-text>Add new schedule</nb-text></nb-button
     >
-    <nb-button :on-press="() => deleteNeed(petId, need.id)"
-      ><nb-text>Delete Need</nb-text></nb-button
-    >
+
     <nb-card
       v-for="(schedule, scheduleIndex) in need.schedules"
       :key="scheduleIndex"
-      ><nb-card-item
-        ><nb-body
-          ><nb-text
-            >{{ schedule.time }} assigned to
-            {{ schedule.assignedUser }}
-          </nb-text>
+      ><nb-card-item>
+        <nb-body>
+          <nb-text> At scheduled time: </nb-text>
         </nb-body>
-        <nb-button
-          :on-press="() => deleteSchedule(petId, need.id, schedule.id)"
-          ><nb-text>Delete Schedule</nb-text></nb-button
-        >
+        <nb-text>{{ schedule.time }}</nb-text>
       </nb-card-item>
+      <nb-card-item>
+        <nb-body><nb-text>Assigned to:</nb-text></nb-body>
+        <nb-text>{{ schedule.assignedUser }}</nb-text>
+      </nb-card-item>
+      <nb-button
+        small
+        :on-press="() => deleteSchedule(petId, need.id, schedule.id)"
+        ><nb-text>Delete Schedule</nb-text></nb-button
+      >
     </nb-card>
+    <nb-button block :on-press="() => deleteNeed(petId, need.id)"
+      ><nb-text>Delete Need</nb-text>
+    </nb-button>
+    <nb-body />
   </nb-card>
 </template>
 

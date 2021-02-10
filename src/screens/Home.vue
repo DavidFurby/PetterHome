@@ -22,7 +22,6 @@
 </template>
 <script>
 import PetCard from "../components/PetCard";
-
 export default {
   components: {
     PetCard,
@@ -38,7 +37,7 @@ export default {
       title: "Home Screen",
     };
   },
-  created() {
+  async created() {
     this.$store.dispatch("pets/fetchPets", this.user.id);
   },
   methods: {

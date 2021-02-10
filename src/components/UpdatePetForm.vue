@@ -39,14 +39,16 @@
         >
           <nb-item stackedLabel
             ><nb-input
-              placeholder="Name"
+              :placeholder="petForm.petName"
               v-model="petForm.petName"
               :on-blur="() => $v.petForm.petName.$touch()"
           /></nb-item>
         </InputWithError>
 
         <nb-item stackedLabel
-          ><nb-input placeholder="Age" v-model="petForm.petAge"
+          ><nb-input
+            :placeholder="petForm.petAge.toString()"
+            v-model="petForm.petAge"
         /></nb-item>
 
         <nb-picker
@@ -61,52 +63,68 @@
         </nb-picker>
 
         <nb-item stackedLabel
-          ><nb-input v-model="petForm.height" placeholder="Height cm"
+          ><nb-input
+            v-model="petForm.height"
+            :placeholder="petForm.height.toString()"
         /></nb-item>
 
         <nb-item stackedLabel>
-          <nb-input v-model="petForm.weight" placeholder="Weight kg" />
+          <nb-input
+            v-model="petForm.weight"
+            :placeholder="petForm.weight.toString()"
+          />
         </nb-item>
       </nb-form>
 
-      <nb-button block :on-press="addPet">
-        <nb-text>Add Pet</nb-text>
+      <nb-button block :on-press="updatePet">
+        <nb-text>Update Pet</nb-text>
       </nb-button>
     </scroll-view>
   </nb-container>
 </template>
+
 <script>
 import { Picker } from "native-base";
+
 import { required } from "vuelidate/lib/validators";
 import { Toast } from "native-base";
 
 export default {
-  components: { Item: Picker.Item,},
+  components: { Item: Picker.Item },
+
   data() {
     return {
+      breedSelection: "",
       currentAnimal: 0,
       petForm: {
-        petName: "",
-        petAge: "",
-        gender: "MALE",
-        weight: "",
-        height: "",
+        petName: this.pet.petName,
+        petAge: this.pet.petAge,
+        gender: this.pet.gender,
+        weight: this.pet.weight,
+        height: this.pet.height,
       },
       animalForm: {
-        animal: this.animals[0].animal,
-        breed: this.animals[0].breeds[0],
+        animal: this.pet.animal.animal,
+        breed: this.pet.animal.breed,
       },
     };
   },
   props: {
     user: {
       type: Object,
+      default: () => {},
+    },
+    pet: {
+      type: Object,
+      default: () => {},
     },
     animals: {
       type: Array,
+      default: () => [],
     },
     navigation: {
       type: Object,
+      default: () => [],
     },
   },
   validations: {
@@ -135,11 +153,10 @@ export default {
     onGenderChange(gender) {
       this.petForm.gender = gender;
     },
-
     setMedication() {
       this.petForm.medication = !this.petForm.medication;
     },
-    addPet() {
+    updatePet() {
       this.$v.petForm.$touch();
       this.$v.animalForm.$touch();
       let petForm = this.petForm;
@@ -149,11 +166,15 @@ export default {
       animal.breed = animalForm.breed;
 
       petForm.animal = animal;
-
+      console.log(petForm);
+      let params= {}
+      params.petForm = petForm;
+      console.log(this.pet.id)
+      params.petId = this.pet.id;
       if (!this.$v.petForm.$invalid) {
-        this.$store.dispatch("pets/addPetToUser", petForm).then(() => {
+        this.$store.dispatch("pets/updateUserPet", params).then(() => {
           Toast.show({
-            text: "Pet was added succesfully",
+            text: "The pets information was updated succesfully",
             buttonText: "ok",
             type: "success",
             duration: 3000,
@@ -173,7 +194,6 @@ export default {
       this.navigation.goBack();
     },
   },
-
   computed: {
     selectedAnimal() {
       return this.animalForm.animal;
@@ -187,3 +207,6 @@ export default {
   },
 };
 </script>
+
+<style>
+</style>

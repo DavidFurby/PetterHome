@@ -3,7 +3,7 @@
     <nb-card>
       <nb-card-item
         ><nb-body
-          ><nb-text>Owner: {{ receivedPet.user.username }}</nb-text></nb-body
+          ><nb-Label>Owner: {{ receivedPet.user.username }}</nb-Label></nb-body
         ></nb-card-item
       >
       <nb-card-item

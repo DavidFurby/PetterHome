@@ -7,11 +7,11 @@
     />
     <nb-content padder>
       <AccountInformation :user="user" />
-      <nb-button :on-press="changePassword"
+      <nb-button block :on-press="changePassword"
         ><nb-text>Change password</nb-text></nb-button
       >
-      <nb-button :on-press="logout"><nb-text>Logout</nb-text></nb-button>
     </nb-content>
+    <nb-button block :on-press="logout"><nb-text>Logout</nb-text></nb-button>
   </nb-container>
 </template>
 
@@ -38,8 +38,8 @@ export default {
 
   methods: {
     changePassword() {
-      const user = this.user; 
-      this.navigation.navigate("ChangePassword", {user: user});
+      const user = this.user;
+      this.navigation.navigate("ChangePassword", { user: user });
     },
 
     logout() {

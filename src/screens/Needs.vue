@@ -1,6 +1,6 @@
 <template>
   <nb-container>
-    <AppHeader :screen="Needs" />
+    <AppHeader screen="Needs" />
     <nb-content v-if="isNeedsLoaded">
       <NeedPage
         v-for="(need, needIndex) in needs"
@@ -21,6 +21,7 @@
 <script>
 import AddNeed from "./AddNeed";
 import NeedPage from "../components/NeedPage";
+import { Toast } from "native-base";
 export default {
   components: {
     AddNeed,
@@ -125,7 +126,7 @@ export default {
           });
         } else {
           Toast.show({
-            text: "need could not be deleted",
+            text: "need has been deleted successfully",
             buttonText: "ok",
             type: "danger",
             duration: 3000,
@@ -139,7 +140,7 @@ export default {
       params.needId = needId;
       params.scheduleId = scheduleId;
       this.$store.dispatch("pets/deleteSchedule", params).then((res) => {
-        if (res == "schedule was deleted") {
+        if (res == "schedule has been deleted successfully") {
           Toast.show({
             text: res,
             buttonText: "ok",

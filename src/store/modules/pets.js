@@ -46,17 +46,33 @@ export default {
           console.log(err, "error");
         });
     },
-    deleteNeed({rootState, commit}, params) {
-      console.log(params)
+    deleteNeed({ rootState, commit }, params) {
+      console.log(params);
 
       const petId = params.petId;
       const needId = params.needId;
       const userId = rootState.auth.user.id;
-      
-      return axiosInstance.delete(`/user/deleteNeedFromPet?userId=${userId}&petId=${petId}&needId=${needId}`).then((res) => {
-        const needId = res.data.objectId; 
-        console.log(needId)
-      }) 
+
+      return axiosInstance
+        .delete(
+          `/user/deleteNeed?userId=${userId}&petId=${petId}&needId=${needId}`
+        )
+        .then((res) => {
+          return res.data.message;
+        });
+    },
+    deleteSchedule({ rootState, commit }, params) {
+      const petId = params.petId;
+      const needId = params.needId;
+      const scheduleId = params.scheduleId;
+      const userId = rootState.auth.user.id;
+      return axiosInstance
+        .delete(
+          `/user/deleteSchedule?userId=${userId}&petId=${petId}&needId=${needId}&scheduleId=${scheduleId}`
+        )
+        .then((res) => {
+          return res.data.message;
+        });
     },
     addNeedToPet({ rootState }, params) {
       let needForm = params.need;
@@ -89,13 +105,15 @@ export default {
           console.log(err);
         });
     },
-    changePassword(context, params) {
-      const userId = params.userId;
-      const passwordRequest = params.passwordForm;
-      return axiosInstance.put(
-        `/user/changePassword?userId=${userId}`,
-        passwordRequest
-      );
+    updateUserPet({ rootState, commit, state }, params) {
+      const petId = params.petId;
+      const petForm = params.petForm;
+      const userId = rootState.auth.user.id;
+      return axiosInstance
+        .put(`/user/updateUserPet?petId=${petId}&userId=${userId}`, petForm)
+        .then((res) => {
+          console.log(res.data);
+        });
     },
     fetchPetById({ rootState, commit, state }, params) {
       const petId = params.petId;

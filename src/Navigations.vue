@@ -33,6 +33,7 @@ import AddSchedule from "./screens/AddSchedule";
 import ReceivedPetsScreen from "./screens/ReceivedPets";
 import ReceivedPetPage from "./screens/ReceivedPetPage";
 import ReceivedPetNeeds from "./screens/ReceivedPetNeeds";
+import UpdatePetScreen from "./screens/UpdatePetInformation";
 const MainNavigator = createStackNavigator(
   {
     Main: MainScreen,
@@ -41,6 +42,7 @@ const MainNavigator = createStackNavigator(
     Needs: NeedsScreen,
     AddNeed: AddNeed,
     AddSchedule: AddSchedule,
+    UpdatePet: UpdatePetScreen,
   },
   {
     initialRouteName: "Main",

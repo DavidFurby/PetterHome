@@ -2,7 +2,6 @@ import { AsyncStorage } from "react-native";
 import jwtDecode from "jwt-decode";
 import axiosInstance from "../../services/axios";
 
-
 const isTokenValid = (token) => {
   if (token) {
     const decodedToken = jwtDecode(token);
@@ -87,6 +86,14 @@ export default {
         commit("resolveAuth");
         return Promise.reject("Token is not valid");
       }
+    },
+    changePassword(context, params) {
+      const userId = params.userId;
+      const passwordRequest = params.passwordForm;
+      return axiosInstance.put(
+        `/user/changePassword?userId=${userId}`,
+        passwordRequest
+      );
     },
   },
   mutations: {

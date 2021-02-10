@@ -11,6 +11,7 @@
     <nb-spinner color="blue" />
   </nb-container>
 </template>
+
 <script>
 import AddPetForm from "../components/AddPetForm";
 
@@ -22,12 +23,6 @@ export default {
     navigation: {
       type: Object,
     },
-  },
-  data() {
-    return {
-      selected: "key0",
-      user: null,
-    };
   },
   created() {
     this.$store.dispatch("animals/fetchAnimals");

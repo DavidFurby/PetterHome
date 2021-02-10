@@ -2,12 +2,18 @@
   <view>
     <nb-card>
       <nb-card-item>
-        <nb-text>AccountName: {{ user.username }}</nb-text>
+        <nb-body>
+          <nb-text>AccountName: </nb-text>
+        </nb-body>
+        <nb-text>{{ user.username }} </nb-text>
       </nb-card-item>
     </nb-card>
     <nb-card>
       <nb-card-item>
-        <nb-text>Email: {{ user.email }}</nb-text>
+        <nb-body>
+          <nb-text>Email: </nb-text>
+        </nb-body>
+        <nb-text>{{ user.email }} > </nb-text>
       </nb-card-item>
     </nb-card>
     <nb-card>

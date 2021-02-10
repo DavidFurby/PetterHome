@@ -8,6 +8,9 @@
       :leftButtonFunction="goBack"
     />
     <PetPage :animal="animal" :pet="pet" />
+    <nb-button block :on-press="() => goToUpdateInformation(pet)"
+      ><nb-text>Update information</nb-text></nb-button
+    >
   </nb-container>
   <nb-text v-else>Pet can't be loaded yet</nb-text>
 </template>
@@ -106,6 +109,9 @@ export default {
     },
     goBack() {
       this.navigation.goBack();
+    },
+    goToUpdateInformation(pet) {
+      this.navigation.navigate("UpdatePet", {pet: pet})
     },
   },
 };
