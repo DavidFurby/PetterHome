@@ -5,9 +5,6 @@
       <nb-button block light :on-press="goToAccount">
         <nb-text>Account Settings</nb-text>
       </nb-button>
-      <nb-button block light :on-press="goToNotificationSettings">
-        <nb-text>Notification Settings</nb-text>
-      </nb-button>
       <nb-button block light :on-press="() => goToSharePet(this.user)">
         <nb-text>Share Pet</nb-text>
       </nb-button>
@@ -34,9 +31,6 @@ export default {
     goToAccount() {
       let user = this.user;
       this.navigation.navigate("Account", { user: user });
-    },
-    goToNotificationSettings() {
-      this.navigation.navigate("NotificationSettings");
     },
     goToSharePet() {
       const userId = this.user.id;

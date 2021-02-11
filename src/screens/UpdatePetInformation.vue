@@ -1,7 +1,7 @@
 <template>
   <nb-container>
     <AppHeader
-      screen="Add Pet"
+      screen="Update Pet"
       leftButton="return"
       :leftButtonFunction="goBack"
     />
@@ -11,6 +11,7 @@
         :user="user"
         :animals="animals"
         :navigation="navigation"
+        :numbers="numbers"
       />
     </nb-content>
     <nb-content v-else class="spinner-container">
@@ -58,6 +59,14 @@ export default {
     },
     hasAnimals() {
       return this.animals && this.animals.length > 0;
+    },
+    numbers() {
+      const numbers = [];
+      for (let i = 0; i <= 100; i++) {
+        numbers[i] = i;
+      }
+      console.log(numbers)
+      return numbers;
     },
   },
   methods: {

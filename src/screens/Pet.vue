@@ -82,20 +82,20 @@ export default {
             this.$store
               .dispatch("pets/deletePetFromUser", petId)
               .then((res) => {
-                console.log(res);
                 {
-                  if (res == "Pet has been deleted! :(") {
+                  if (res == "pet has been deleted successfully") {
                     Toast.show({
                       text: res,
                       buttonText: "ok",
                       type: "success",
                       duration: 3000,
                     });
-                    this.navigation.goBack();
+                    this.goBack();
                   }
                 }
               })
-              .catch(() => {
+              .catch((err) => {
+                console.log(err);
                 Toast.show({
                   text: "Pet could not be deleted",
                   buttonText: "ok",
@@ -111,7 +111,7 @@ export default {
       this.navigation.goBack();
     },
     goToUpdateInformation(pet) {
-      this.navigation.navigate("UpdatePet", {pet: pet})
+      this.navigation.navigate("UpdatePet", { pet: pet });
     },
   },
 };

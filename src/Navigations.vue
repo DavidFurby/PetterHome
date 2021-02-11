@@ -17,7 +17,6 @@ import NotificationScreen from "./screens/Notifications";
 import SettingsScreen from "./screens/Settings";
 import AccountScreen from "./screens/Account";
 import ChangePasswordScreen from "./screens/ChangePassword";
-import NotificationSettingsScreen from "./screens/NotificationSettings";
 import SharePetScreen from "./screens/SharePet";
 import PetScreen from "./screens/Pet";
 import AddPetScreen from "./screens/AddPet";
@@ -87,7 +86,6 @@ const SettingsNavigator = createStackNavigator(
     Settings: SettingsScreen,
     ChangePassword: ChangePasswordScreen,
     Account: AccountScreen,
-    NotificationSettings: NotificationSettingsScreen,
     SharePet: ShareNavigation,
   },
   {

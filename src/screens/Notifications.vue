@@ -15,6 +15,11 @@
 import NotificationCard from "../components/NotificationCard";
 
 export default {
+  data() {
+    return {
+      currentTime: Date.now(),
+    };
+  },
   components: {
     NotificationCard,
   },
@@ -33,6 +38,30 @@ export default {
     },
     pets() {
       return this.user.pets;
+    },
+  },
+  methods: {
+    createNotification() {
+      this.pets.map((pet) => {
+        pet.needs.map((need) => {
+          need.schedules((schedule) => {
+            if (schedule.time == this.currentTime) {
+              let params = {};
+              params.petId = pet.id;
+              params.needId = need.id;
+              params.schedule = schedule.id;
+              this.$store
+                .dispatch("notification/createNotification", params)
+                .then((res) => {
+                  console.log(res);
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            }
+          });
+        });
+      });
     },
   },
 };

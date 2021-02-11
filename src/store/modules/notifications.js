@@ -23,7 +23,10 @@ export default {
         });
     },
     createNotifications({ rootState }, params) {
-      let petData = params.petForm;
+      let petId = params.petId;
+      let needId = params.needId;
+      let scheduleId = params.scheduleId;
+      
       let userId = rootState.auth.user.id;
       return axiosInstance
         .post(`/user/createNotifications?userId=${userId}`, petData)
