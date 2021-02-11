@@ -1,7 +1,7 @@
 <template>
   <nb-container>
     <AppNavigationEvents :onDidFocus="checkForMessage" />
-    <AppHeader root screen="Login" />
+    <AppHeader root screen="PetterHome" />
     <nb-content>
       <nb-form>
         <InputWithError

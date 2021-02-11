@@ -23,7 +23,7 @@ export default {
       default: () => {},
     },
     invites: {
-      type: Object,
+      type: Array,
       default: () => {},
     },
     acceptRequest: {

@@ -22,6 +22,17 @@ export default {
           console.log(error, "err");
         });
     },
+    checkNotification({rootState, commit, state }, notificationId) {
+      let userId = rootState.auth.user.id;
+      return axiosInstance
+        .put(`/user/checkNotification?notificationId=${notificationId}&userId=${userId}`)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
   mutations: {
     setNotifications(state, notifications) {

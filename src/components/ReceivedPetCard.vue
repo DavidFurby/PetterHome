@@ -18,7 +18,7 @@
           <nb-text>Breed: {{ receivedPet.pet.animal.breed }}</nb-text>
         </nb-body>
         <nb-button :on-press="() => navigateToPetNeeds(receivedPet.pet.id)"
-          ><nb-text>Shedules</nb-text>
+          ><nb-text>Schedules</nb-text>
         </nb-button>
       </nb-card-item>
     </nb-card>

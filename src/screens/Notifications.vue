@@ -3,7 +3,10 @@
     <AppHeader screen="Notifications" />
     <nb-content v-if="ifNotifications">
       <scroll-view>
-        <NotificationCard :notifications="notifications" />
+        <NotificationCard
+          :notifications="notifications"
+          :checkNotification="checkNotification"
+        />
       </scroll-view>
     </nb-content>
     <nb-text v-else>No new notifications</nb-text>
@@ -12,6 +15,8 @@
 
 
 <script>
+import { Toast } from "native-base";
+
 import NotificationCard from "../components/NotificationCard";
 
 export default {
@@ -41,27 +46,36 @@ export default {
     },
   },
   methods: {
-    createNotification() {
-      this.pets.map((pet) => {
-        pet.needs.map((need) => {
-          need.schedules((schedule) => {
-            if (schedule.time == this.currentTime) {
-              let params = {};
-              params.petId = pet.id;
-              params.needId = need.id;
-              params.schedule = schedule.id;
-              this.$store
-                .dispatch("notification/createNotification", params)
-                .then((res) => {
-                  console.log(res);
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
-            }
+    checkNotification(notification) {
+      if (notification.schedule.assignedUser == this.user.username) {
+        notification.check = !notification.check;
+        notificationId = notification.notificationId;
+        this.$store
+          .dispatch("notifications/checkNotification", notificationId)
+          .then(() => {
+              Toast.show({
+              text: "checked notification",
+              buttonText: "Ok",
+              type: "success",
+              duration: 3000,
+            });
+          })
+          .catch((err) => {
+            Toast.show({
+              text: "Something went wrong!",
+              buttonText: "Ok",
+              type: "success",
+              duration: 3000,
+            });
           });
+      } else {
+        Toast.show({
+          text: "Only the assigned user can check the need",
+          buttonText: "ok",
+          type: "danger",
+          duration: 3000,
         });
-      });
+      }
     },
   },
 };
