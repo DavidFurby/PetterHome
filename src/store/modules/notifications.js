@@ -19,22 +19,7 @@ export default {
           return state.notifications;
         })
         .catch((error) => {
-          console.log(error);
-        });
-    },
-    createNotifications({ rootState }, params) {
-      let petId = params.petId;
-      let needId = params.needId;
-      let scheduleId = params.scheduleId;
-      
-      let userId = rootState.auth.user.id;
-      return axiosInstance
-        .post(`/user/createNotifications?userId=${userId}`, petData)
-        .then((res) => {
-          console.log(res, "success");
-        })
-        .catch((err) => {
-          console.log(err, "error");
+          console.log(error, "err");
         });
     },
   },
