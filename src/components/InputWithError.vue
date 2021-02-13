@@ -3,7 +3,7 @@
     ><nb-item> <slot /></nb-item>
     <nb-text
       v-if="error"
-      :style="{ color: 'red', padding: 10, fontSize: 14 }"
+      :style="{ color: 'red', padding: 10, fontSize: 14,}"
       >{{ msg }}</nb-text
     >
   </view>

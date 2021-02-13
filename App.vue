@@ -1,14 +1,15 @@
 <template>
-  <App v-if="isAppReady" />
+  <App v-if="isAppReady"/>
 </template>
 
 <script>
-import App from "./src/index";
+import App from "./src";
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
+
 export default {
   components: {
-    App,
+    App,  
   },
   data() {
     return {
@@ -17,7 +18,7 @@ export default {
   },
   async created() {
     await Font.loadAsync({
-      Roboto: require("native-base/Fonts/Roboto.ttf"),
+      ArchitectsDaughter: require("./fonts/ArchitectsDaughter-Regular.ttf"),
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
       ...Ionicons.font,
     });
@@ -25,14 +26,3 @@ export default {
   },
 };
 </script>
-<style>
-.container {
-  background-color: white;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-}
-.text-color-primary {
-  color: blue;
-}
-</style>

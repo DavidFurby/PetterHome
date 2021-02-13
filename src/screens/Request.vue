@@ -8,7 +8,7 @@
         :user="user"
         :invites="invites"
       />
-      <nb-text v-else>No Invites available</nb-text>
+        <nb-text v-else>No Invites available</nb-text>
     </scroll-view>
   </nb-container>
 </template>

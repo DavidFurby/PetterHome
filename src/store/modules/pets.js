@@ -112,6 +112,7 @@ export default {
       return axiosInstance
         .put(`/user/updateUserPet?petId=${petId}&userId=${userId}`, petForm)
         .then((res) => {
+          console.log(res.data);
           pet = res.data.pet;
           message = res.data.msg;
           commit("updatePet", pet);
@@ -129,7 +130,7 @@ export default {
           return state.item;
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error, "err");
         });
     },
   },
@@ -152,12 +153,12 @@ export default {
     updatePet(state, pet) {
       let newPetArr = [];
       state.items.map((newPet) => {
-        console.log(newPet.id == pet.id);
         if (newPet.id == pet.id) {
           newPet = pet;
           newPetArr.push(newPet);
+        } else if (newPet.id != pet.id) {
+          newPetArr.push(newPet);
         }
-        newPetArr.push(newPet);
       });
       state.items = newPetArr;
     },

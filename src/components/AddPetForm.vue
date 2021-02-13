@@ -2,74 +2,124 @@
   <nb-container>
     <scroll-view>
       <nb-form>
-        <nb-picker
-          note
-          mode="dropdown"
-          :style="{ width: 120 }"
-          :selectedValue="selectedAnimal"
-          :onValueChange="onAnimalChange"
-        >
-          <item
-            v-for="(animal, animalIndex) in animals"
-            :key="animalIndex"
-            :label="animal.animal"
-            :value="animal.animal"
-          />
-        </nb-picker>
-
-        <nb-picker
-          note
-          mode="dropdown"
-          :style="{ width: 120 }"
-          :selectedValue="selectedBreed"
-          :onValueChange="onBreedChange"
-        >
-          <item
-            v-for="(breed, breedIndex) in animals[currentAnimal].breeds"
-            :key="breedIndex"
-            :label="breed"
-            :value="breed"
-          />
-        </nb-picker>
+        <nb-card>
+          <nb-card-item>
+            <nb-text :style="{ width: 220 }">Animal</nb-text>
+            <nb-picker
+              note
+              mode="dropdown"
+              :style="{ width: 10 }"
+              :selectedValue="selectedAnimal"
+              :onValueChange="onAnimalChange"
+            >
+              <item
+                v-for="(animal, animalIndex) in animals"
+                :key="animalIndex"
+                :label="animal.animal"
+                :value="animal.animal"
+              />
+            </nb-picker>
+          </nb-card-item>
+          <nb-card-item>
+            <nb-text :style="{ width: 220 }">Breed</nb-text>
+            <nb-picker
+              note
+              mode="dropdown"
+              :style="{ width: 10 }"
+              :selectedValue="selectedBreed"
+              :onValueChange="onBreedChange"
+            >
+              <item
+                v-for="(breed, breedIndex) in animals[currentAnimal].breeds"
+                :key="breedIndex"
+                :label="breed"
+                :value="breed"
+              />
+            </nb-picker>
+          </nb-card-item>
+        </nb-card>
       </nb-form>
       <nb-form>
-        <InputWithError
-          :error="$v.petForm.petName.$dirty && !$v.petForm.petName.required"
-          msg="A name must be given for the pet"
-        >
-          <nb-item stackedLabel
-            ><nb-input
-              placeholder="Name"
-              v-model="petForm.petName"
-              :on-blur="() => $v.petForm.petName.$touch()"
-          /></nb-item>
-        </InputWithError>
+        <nb-card>
+          <nb-card-item>
+            <nb-text :style="{ width: 220 }">Name</nb-text>
+            <InputWithError
+              :error="$v.petForm.petName.$dirty && !$v.petForm.petName.required"
+              msg="A name must be given for the pet"
+            >
+              <nb-item
+                ><nb-input
+                  placeholder="Name"
+                  v-model="petForm.petName"
+                  :on-blur="() => $v.petForm.petName.$touch()"
+              /></nb-item>
+            </InputWithError>
+          </nb-card-item>
+          <nb-card-item>
+            <nb-text :style="{ width: 220 }">Age</nb-text>
+            <nb-picker
+              note
+              mode="dropdown"
+              :selectedValue="selectedAge"
+              :onValueChange="onAgeChange"
+            >
+              <item
+                v-for="(number, numberIndex) in numbers"
+                v-bind:key="numberIndex"
+                :label="number.toString()"
+                :value="number.toString()"
+              />
+            </nb-picker>
+          </nb-card-item>
 
-        <nb-item stackedLabel
-          ><nb-input placeholder="Age" v-model="petForm.petAge"
-        /></nb-item>
-
-        <nb-picker
-          note
-          mode="dropdown"
-          :style="{ width: 120 }"
-          :selectedValue="selectedGender"
-          :onValueChange="onGenderChange"
-        >
-          <item label="Male" value="MALE" />
-          <item label="Female" value="FEMALE" />
-        </nb-picker>
-
-        <nb-item stackedLabel
-          ><nb-input v-model="petForm.height" placeholder="Height cm"
-        /></nb-item>
-
-        <nb-item stackedLabel>
-          <nb-input v-model="petForm.weight" placeholder="Weight kg" />
-        </nb-item>
+          <nb-card-item>
+            <nb-text :style="{ width: 220 }">Gender</nb-text>
+            <nb-picker
+              note
+              mode="dropdown"
+              :selectedValue="selectedGender"
+              :onValueChange="onGenderChange"
+            >
+              <item label="Male" value="MALE" />
+              <item label="Female" value="FEMALE" />
+            </nb-picker>
+          </nb-card-item>
+          <nb-card-item>
+            <nb-text :style="{ width: 220 }">Height (cm)</nb-text>
+            <nb-picker
+              note
+              mode="dropdown"
+              :selectedValue="selectedHeight"
+              :onValueChange="onHeightChange"
+            >
+              <item
+                v-for="(number, numberIndex) in numbers"
+                v-bind:key="numberIndex"
+                :label="number.toString()"
+                :value="number.toString()"
+              />
+            </nb-picker>
+          </nb-card-item>
+          <nb-card-item>
+            <nb-text :style="{ width: 220 }">Weight (kg)</nb-text>
+            <nb-picker
+              note
+              mode="dropdown"
+              :selectedValue="selectedWeight"
+              :onValueChange="onWeightChange"
+            >
+              <item
+                v-for="(number, numberIndex) in numbers"
+                v-bind:key="numberIndex"
+                :label="number.toString()"
+                :value="number.toString()"
+              />
+            </nb-picker>
+          </nb-card-item>
+        </nb-card>
       </nb-form>
 
-      <nb-button block :on-press="addPet">
+      <nb-button block success :on-press="addPet">
         <nb-text>Add Pet</nb-text>
       </nb-button>
     </scroll-view>
@@ -81,16 +131,16 @@ import { required } from "vuelidate/lib/validators";
 import { Toast } from "native-base";
 
 export default {
-  components: { Item: Picker.Item,},
+  components: { Item: Picker.Item },
   data() {
     return {
       currentAnimal: 0,
       petForm: {
         petName: "",
-        petAge: "",
+        petAge: 0,
         gender: "MALE",
-        weight: "",
-        height: "",
+        weight: 0,
+        height: 0,
       },
       animalForm: {
         animal: this.animals[0].animal,
@@ -107,6 +157,10 @@ export default {
     },
     navigation: {
       type: Object,
+    },
+    numbers: {
+      type: Array,
+      default: () => [],
     },
   },
   validations: {
@@ -127,6 +181,7 @@ export default {
   methods: {
     onAnimalChange(animal, index) {
       this.animalForm.animal = animal;
+      this.animalForm.breed = this.animals[index].breeds[0]
       this.currentAnimal = index;
     },
     onBreedChange(breed) {
@@ -135,9 +190,14 @@ export default {
     onGenderChange(gender) {
       this.petForm.gender = gender;
     },
-
-    setMedication() {
-      this.petForm.medication = !this.petForm.medication;
+    onAgeChange(age) {
+      this.petForm.petAge = age;
+    },
+    onHeightChange(height) {
+      this.petForm.height = height;
+    },
+    onWeightChange(weight) {
+      this.petForm.weight = weight;
     },
     addPet() {
       this.$v.petForm.$touch();
@@ -183,6 +243,15 @@ export default {
     },
     selectedGender() {
       return this.petForm.gender;
+    },
+    selectedAge() {
+      return this.petForm.petAge;
+    },
+    selectedHeight() {
+      return this.petForm.height;
+    },
+    selectedWeight() {
+      return this.petForm.weight;
     },
   },
 };

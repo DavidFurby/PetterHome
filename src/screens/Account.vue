@@ -7,11 +7,11 @@
     />
     <nb-content padder>
       <AccountInformation :user="user" />
-      <nb-button block :on-press="changePassword"
+      <nb-button block info :on-press="changePassword"
         ><nb-text>Change password</nb-text></nb-button
       >
     </nb-content>
-    <nb-button block :on-press="logout"><nb-text>Logout</nb-text></nb-button>
+    <nb-button block danger :on-press="logout"><nb-text>Logout</nb-text></nb-button>
   </nb-container>
 </template>
 

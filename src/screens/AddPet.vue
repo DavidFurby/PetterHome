@@ -5,7 +5,12 @@
       leftButton="return"
       :leftButtonFunction="goBack"
     />
-    <AddPetForm :user="user" :animals="animals" :navigation="navigation" />
+    <AddPetForm
+      :user="user"
+      :animals="animals"
+      :navigation="navigation"
+      :numbers="numbers"
+    />
   </nb-container>
   <nb-container v-else class="spinner-container">
     <nb-spinner color="blue" />
@@ -14,7 +19,6 @@
 
 <script>
 import AddPetForm from "../components/AddPetForm";
-
 
 export default {
   components: { AddPetForm },
@@ -35,6 +39,13 @@ export default {
   computed: {
     user() {
       return this.$store.state.auth.user;
+    },
+    numbers() {
+      const numbers = [];
+      for (let i = 0; i <= 100; i++) {
+        numbers[i] = i;
+      }
+      return numbers;
     },
     animals() {
       let animals = this.$store.state.animals.items;

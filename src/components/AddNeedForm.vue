@@ -2,70 +2,57 @@
   <nb-container>
     <scroll-view>
       <nb-form>
-        <InputWithError
-          :error="$v.needForm.type.$dirty && !$v.needForm.type.required"
-          msg="Must select a type"
-        >
-          <nb-item stackedLabel>
-            <nb-text>Name of the pets need</nb-text>
-            <nb-input
-              placeholder="type"
-              v-model="needForm.type"
-              :on-blur="() => $v.needForm.type.$touch()"
-          /></nb-item>
-        </InputWithError>
-
-        <nb-list-item stackedLabel>
-          <nb-checkbox
-            :checked="needForm.notified"
-            :on-press="setNotification"
-          />
-          <nb-text> Do you want to be notified about this need?</nb-text>
-        </nb-list-item>
+        <nb-card>
+          <InputWithError
+            :error="$v.needForm.type.$dirty && !$v.needForm.type.required"
+            msg="Must select a type"
+          >
+            <nb-card-item stackedLabel>
+              <nb-text :style="{ width: 200 }">Name of the pets need</nb-text>
+              <nb-input
+                placeholder="type"
+                v-model="needForm.type"
+                :on-blur="() => $v.needForm.type.$touch()"
+            /></nb-card-item>
+          </InputWithError>
+        </nb-card>
       </nb-form>
 
       <nb-form>
-        <nb-text>Create schedule</nb-text>
-        <nb-item stackedLabel>
-          <nb-text>Time of day</nb-text>
-          <AppTimePicker :onValueChange="(time) => setTime(time, 'time')" />
-        </nb-item>
-        <nb-item stackedLabel>
-          <nb-text>Assign schedule to user</nb-text>
-          <nb-picker
-            note
-            mode="dropdown"
-            :style="{ width: 120 }"
-            :selectedValue="selectedUser"
-            :onValueChange="onUserChange"
-          >
-            <item
-              v-for="(availableUser, availableUserIndex) in availableUsers"
-              :key="availableUserIndex"
-              :label="availableUser"
-              :value="availableUser"
-            />
-          </nb-picker>
-        </nb-item>
-        <!-- <nb-list-item>
-          <nb-text>Medication ?</nb-text>
-          <nb-body> </nb-body>
-          <nb-checkbox
-            :on-press="setMedication"
-            :checked="needForm.medication"
-          />
-        </nb-list-item>
-        <Medication
-          v-if="ifMedication"
-          :medicationName="$v.needForm.medicationName"
-          :dosage="$v.needForm.dosage"
-        />
-        <DogForm v-if="ifDog" />
-        <nb-button block :on-press="addPet">
-          <nb-text>Add Pet</nb-text> 
-        </nb-button>-->
+        <nb-card>
+          <nb-card-item>
+            <nb-body>
+              <nb-text>Create schedule</nb-text>
+            </nb-body>
+            <nb-item stackedLabel>
+              <nb-text>Time of day</nb-text>
+              <AppTimePicker :onValueChange="(time) => setTime(time, 'time')" />
+            </nb-item>
+          </nb-card-item>
+          <nb-card-item>
+            <nb-body>
+              <nb-text>Assign schedule to user</nb-text>
+            </nb-body>
+            <nb-item stackedLabel>
+              <nb-picker
+                note
+                mode="dropdown"
+                :style="{ width: 120 }"
+                :selectedValue="selectedUser"
+                :onValueChange="onUserChange"
+              >
+                <item
+                  v-for="(availableUser, availableUserIndex) in availableUsers"
+                  :key="availableUserIndex"
+                  :label="availableUser"
+                  :value="availableUser"
+                />
+              </nb-picker>
+            </nb-item>
+          </nb-card-item>
+        </nb-card>
       </nb-form>
-      <nb-button block :on-press="addPetNeed">
+      <nb-button block success :on-press="addPetNeed">
         <nb-text>Add Need </nb-text>
       </nb-button>
     </scroll-view>
@@ -123,9 +110,7 @@ export default {
       },
     },
   },
-  mounted() {
-    console.log(this.thisFirstAvailableUser, "Form");
-  },
+
   methods: {
     ontypeChange(typeValue) {
       this.needForm.type = typeValue;

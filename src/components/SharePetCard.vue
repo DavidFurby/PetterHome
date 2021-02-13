@@ -10,7 +10,7 @@
           <nb-text>Breed: {{ animal.breed }} </nb-text>
         </nb-body>
         <nb-content>
-          <nb-button :on-press="() => navigateToShareList(pet.id)">
+          <nb-button info :on-press="() => navigateToShareList(pet.id)">
             <nb-text>Users</nb-text>
           </nb-button>
         </nb-content>

@@ -45,7 +45,7 @@ export default {
           return state.invites;
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err, "invites");
         });
     },
   },

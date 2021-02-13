@@ -4,6 +4,7 @@
     <nb-content>
       <nb-form>
         <InputWithError
+          class="textInput"
           :error="$v.form.username.$dirty && !$v.form.username.minLength"
           msg="Minimum length of 6 characters!"
         >
@@ -15,6 +16,7 @@
           />
         </InputWithError>
         <InputWithError
+          class="textInput"
           :error="$v.form.email.$dirty && !$v.form.email.validEmail"
           msg="Email format must be valid!"
         >
@@ -26,6 +28,7 @@
           />
         </InputWithError>
         <InputWithError
+          class="textInput"
           :error="$v.form.password.$dirty && !$v.form.password.required"
           msg="Password is required!"
         >
@@ -37,6 +40,7 @@
           />
         </InputWithError>
         <InputWithError
+          class="textInput"
           :error="
             $v.form.passwordConfirmation.$dirty &&
             !$v.form.passwordConfirmation.sameAsPassword
@@ -50,9 +54,11 @@
             :on-blur="() => $v.form.passwordConfirmation.$touch()"
           />
         </InputWithError>
-        <nb-button :on-press="register"><nb-text>Register</nb-text></nb-button>
-        <nb-button transparent :on-press="goToLogin"
-          ><nb-text>Return to login</nb-text></nb-button
+        <nb-button class="button" block :on-press="register"
+          ><nb-text class="text">Register</nb-text></nb-button
+        >
+        <nb-button class="subButton" transparent :on-press="goToLogin"
+          ><nb-text class="text">Return to login</nb-text></nb-button
         >
       </nb-form>
     </nb-content>
@@ -71,7 +77,7 @@ export default {
   data() {
     return {
       form: {
-        username: "",
+        usernam: "",
         email: "",
         password: "",
         passwordConfirmation: "",
@@ -119,3 +125,27 @@ export default {
   },
 };
 </script>
+<style>
+.button {
+  border-radius: 20;
+  margin-top: 10;
+  margin-right: 40;
+  margin-left: 40;
+  background-color: #edccaf;
+}
+.textInput {
+  margin-right: 40;
+  margin-left: 50;
+}
+.text {
+  color: white;
+  font-family: ArchitectsDaughter;
+}
+.subButton {
+  border-radius: 20;
+  margin-top: 10;
+  margin-right: 50;
+  margin-left: 130;
+  background-color: #edccaf;
+}
+</style>

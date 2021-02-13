@@ -4,6 +4,7 @@
     <nb-content>
       <nb-form>
         <InputWithError
+          class="textInput"
           :error="
             $v.form.usernameConfirmation.$dirty &&
             !$v.form.usernameConfirmation.sameAsUsername
@@ -18,6 +19,7 @@
           />
         </InputWithError>
         <InputWithError
+          class="textInput"
           :error="
             $v.form.oldPasswordConfirmation.$dirty &&
             !$v.form.oldPasswordConfirmation.sameAsOldPassword
@@ -32,6 +34,7 @@
           />
         </InputWithError>
         <InputWithError
+          class="textInput"
           :error="$v.form.newPassword.$dirty && !$v.form.newPassword.required"
           msg="Password is required!"
         >
@@ -43,6 +46,7 @@
           />
         </InputWithError>
         <InputWithError
+          class="textInput"
           :error="
             $v.form.newPasswordConfirmation.$dirty &&
             !$v.form.newPasswordConfirmation.sameAsNewPassword
@@ -56,11 +60,11 @@
             :on-blur="() => $v.form.newPasswordConfirmation.$touch()"
           />
         </InputWithError>
-        <nb-button :on-press="updatePassword"
+        <nb-button class="button" block :on-press="updatePassword"
           ><nb-text>Update</nb-text>
         </nb-button>
-        <nb-button transparent :on-press="goToLogin"
-          ><nb-text>Return to login</nb-text></nb-button
+        <nb-button class="subButton" transparent :on-press="goToLogin"
+          ><nb-text class="text">Return to login</nb-text></nb-button
         >
       </nb-form>
     </nb-content>
@@ -68,7 +72,7 @@
 </template>
 
 <script>
-import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
+import { required, sameAs } from "vuelidate/lib/validators";
 import { Toast } from "native-base";
 import user from "../data/userMock.json";
 export default {
@@ -136,3 +140,28 @@ export default {
   },
 };
 </script>
+<style scoped>
+.button {
+  border-radius: 20;
+  margin-top: 10;
+  margin-right: 40;
+  margin-left: 40;
+  background-color: #edccaf;
+}
+.subButton {
+  border-radius: 20;
+  margin-top: 10;
+  margin-right: 50;
+  margin-left: 130;
+  background-color: #edccaf;
+}
+.textInput {
+  margin-right: 40;
+  margin-left: 40;
+  font-family: ArchitectsDaughter;
+}
+.text {
+  font-family: ArchitectsDaughter;
+  color: white;
+}
+</style>

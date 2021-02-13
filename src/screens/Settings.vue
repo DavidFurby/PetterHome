@@ -2,10 +2,10 @@
   <nb-container>
     <AppHeader screen="Settings" />
     <nb-content padder>
-      <nb-button block light :on-press="goToAccount">
+      <nb-button class="button" block :on-press="goToAccount">
         <nb-text>Account Settings</nb-text>
       </nb-button>
-      <nb-button block light :on-press="() => goToSharePet(this.user)">
+      <nb-button class="button" block :on-press="() => goToSharePet(this.user)">
         <nb-text>Share Pet</nb-text>
       </nb-button>
     </nb-content>
@@ -39,3 +39,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+.button {
+    background-color: #edccaf;
+
+}
+</style>

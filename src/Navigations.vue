@@ -1,7 +1,7 @@
 <template>
-  <Root>
+  <root>
     <AppNavigaton />
-  </Root>
+  </root>
 </template>
 
 <script>
@@ -135,4 +135,10 @@ export default {
   },
 };
 </script>
-<style scoped></style>
+<nb-text scoped>
+.container {
+  flex: 1;
+  background-color: red;
+}
+
+</style>

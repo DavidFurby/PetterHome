@@ -13,6 +13,7 @@
         :navigation="navigation"
         :numbers="numbers"
       />
+      
     </nb-content>
     <nb-content v-else class="spinner-container">
       <nb-spinner color="blue" />
@@ -41,6 +42,7 @@ export default {
   created() {
     const pet = this.navigation.getParam("pet", "undefined");
     this.pet = pet;
+    console.log(pet,"test");
     this.$store.dispatch("animals/fetchAnimals");
   },
 
@@ -65,7 +67,6 @@ export default {
       for (let i = 0; i <= 100; i++) {
         numbers[i] = i;
       }
-      console.log(numbers)
       return numbers;
     },
   },

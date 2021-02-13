@@ -23,7 +23,6 @@ Vue.component("AppHeader", AppHeader);
 Vue.component("InputWithError", InputWithError);
 Vue.component("PickerWithError", PickerWithError);
 Vue.component("AppTimePicker", AppTimePicker);
-
 export default {
   components: {
     Navigation,
@@ -46,7 +45,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .container {
   flex: 1;
 }

@@ -3,45 +3,23 @@
   <nb-content>
     <nb-card>
       <nb-card-item>
-        <nb-body>
-          <nb-text>Name:</nb-text>
-        </nb-body>
-        <nb-text>{{ pet.petName }}</nb-text>
-      </nb-card-item>
-    </nb-card>
-    <nb-card>
-      <nb-card-item>
-        <nb-body>
-          <nb-text>Animal:</nb-text>
-        </nb-body>
+        <nb-text :style="{ width: 280 }">Animal:</nb-text>
         <nb-text>{{ animal.animal }}</nb-text>
       </nb-card-item>
       <nb-card-item>
-        <nb-body>
-          <nb-text>Breed:</nb-text>
-        </nb-body>
+        <nb-text :style="{ width: 280 }">Breed:</nb-text>
         <nb-text>{{ animal.breed }}</nb-text>
       </nb-card-item>
-    </nb-card>
-    <nb-card>
       <nb-card-item>
-        <nb-body>
-          <nb-text>Age: </nb-text>
-        </nb-body>
+        <nb-text :style="{ width: 280 }">Age: </nb-text>
         <nb-text>{{ pet.petAge }} years old</nb-text>
       </nb-card-item>
-    </nb-card>
-    <nb-card>
       <nb-card-item>
-        <nb-body>
-          <nb-text>Weight: </nb-text>
-        </nb-body>
+        <nb-text :style="{ width: 280 }">Weight: </nb-text>
         <nb-text>{{ pet.weight }} kg</nb-text>
       </nb-card-item>
-    </nb-card>
-    <nb-card>
       <nb-card-item>
-        <nb-body> <nb-text>Height: </nb-text></nb-body>
+        <nb-text :style="{ width: 280 }">Height: </nb-text>
         <nb-text>{{ pet.height }} cm</nb-text>
       </nb-card-item>
     </nb-card>
@@ -60,4 +38,5 @@ export default {
 </script>
 
 <style>
+
 </style>

@@ -124,11 +124,11 @@
           </nb-card-item>
         </nb-card>
       </nb-form>
-
-      <nb-button block :on-press="updatePet">
+      <nb-button block info :on-press="updatePet">
         <nb-text>Update Pet</nb-text>
       </nb-button>
     </scroll-view>
+
   </nb-container>
 </template>
 
@@ -197,6 +197,7 @@ export default {
   methods: {
     onAnimalChange(animal, index) {
       this.animalForm.animal = animal;
+      this.animalForm.breed = this.animals[index].breeds[0]
       this.currentAnimal = index;
     },
     onBreedChange(breed) {
@@ -207,13 +208,14 @@ export default {
     },
 
     onHeightChange(height) {
-      this.petForm.height = height;
+      this.petForm.height = height.toString();
     },
     onWeightChange(weight) {
-      this.petForm.weight = weight;
+      this.petForm.weight = weight.toString();
     },
     onAgeChange(age) {
-      this.petForm.age = age;
+      console.log(age); 
+      this.petForm.petAge = age.toString();
     },
     updatePet() {
       this.$v.petForm.$touch();
@@ -228,6 +230,7 @@ export default {
       let params = {};
       params.petForm = petForm;
       params.petId = this.pet.id;
+      console.log(params.petForm, "test")
       if (!this.$v.petForm.$invalid) {
         this.$store.dispatch("pets/updateUserPet", params).then(() => {
           Toast.show({
@@ -262,13 +265,13 @@ export default {
       return this.petForm.gender;
     },
     selectedHeight() {
-      return this.pet.height.toString();
+      return this.pet.height;
     },
     selectedWeight() {
-      return this.pet.weight.toString();
+      return this.pet.weight;
     },
     selectedAge() {
-      return this.pet.petAge.toString(); 
+      return this.pet.petAge; 
     },
   },
 };

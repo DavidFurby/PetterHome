@@ -1,9 +1,16 @@
 <template>
   <nb-container>
     <AppHeader root :screen="title" />
+
     <nb-content v-if="hasPets">
       <scroll-view>
         <PetCard
+          :style="{
+            marginTop: 30,
+            marginLeft: 20,
+            marginRight: 20,
+            marginBottom: 40,
+          }"
           v-for="pet in pets"
           :key="pet.id"
           :pet="pet"
@@ -12,11 +19,13 @@
         />
       </scroll-view>
     </nb-content>
-    <nb-container v-else c>
+    <nb-container v-else>
       <nb-text>You haven't added any pets yet</nb-text>
     </nb-container>
-    <nb-button block :on-press="goToAddPetScreen" :pets="pets">
-      <nb-text>Add Pet</nb-text>
+    <nb-button class="button" success block :on-press="goToAddPetScreen" :pets="pets">
+      <nb-text
+        >Add Pet <nb-icon :style="{ fontSize: 15, color: 'white' }" name="paw"
+      /></nb-text>
     </nb-button>
   </nb-container>
 </template>

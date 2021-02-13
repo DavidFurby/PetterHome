@@ -13,7 +13,7 @@
         <nb-body>
           <nb-text> {{ receivedPet.pet.petName }}</nb-text>
           <nb-text>Animal: {{ receivedPet.pet.animal.animal }}</nb-text>
-          <nb-text>Age: {{ receivedPet.pet.age }}</nb-text>
+          <nb-text>Age: {{ receivedPet.pet.petAge }}</nb-text>
           <nb-text>Gender: {{ receivedPet.pet.gender }}</nb-text>
           <nb-text>Breed: {{ receivedPet.pet.animal.breed }}</nb-text>
         </nb-body>

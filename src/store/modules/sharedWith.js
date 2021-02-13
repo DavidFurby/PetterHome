@@ -10,8 +10,8 @@ export default {
   },
   getters: {},
   actions: {
-    fetchSharedWithUsers({ commit, state }, params) {
-      const userId = params.userId;
+    fetchSharedWithUsers({rootState, commit, state }, params) {
+      const userId = rootState.auth.user.id;
       const petId = params.petId;
       return axiosInstance
         .get(`/user/getSharedWithUsers?userId=${userId}&petId=${petId}`)
@@ -21,7 +21,7 @@ export default {
           return state.sharedWithUsers;
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err, "sharedWith");
         });
     },
   },

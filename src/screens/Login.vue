@@ -5,6 +5,7 @@
     <nb-content>
       <nb-form>
         <InputWithError
+          class="textInput"
           :error="$v.form.username.$dirty && !$v.form.username.required"
           msg="Username is required"
         >
@@ -16,6 +17,7 @@
           />
         </InputWithError>
         <InputWithError
+          class="textInput"
           :error="$v.form.password.$dirty && !$v.form.password.required"
           msg="Password is required!"
         >
@@ -27,12 +29,20 @@
             secure-text-entry
           />
         </InputWithError>
-        <nb-button :on-press="login" block><nb-text>Login</nb-text></nb-button>
-        <nb-button transparent :on-press="goToRegister"
-          ><nb-text>Register new account</nb-text></nb-button
+        <view>
+          <nb-button class="button" block :on-press="login"
+            ><nb-text class="text">Login</nb-text></nb-button
+          >
+        </view>
+        <nb-button class="subButton" transparent :on-press="goToRegister"
+          ><nb-text class="text">Register new account</nb-text></nb-button
         >
-        <nb-button transparent :on-press="goToRecoverPassword"
-          ><nb-text>Forgot Password?</nb-text></nb-button
+        <nb-button
+          :style="{ marginLeft: 120 }"
+          class="subButton"
+          transparent
+          :on-press="goToRecoverPassword"
+          ><nb-text class="text">Forgot Password?</nb-text></nb-button
         >
       </nb-form>
     </nb-content>
@@ -132,3 +142,28 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.button {
+  border-radius: 20;
+  margin-top: 10;
+  margin-right: 40;
+  margin-left: 40;
+  background-color: #edccaf;
+
+}
+.subButton {
+  border-radius: 20;
+  margin-top: 10;
+  margin-right: 50;
+  margin-left: 110;
+  background-color: #edccaf;
+}
+.textInput {
+  margin-right: 40;
+  margin-left: 40;
+}
+.text {
+  color: white;
+  font-family: ArchitectsDaughter;
+}
+</style>

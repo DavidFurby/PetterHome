@@ -1,14 +1,14 @@
 <template>
   <nb-card>
-    <nb-card-item info button :on-press="() => navigateToPet(pet.id)">
-      <nb-body full>
-        <nb-text>{{ pet.petName }} </nb-text>
+    <nb-card-item button :on-press="() => navigateToPet(pet.id)">
+      <nb-body>
+          <nb-text>{{ pet.petName }} </nb-text>
         <nb-text>Animal: {{ animal.animal }} </nb-text>
         <nb-text>Age: {{ pet.petAge }} </nb-text>
         <nb-text>Gender: {{ pet.gender }} </nb-text>
         <nb-text>Breed: {{ animal.breed }} </nb-text>
       </nb-body>
-      <nb-button :on-press="() => navigateToPetSchema(pet.id)"
+      <nb-button rounded class="button" :on-press="() => navigateToPetSchema(pet.id)"
         ><nb-text>Schedules</nb-text>
       </nb-button>
     </nb-card-item>
@@ -36,3 +36,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.button {
+  background-color: #edccaf;
+}
+</style>

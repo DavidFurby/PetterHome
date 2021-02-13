@@ -68,7 +68,7 @@ export default {
 
   methods: {
     goBack() {
-      this.navigation.goBack();
+      this.navigation.navigate("Main");
     },
     ifAvailableUsers() {
       return Object.keys(this.availableUsers).length > 0;

@@ -11,10 +11,9 @@
         :deleteSchedule="deleteSchedule"
         :petId="pet.id"
       />
-      <nb-button block :on-press="() => goToAddNeedScreen(pet.id)"
-        ><nb-text>Add new Need</nb-text></nb-button
-      >
     </nb-content>
+    <nb-button class="button" success block :on-press="() => goToAddNeedScreen(pet.id)"
+      ><nb-text>Add new Need</nb-text></nb-button>
   </nb-container>
 </template>
 
@@ -71,7 +70,6 @@ export default {
     params.petId = petId;
     this.$store.dispatch("pets/fetchPetById", params);
     await this.$store.dispatch("sharedWith/fetchSharedWithUsers", params);
-    console.log("object");
     const sharedWithUsers = this.sharedWithUsers;
     let arr = [];
     arr.push(this.user.username);
@@ -81,7 +79,6 @@ export default {
     const firstUser = arr[0];
     this.availableUsers = arr;
     this.firstAvailableUser = firstUser;
-    console.log(firstUser, "test");
   },
 
   methods: {
@@ -161,4 +158,3 @@ export default {
 };
 </script>
 
-<style></style>

@@ -19,7 +19,7 @@ export default {
           return state.receivedPets;
         })
         .catch((err) => {
-          console.log(err, "err");
+          console.log(err, "receivedPets");
         });
     },
     fetchReceivedPetById({ rootState, commit, state }, params) {

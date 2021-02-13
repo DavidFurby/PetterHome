@@ -3,20 +3,20 @@
     <AppHeader :screen="header" />
     <scroll-view>
       <SharedWithUserCard v-if="isSharedWithLoaded" :sharedWith="sharedWith" />
-      <nb-text v-else>You haven't shared this pet with anyone yet</nb-text>
+      <nb-text>You haven't shared this pet with anyone yet</nb-text>
     </scroll-view>
     <nb-content>
-      <nb-button block :on-press="setShare">
+      <nb-button info block :on-press="setShare">
         <nb-text>Share Pet</nb-text>
       </nb-button>
       <nb-content v-if="share">
-        <nb-text>Add sharing account</nb-text>
+        <nb-text>typer username you want to share {{ pet.petName }}</nb-text>
         <nb-item
           ><nb-form
             ><nb-input placeholder="username" v-model="userForm.username" />
           </nb-form>
         </nb-item>
-        <nb-button :on-press="() => sharePet()"
+        <nb-button success :on-press="() => sharePet()"
           ><nb-text>Send invite</nb-text>
         </nb-button>
       </nb-content>
@@ -111,6 +111,14 @@ export default {
               text: res,
               buttonText: "ok",
               type: "success",
+              duration: 3000,
+            });
+          }
+          if (res == "User does not exist") {
+            Toast.show({
+              text: res,
+              buttonText: "ok",
+              type: "danger",
               duration: 3000,
             });
           }

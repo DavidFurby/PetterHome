@@ -10,7 +10,7 @@
       </nb-body>
       <nb-label>{{ need.notified }}</nb-label>
     </nb-card-item>
-    <nb-button small :on-press="() => goToAddScheduleScreen(petId, need.id)"
+    <nb-button success small :on-press="() => goToAddScheduleScreen(petId, need.id)"
       ><nb-text>Add new schedule</nb-text></nb-button
     >
 
@@ -28,12 +28,13 @@
         <nb-text>{{ schedule.assignedUser }}</nb-text>
       </nb-card-item>
       <nb-button
+        danger
         small
         :on-press="() => deleteSchedule(petId, need.id, schedule.id)"
         ><nb-text>Delete Schedule</nb-text></nb-button
       >
     </nb-card>
-    <nb-button block :on-press="() => deleteNeed(petId, need.id)"
+    <nb-button danger block :on-press="() => deleteNeed(petId, need.id)"
       ><nb-text>Delete Need</nb-text>
     </nb-button>
     <nb-body />
@@ -63,5 +64,3 @@ export default {
 };
 </script>
 
-<style>
-</style>

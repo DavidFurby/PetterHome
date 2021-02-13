@@ -39,7 +39,6 @@ export default {
     },
   },
   created() {
-    console.log("test");
     this.$store.dispatch("invites/fetchInvites", this.user.id);
     this.$store.dispatch("receivedPets/fetchReceivedPets", this.user.id);
   },

@@ -8,7 +8,7 @@
       :leftButtonFunction="goBack"
     />
     <PetPage :animal="animal" :pet="pet" />
-    <nb-button block :on-press="() => goToUpdateInformation(pet)"
+    <nb-button class="button" block :on-press="() => goToUpdateInformation(pet)"
       ><nb-text>Update information</nb-text></nb-button
     >
   </nb-container>
@@ -116,3 +116,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.button {
+  background-color: #edccaf;
+}
+</style>

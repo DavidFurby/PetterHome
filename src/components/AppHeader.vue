@@ -1,25 +1,20 @@
-<template>
-  <nb-header>
+<template >
+  <nb-header class="header">
     <nb-left>
       <nb-button :on-press="leftButtonFunction" transparent>
-        <nb-text>{{ leftButton }}</nb-text>
+        <nb-icon v-if="leftButton" name="arrow-back" />
       </nb-button>
     </nb-left>
-    <nb-body :class="screen">
-      <nb-title>{{ screen }}</nb-title>
-    </nb-body>
+    <nb-title class="screenName">{{ screen }}</nb-title>
     <nb-right>
       <nb-button :on-press="rightButtonFunction" transparent>
-        <nb-text>{{ rightButton }}</nb-text>
+        <nb-icon v-if="rightButton" name="trash" />
       </nb-button>
     </nb-right>
   </nb-header>
 </template>
 <script>
 export default {
-  data() {
-    return {};
-  },
   props: {
     screen: {
       type: String,
@@ -45,7 +40,14 @@ export default {
 };
 </script>
 <style scoped>
-.screen {
-  align-items: center;
+.header {
+  background-color: #edccaf;
+  border-bottom-color: #edccae;
+}
+.screenName {
+  font-family: ArchitectsDaughter;
+  margin-left: 80;
+  margin-top: 10;
+  font-size: 25;
 }
 </style>

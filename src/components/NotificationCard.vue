@@ -11,7 +11,6 @@
           <nb-text>Pet: {{ notification.pet.petName }} </nb-text>
           <nb-text>User: {{ notification.schedule.assignedUser }}</nb-text>
         </nb-body>
-        <nb-text>Need met?</nb-text>
         <nb-checkbox :checked="notification.check" :on-press="() => checkNotification(notification)" />
       </nb-card-item>
     </nb-card>
