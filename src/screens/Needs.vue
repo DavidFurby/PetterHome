@@ -12,8 +12,16 @@
         :petId="pet.id"
       />
     </nb-content>
-    <nb-button class="button" success block :on-press="() => goToAddNeedScreen(pet.id)"
-      ><nb-text>Add new Need</nb-text></nb-button>
+    <nb-container v-else class="spinner-container">
+      <nb-spinner color="blue" />
+    </nb-container>
+    <nb-button
+      class="button"
+      success
+      block
+      :on-press="() => goToAddNeedScreen(pet.id)"
+      ><nb-text>Add new Need</nb-text></nb-button
+    >
   </nb-container>
 </template>
 

@@ -71,7 +71,6 @@ export default {
   methods: {
     deleteFromApp() {
       this.displayActionsheet();
-      //this.$store.dispatch('pets/deletePetsById', this.petId)
     },
     displayActionsheet() {
       ActionSheet.show(

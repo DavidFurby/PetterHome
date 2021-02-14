@@ -1,6 +1,10 @@
 <template>
   <nb-container>
-    <AppHeader screen="Notifications" />
+    <AppHeader
+      screen="Notifications"
+      rightButton="update"
+      :rightButtonFunction="updateNotification"
+    />
     <nb-content v-if="ifNotifications">
       <scroll-view>
         <NotificationCard
@@ -27,11 +31,8 @@ export default {
   components: {
     NotificationCard,
   },
-  mounted() {
+  beforeMount() {
     this.$store.dispatch("notifications/fetchNotifications", this.user.id);
-  },
-  updated() {
-
   },
   computed: {
     notifications() {
@@ -55,7 +56,7 @@ export default {
         this.$store
           .dispatch("notifications/checkNotification", notificationId)
           .then(() => {
-              Toast.show({
+            Toast.show({
               text: "checked notification",
               buttonText: "Ok",
               type: "success",
@@ -78,6 +79,9 @@ export default {
           duration: 3000,
         });
       }
+    },
+    updateNotification() {
+      this.$store.dispatch("notifications/fetchNotifications", this.user.id);
     },
   },
 };

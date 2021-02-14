@@ -8,7 +8,8 @@
     <nb-title class="screenName">{{ screen }}</nb-title>
     <nb-right>
       <nb-button :on-press="rightButtonFunction" transparent>
-        <nb-icon v-if="rightButton" name="trash" />
+        <nb-icon v-if="deleteFunction" name="trash" />
+        <nb-icon v-if="updateFunction" name="refresh" />
       </nb-button>
     </nb-right>
   </nb-header>
@@ -35,6 +36,19 @@ export default {
     rightButtonFunction: {
       type: Function,
       default: () => {},
+    },
+  },
+  computed: {
+    deleteFunction() {
+      if(this.rightButton == "delete") {
+        return true; 
+
+      }
+    },
+    updateFunction() {
+      if (this.rightButton == "update") {
+        return true;
+      }
     },
   },
 };
