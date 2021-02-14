@@ -2,22 +2,27 @@
   <nb-container>
     <AppHeader :screen="header" />
     <scroll-view>
-      <SharedWithUserCard v-if="isSharedWithLoaded" :sharedWith="sharedWith" />
-      <nb-text>You haven't shared this pet with anyone yet</nb-text>
+      <SharedWithUserCard
+        v-if="isSharedWithLoaded"
+        :sharedWith="sharedWith"
+        :deleteReceivedUser="deleteReceivedUser"
+      />
     </scroll-view>
     <nb-content>
       <nb-button info block :on-press="setShare">
-        <nb-text>Share Pet</nb-text>
+        <nb-text class="text">Share Pet</nb-text>
       </nb-button>
       <nb-content v-if="share">
-        <nb-text>typer username you want to share {{ pet.petName }}</nb-text>
+        <nb-text class="text"
+          >type the username you want to share your pet with</nb-text
+        >
         <nb-item
           ><nb-form
             ><nb-input placeholder="username" v-model="userForm.username" />
           </nb-form>
         </nb-item>
         <nb-button success :on-press="() => sharePet()"
-          ><nb-text>Send invite</nb-text>
+          ><nb-text class="text">Send invite</nb-text>
         </nb-button>
       </nb-content>
     </nb-content>
@@ -132,9 +137,27 @@ export default {
           });
         });
     },
+    deleteReceivedUser(receiverId) {
+      const petId = this.petId;
+      let params = {};
+      params.petId = petId; 
+      params.receiverId = receiverId; 
+      this.$store
+        .dispatch("sharedWith/removeReceivedUser", params)
+        .then((res) => {
+          console.log(res);
+          this.navigation.goBack();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
 };
 </script>
 
 <style>
+.text {
+  font-family: ArchitectsDaughter;
+}
 </style>

@@ -47,7 +47,6 @@ export default {
       });
     },
     goToPetSchema(petId) {
-      console.log(petId)
       this.navigation.navigate("ReceivedPetNeeds", { petId: petId });
     },
   },

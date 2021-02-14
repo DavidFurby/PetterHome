@@ -42,13 +42,11 @@ export default {
   created() {
     const pet = this.navigation.getParam("pet", "undefined");
     this.pet = pet;
-    console.log(pet,"test");
     this.$store.dispatch("animals/fetchAnimals");
   },
 
   computed: {
     hasPet() {
-      console.log(this.pet);
       return this.pet;
     },
     user() {
@@ -56,7 +54,6 @@ export default {
     },
     animals() {
       let animals = this.$store.state.animals.items;
-      console.log(animals);
       return animals;
     },
     hasAnimals() {

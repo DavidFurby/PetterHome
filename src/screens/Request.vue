@@ -5,10 +5,10 @@
       <RequestCard
         v-if="ifInvites"
         :acceptRequest="acceptRequest"
+        :declineInvite="declineInvite"
         :user="user"
         :invites="invites"
       />
-        <nb-text v-else>No Invites available</nb-text>
     </scroll-view>
   </nb-container>
 </template>
@@ -48,13 +48,14 @@ export default {
       params.userId = this.user.id;
       this.$store
         .dispatch("invites/acceptInvite", params)
-        .then((res) => {
+        .then(() => {
           Toast.show({
             text: "Invite was accepted",
             buttonText: "ok",
             type: "success",
             duration: 3000,
           });
+          this.goBack();
         })
         .catch(() => {
           Toast.show({
@@ -64,6 +65,30 @@ export default {
             duration: 3000,
           });
         });
+    },
+    declineInvite(inviteId) {
+      this.$store
+        .dispatch("invites/declineInvite", inviteId)
+        .then((res) => {
+          Toast.show({
+            text: "Invite was declined",
+            buttonText: "ok",
+            type: "success",
+            duration: 3000,
+          });
+          this.goBack();
+        })
+        .catch(() => {
+          Toast.show({
+            text: "Invite could not be declined",
+            buttonText: "ok",
+            type: "danger",
+            duration: 3000,
+          });
+        });
+    },
+    goBack() {
+      this.navigation.goBack();
     },
   },
 };

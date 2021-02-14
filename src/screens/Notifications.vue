@@ -9,7 +9,6 @@
         />
       </scroll-view>
     </nb-content>
-    <nb-text v-else>No new notifications</nb-text>
   </nb-container>
 </template>
 
@@ -28,8 +27,11 @@ export default {
   components: {
     NotificationCard,
   },
-  created() {
+  mounted() {
     this.$store.dispatch("notifications/fetchNotifications", this.user.id);
+  },
+  updated() {
+
   },
   computed: {
     notifications() {

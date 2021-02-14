@@ -64,7 +64,6 @@ export default {
         });
     },
     fetchCurrentUser({ commit, state }, userId) {
-      console.log(userId);
       return axiosInstance
         .get(`/user/getCurrentUser?userId=${userId}`)
         .then((res) => {

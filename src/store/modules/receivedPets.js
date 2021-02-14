@@ -23,7 +23,6 @@ export default {
         });
     },
     fetchReceivedPetById({ rootState, commit, state }, params) {
-      console.log(params);
       const petId = params.petId;
       const userId = rootState.auth.user.id;
       return axiosInstance
@@ -39,7 +38,6 @@ export default {
     },
     deleteReceivedPetFromUser({ rootState, commit, state }, petId) {
       const userId = rootState.auth.user.id;
-      console.log(petId, "petId")
       return axiosInstance
         .delete(`/user/deleteReceivedPetFromUser?userId=${userId}&petId=${petId}`)
         .then((res) => {

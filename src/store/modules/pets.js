@@ -47,8 +47,6 @@ export default {
         });
     },
     deleteNeed({ rootState, commit }, params) {
-      console.log(params);
-
       const petId = params.petId;
       const needId = params.needId;
       const userId = rootState.auth.user.id;
@@ -78,7 +76,6 @@ export default {
       let needForm = params.need;
       let userId = rootState.auth.user.id;
       let petId = params.petId;
-      console.log(params);
       return axiosInstance
         .post(`/user/addNeedToPet?userId=${userId}&petId=${petId}`, needForm)
         .then((res) => {
@@ -112,7 +109,6 @@ export default {
       return axiosInstance
         .put(`/user/updateUserPet?petId=${petId}&userId=${userId}`, petForm)
         .then((res) => {
-          console.log(res.data);
           pet = res.data.pet;
           message = res.data.msg;
           commit("updatePet", pet);

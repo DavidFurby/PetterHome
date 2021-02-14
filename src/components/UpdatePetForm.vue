@@ -146,10 +146,10 @@ export default {
       currentAnimal: 0,
       petForm: {
         petName: this.pet.petName,
-        petAge: this.pet.petAge,
+        petAge: this.pet.petAge.toString(),
         gender: this.pet.gender,
-        weight: this.pet.weight,
-        height: this.pet.height,
+        weight: this.pet.weight.toString(),
+        height: this.pet.height.toString(),
       },
       animalForm: {
         animal: this.pet.animal.animal,
@@ -212,9 +212,9 @@ export default {
     },
     onWeightChange(weight) {
       this.petForm.weight = weight.toString();
+
     },
     onAgeChange(age) {
-      console.log(age); 
       this.petForm.petAge = age.toString();
     },
     updatePet() {
@@ -230,7 +230,6 @@ export default {
       let params = {};
       params.petForm = petForm;
       params.petId = this.pet.id;
-      console.log(params.petForm, "test")
       if (!this.$v.petForm.$invalid) {
         this.$store.dispatch("pets/updateUserPet", params).then(() => {
           Toast.show({
@@ -265,13 +264,13 @@ export default {
       return this.petForm.gender;
     },
     selectedHeight() {
-      return this.pet.height;
+      return this.petForm.height;
     },
     selectedWeight() {
-      return this.pet.weight;
+      return this.petForm.weight;
     },
     selectedAge() {
-      return this.pet.petAge; 
+      return this.petForm.petAge; 
     },
   },
 };

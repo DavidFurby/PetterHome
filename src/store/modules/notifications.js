@@ -27,7 +27,6 @@ export default {
       return axiosInstance
         .put(`/user/checkNotification?notificationId=${notificationId}&userId=${userId}`)
         .then((res) => {
-          console.log(res);
         })
         .catch((error) => {
           console.log(error);

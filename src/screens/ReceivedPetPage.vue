@@ -83,7 +83,6 @@ export default {
             this.$store
               .dispatch("receivedPets/deleteReceivedPetFromUser", petId)
               .then((res) => {
-                console.log(res);
                 {
                   if (res == "Pet has been deleted! :(") {
                     Toast.show({

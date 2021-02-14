@@ -63,7 +63,6 @@ export default {
     this.username = user.username;
     this.availableUsers = availableUsers;
     this.firstAvailableUser = firstAvailableUser;
-    console.log(this.firstAvailableUser, "availableUser");
   },
 
   methods: {

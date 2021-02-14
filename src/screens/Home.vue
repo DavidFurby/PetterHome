@@ -22,8 +22,8 @@
     <nb-container v-else>
       <nb-text>You haven't added any pets yet</nb-text>
     </nb-container>
-    <nb-button class="button" success block :on-press="goToAddPetScreen" :pets="pets">
-      <nb-text
+    <nb-button success block :on-press="goToAddPetScreen" :pets="pets">
+      <nb-text class="text"
         >Add Pet <nb-icon :style="{ fontSize: 15, color: 'white' }" name="paw"
       /></nb-text>
     </nb-button>
@@ -73,5 +73,9 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style>
+.text {
+  color: white;
+  font-family: ArchitectsDaughter;
+}
 </style>

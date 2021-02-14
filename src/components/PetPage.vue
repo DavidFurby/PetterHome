@@ -15,6 +15,10 @@
         <nb-text>{{ pet.petAge }} years old</nb-text>
       </nb-card-item>
       <nb-card-item>
+        <nb-text :style="{ width: 280 }">Gender: </nb-text>
+        <nb-text>{{ pet.gender }}</nb-text>
+      </nb-card-item>
+      <nb-card-item>
         <nb-text :style="{ width: 280 }">Weight: </nb-text>
         <nb-text>{{ pet.weight }} kg</nb-text>
       </nb-card-item>
@@ -38,5 +42,4 @@ export default {
 </script>
 
 <style>
-
 </style>

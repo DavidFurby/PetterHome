@@ -10,7 +10,7 @@ export default {
   },
   getters: {},
   actions: {
-    fetchSharedWithUsers({rootState, commit, state }, params) {
+    fetchSharedWithUsers({ rootState, commit, state }, params) {
       const userId = rootState.auth.user.id;
       const petId = params.petId;
       return axiosInstance
@@ -22,6 +22,21 @@ export default {
         })
         .catch((err) => {
           console.log(err, "sharedWith");
+        });
+    },
+    removeReceivedUser({ rootState, commit, state }, params) {
+      const userId = rootState.auth.user.id;
+      const petId = params.petId;
+      const receiverId = params.receiverId;
+      return axiosInstance
+        .delete(
+          `/user/removeReceivedUser?receiverId=${receiverId}&petId=${petId}&userId=${userId}`
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
         });
     },
   },

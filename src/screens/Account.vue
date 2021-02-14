@@ -8,10 +8,12 @@
     <nb-content padder>
       <AccountInformation :user="user" />
       <nb-button block info :on-press="changePassword"
-        ><nb-text>Change password</nb-text></nb-button
+        ><nb-text class="text">Change password</nb-text></nb-button
       >
     </nb-content>
-    <nb-button block danger :on-press="logout"><nb-text>Logout</nb-text></nb-button>
+    <nb-button block danger :on-press="logout"
+      ><nb-text class="text">Logout</nb-text></nb-button
+    >
   </nb-container>
 </template>
 
@@ -54,3 +56,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+.text {
+  color: white;
+  font-family: ArchitectsDaughter;
+}
+</style>

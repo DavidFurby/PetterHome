@@ -120,7 +120,7 @@
       </nb-form>
 
       <nb-button block success :on-press="addPet">
-        <nb-text>Add Pet</nb-text>
+        <nb-text class="text">Add Pet</nb-text>
       </nb-button>
     </scroll-view>
   </nb-container>
@@ -181,7 +181,7 @@ export default {
   methods: {
     onAnimalChange(animal, index) {
       this.animalForm.animal = animal;
-      this.animalForm.breed = this.animals[index].breeds[0]
+      this.animalForm.breed = this.animals[index].breeds[0];
       this.currentAnimal = index;
     },
     onBreedChange(breed) {
@@ -256,3 +256,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.text {
+  font-family: ArchitectsDaughter;
+}
+</style>

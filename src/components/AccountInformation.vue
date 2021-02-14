@@ -13,7 +13,7 @@
         </nb-body>
         <nb-text>{{ user.email }} </nb-text>
       </nb-card-item>
-      </nb-card>
+    </nb-card>
   </view>
 </template>
 <script>
@@ -26,5 +26,3 @@ export default {
   },
 };
 </script>
-<style scoped>
-</style>

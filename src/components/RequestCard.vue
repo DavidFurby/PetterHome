@@ -11,7 +11,7 @@
         <nb-button info :style="{width: 200}" :on-press="() => acceptRequest(invite.inviteId)"
           ><nb-text >Accept</nb-text>
         </nb-button>
-         <nb-button danger :style="{width: 200}" :on-press="() => acceptRequest(invite.inviteId)"
+         <nb-button danger :style="{width: 200}" :on-press="() => declineInvite(invite.inviteId)"
           ><nb-text >Decline</nb-text>
         </nb-button>
         </nb-card-item>
@@ -33,6 +33,9 @@ export default {
     acceptRequest: {
       type: Function,
     },
+    declineInvite: {
+      type: Function
+    }
   },
   computed: {},
 };

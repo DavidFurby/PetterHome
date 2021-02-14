@@ -3,10 +3,10 @@
     <AppHeader screen="Settings" />
     <nb-content padder>
       <nb-button class="button" block :on-press="goToAccount">
-        <nb-text>Account Settings</nb-text>
+        <nb-text class="text">Account Settings</nb-text>
       </nb-button>
       <nb-button class="button" block :on-press="() => goToSharePet(this.user)">
-        <nb-text>Share Pet</nb-text>
+        <nb-text class="text">Share Pet</nb-text>
       </nb-button>
     </nb-content>
   </nb-container>
@@ -41,7 +41,10 @@ export default {
 </script>
 <style scoped>
 .button {
-    background-color: #edccaf;
-
+  background-color: #edccaf;
+}
+.text {
+  color: white;
+  font-family: ArchitectsDaughter;
 }
 </style>

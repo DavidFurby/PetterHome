@@ -11,7 +11,7 @@
         </nb-body>
         <nb-content>
           <nb-button info :on-press="() => navigateToShareList(pet.id)">
-            <nb-text>Users</nb-text>
+            <nb-text class="text">Users</nb-text>
           </nb-button>
         </nb-content>
       </nb-card-item>
@@ -41,3 +41,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+.text {
+  color: white;
+  font-family: ArchitectsDaughter;
+}
+</style>

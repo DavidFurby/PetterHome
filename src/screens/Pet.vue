@@ -9,10 +9,16 @@
     />
     <PetPage :animal="animal" :pet="pet" />
     <nb-button class="button" block :on-press="() => goToUpdateInformation(pet)"
-      ><nb-text>Update information</nb-text></nb-button
-    >
+      ><nb-text class="text"
+        >Update information
+        <nb-icon
+          :style="{ fontSize: 15, color: 'white' }"
+          name="build" /></nb-text
+    ></nb-button>
   </nb-container>
-  <nb-text v-else>Pet can't be loaded yet</nb-text>
+  <nb-container v-else class="spinner-container">
+    <nb-spinner color="blue" />
+  </nb-container>
 </template>
 <script>
 import { ActionSheet } from "native-base";
@@ -119,5 +125,9 @@ export default {
 <style scoped>
 .button {
   background-color: #edccaf;
+}
+.text {
+  color: white;
+  font-family: ArchitectsDaughter;
 }
 </style>

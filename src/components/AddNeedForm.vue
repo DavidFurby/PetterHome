@@ -116,7 +116,6 @@ export default {
       this.needForm.type = typeValue;
     },
     onUserChange(userValue) {
-      console.log(userValue);
       this.scheduleForm.assignedUser = userValue;
     },
     getIosIcon() {
@@ -131,7 +130,6 @@ export default {
       if (!this.$v.needForm.$invalid || !this.$v.scheduleForm.$invalid) {
         let needForm = this.needForm;
         let scheduleForm = this.scheduleForm;
-        console.log(scheduleForm);
         let need = {};
         let schedule = [];
         schedule.push(scheduleForm);
@@ -191,7 +189,6 @@ export default {
   },
   computed: {
     selectedUser() {
-      console.log("test");
       return this.scheduleForm.assignedUser;
     },
   },

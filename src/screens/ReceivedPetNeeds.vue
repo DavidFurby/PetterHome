@@ -27,7 +27,6 @@ export default {
       return this.$store.state.receivedPets.receivedPet;
     },
     needs() {
-      console.log(this.pet);
       let needs = this.pet.needs;
       return needs;
     },
